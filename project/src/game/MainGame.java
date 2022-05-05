@@ -1,3 +1,5 @@
+package game;
+
 import dresseur.Dresseur;
 import pokedex.Pokedex;
 import pokemon.Pokemon;
@@ -15,10 +17,12 @@ public class MainGame {
         window.setTitle("Pokemoune");*/
 
         Pokedex pokedex = new Pokedex();
+/*
         Dresseur dresseur = new Dresseur("Arnaud",1, pokedex.generatePokemon(6));
-        for (Pokemon p : dresseur.pokemons  ) {
+*/
+   /*     for (Pokemon p : dresseur.pokemons  ) {
             System.out.println(p.name_of_species);
-        }
+        }*/
 
 
     }

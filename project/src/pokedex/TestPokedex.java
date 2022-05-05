@@ -5,18 +5,25 @@ import java.util.Scanner;
 public class TestPokedex {
     public static void main(String[] args) {
         Pokedex pokedex = new Pokedex();
-/*
+
+
         System.out.println(pokedex.toString());
-*/
+
+        pokedex.writeLevel1Pokemon("pok1.csv");
 
 
+        while (true) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a pokemon name or ID: ");
+        System.out.print("Enter a pokemon name or ID: ");
         String name = scanner.nextLine();
-        if (name.matches("^[0-9]+$")) {
-            pokedex.searchPokemon(Integer.parseInt(name));
-        }else {
-            pokedex.searchPokemon(name);
+        if (name.equals("0")) {
+            return;
+        }
+            if (name.matches("^[0-9]+$")) {
+                pokedex.searchPokemon(Integer.parseInt(name));
+            } else {
+                pokedex.searchPokemon(name);
+            }
         }
     }
 }
