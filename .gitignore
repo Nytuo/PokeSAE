@@ -74,8 +74,6 @@ captures/
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
 
-# lint
-lint/intermediates/
-lint/generated/
-lint/outputs/
-lint/tmp/
+# External native build folder generated in Android Studio 2.2 and later
+.externalNativeBuild
+.cxx/
