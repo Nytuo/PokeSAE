@@ -77,3 +77,8 @@ captures/
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
+# lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
