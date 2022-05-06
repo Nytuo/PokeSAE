@@ -3,6 +3,7 @@ package pokedex;
 import pokemon.Pokemon;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,7 +73,7 @@ public class Pokedex {
             for (Pokemon i : pokedata.values()) {
                 if (i.name_of_species.equals(name)) {
 
-                System.out.println(i.);
+                System.out.println(i);
                 }
             }
             return;
@@ -122,18 +123,18 @@ public class Pokedex {
 
     private Pokemon createPokemon(String[] theLine) {
         try {
-            String[] types = new String[2];
-            types[0] = theLine[8];
-            types[1] = theLine[9];
-            int[] stats = new int[5];
-            stats[0] = Integer.parseInt(theLine[2]);
-            stats[1] = Integer.parseInt(theLine[3]);
-            stats[2] = Integer.parseInt(theLine[4]);
-            stats[3] = Integer.parseInt(theLine[5]);
-            stats[4] = Integer.parseInt(theLine[6]);
-            String[] evolutions = new String[2];
-            evolutions[0] = theLine[10];
-            evolutions[1] = theLine[11];
+            ArrayList<String> types = new ArrayList<String>();
+            types.add(theLine[8]);
+            types.add(theLine[9]);
+            ArrayList<Integer> stats = new ArrayList<Integer>();
+            stats.add(Integer.parseInt(theLine[2]));
+            stats.add(Integer.parseInt(theLine[3]));
+            stats.add(Integer.parseInt(theLine[4]));
+            stats.add(Integer.parseInt(theLine[5]));
+            stats.add(Integer.parseInt(theLine[6]));
+            ArrayList<String> evolutions = new ArrayList<String>();
+            evolutions.add(theLine[10]);
+            evolutions.add(theLine[11]);
             return new Pokemon(theLine[1], types, stats, Integer.parseInt(theLine[10]), evolutions, null, 1, 0, null, null, "name",Integer.parseInt(theLine[0]));
 
 
