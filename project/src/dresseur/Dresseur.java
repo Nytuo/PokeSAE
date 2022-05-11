@@ -20,7 +20,4 @@ public class Dresseur {
     private void ChooseAttack(Pokemon pokemon) {
     }
 
-    private void ChooseSquadmon(Pokemon pokemon) {
-    }
-
 }

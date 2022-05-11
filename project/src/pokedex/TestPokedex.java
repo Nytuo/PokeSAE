@@ -2,6 +2,8 @@ package pokedex;
 
 import java.util.Scanner;
 
+import static pokedex.Pokedex.printPoke;
+
 public class TestPokedex {
     public static void main(String[] args) {
         Pokedex pokedex = new Pokedex();
@@ -9,21 +11,18 @@ public class TestPokedex {
 
         System.out.println(pokedex.toString());
 
-        pokedex.writeLevel1Pokemon("pok1.csv");
 
 
+        System.out.println("Welcome to the Pokavadex!\nThe Pokedex in java!\nAll information are provided by pokeapi.co");
         while (true) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a pokemon name or ID: ");
-        String name = scanner.nextLine();
-        if (name.equals("0")) {
-            return;
-        }
-            if (name.matches("^[0-9]+$")) {
-                pokedex.searchPokemon(Integer.parseInt(name));
-            } else {
-                pokedex.searchPokemon(name);
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter a Pokemon name in english or exit with 'quit' : ");
+            String name = scanner.nextLine();
+            if (name.equalsIgnoreCase("quit")) {
+                return;
             }
+            printPoke(name.toLowerCase());
+
         }
     }
 }
