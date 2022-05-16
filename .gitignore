@@ -86,3 +86,5 @@ lint/tmp/
 .cxx/
 
 .idea/
+.classpath
+.project
