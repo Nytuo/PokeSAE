@@ -22,6 +22,11 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats:
 - Description des classes utilisées : Arnaud, Ethan 
 - Séparation des classes en package : Arnaud, Ethan, Elyan, Jules
 
+## Rendu 2
+- Capicite, pokedex: Arnaud
+- Pokemon, pokedex: Ethan
+- Readme, contributing, pdf: Elyan 
+- Aide : Jules
 
 
 ## Contribution
