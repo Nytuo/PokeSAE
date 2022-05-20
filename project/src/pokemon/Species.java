@@ -28,7 +28,7 @@ public class Species implements IEspece{
     }
         
         public IStat getBaseStat() { //stats de base
-        	return null;
+        	return baseStats;
         };				
     	public String getNom() {
     		return name_of_species;

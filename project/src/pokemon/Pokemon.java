@@ -2,6 +2,7 @@ package pokemon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +17,7 @@ import pokedex.Pokedex;
 public class Pokemon extends Species implements IPokemon, IStat {
     private int ID;
     private static String name;
-    /*private int level;*/
+    private int level;
     private double xp;
     private HashMap<String,Integer> stats;
     private HashMap<String, HashMap<String, String>> known_capacities;
@@ -25,9 +26,9 @@ public class Pokemon extends Species implements IPokemon, IStat {
     private static ArrayList<Integer> DV;
 
 
-    public Pokemon(String name_of_species, ArrayList<String> types, ArrayList<Integer> baseStats, int start_level, ArrayList<String> evolution, ArrayList<String> capacities, int level, double xp, HashMap<String,Integer> stats,  HashMap<String, HashMap<String, String>> capacities1, String name, int ID) {
-        super(name_of_species, types, baseStats, start_level, evolution, capacities);
-        /*this.level = level;*/
+    public Pokemon(String name_of_species, ArrayList<String> types, TreeMap<String,Integer> baseStats, int baseLevel, ArrayList<String> evolution, ArrayList<String> capacities, int level, double xp, HashMap<String,Integer> stats,  HashMap<String, HashMap<String, String>> capacities1, String name, int ID) {
+        super(name_of_species, types, baseStats, baseLevel, evolution, capacities);
+        this.level = baseLevel;
         this.xp = xp;
         this.stats=stats; //pv,force,defence,special,vitesse
         this.known_capacities = capacities1;
@@ -170,7 +171,7 @@ public class Pokemon extends Species implements IPokemon, IStat {
 	}
 	
 	public void gagneExperienceDe(IPokemon pok) {
-		this.stats
+		this.xp+=(1.5 * pok.getNiveau() * pok.getBaseExp())/7);
 	}
 	
 	public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
@@ -192,6 +193,95 @@ public class Pokemon extends Species implements IPokemon, IStat {
 	}
 	
 	public void soigne() {
+		
+	}
+
+
+
+
+	@Override
+	public int getPV() {
+		return stats.get("PV");
+	}
+
+
+
+
+	@Override
+	public int getForce() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+	@Override
+	public int getDefense() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+	@Override
+	public int getSpecial() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+	@Override
+	public int getVitesse() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
+	@Override
+	public void setPV(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void setForce(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void setDefense(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void setVitesse(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void setSpecial(int i) {
+		// TODO Auto-generated method stub
 		
 	}
 }
