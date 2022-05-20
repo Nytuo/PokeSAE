@@ -21,3 +21,6 @@ Génération du diagramme UML : Arnaud
 Description des classes utilisées : Arnaud, Ethan 
 Séparation des classes en package : Arnaud, Ethan, Elyan, Jules
 
+## Contribution
+Vous trouverez ci-joint le lien concernant la contribution du projet:
+https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult/blob/main/CONTRIBUTING.md
