@@ -15,4 +15,9 @@ Ce jeu est un RPG tour par tour avec une histoire, les Pokémons peuvent apparte
 
 Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats: les attaques, les avantages de types, le gain d'experience en gagnant des combats, la montée de niveau... Pas d'histoire ni d'objets ni de capture de Pokémon. 
 
+## Répartition du travail 
+### Rendu 1
+Génération du diagramme UML : Arnaud
+Description des classes utilisées : Arnaud, Ethan 
+Séparation des classes en package : Arnaud, Ethan, Elyan, Jules
 
