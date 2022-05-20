@@ -24,7 +24,7 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 - Séparation des classes en packages : Arnaud, Ethan, Elyan, Jules
 
 
-## Rendu 2
+### Rendu 2
 - Capicite, Pokedex : Arnaud
 - Pokemon, Pokedex : Ethan
 - Readme, contributing, PDF : Elyan 
