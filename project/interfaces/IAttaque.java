@@ -12,6 +12,6 @@ package interfaces;
  *
  */
 public interface IAttaque {
-	int calculeDommage(IPokemon lanceur, IPokemon receveur);
+	int calculeDommage(/*IPokemon lanceur, IPokemon receveur*/);
 	void utilise();
 }

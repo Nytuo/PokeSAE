@@ -11,12 +11,16 @@ package interfaces;
  * @author Leo Donati
  *
  */
-public interface ICapacite extends IAttaque {
+public interface ICapacite extends interfaces.IAttaque {
 	String getNom();
 	double getPrecision();
 	int getPuissance();
 	int getPP();
 	void resetPP();
-	ICategorie getCategorie();
-	IType getType();
+	interfaces.ICategorie getCategorie();
+	interfaces.IType getType();
+
+	int calculeDommage(/*IPokemon lanceur, IPokemon receveur*/);
+
+	void utilise();
 }
