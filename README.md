@@ -8,7 +8,7 @@
 - GRUAU Elyan
 - MAHE Jules
 
-# Présentation de la SAE
+## Présentation de la SAE
 
 Les Pokémons sont des créatures possédant des types différents, et font partis du jeu éponyme de la société japonaise *Nintendo*. <br/>
 Ce jeu est un RPG tour par tour avec une histoire, les Pokémons peuvent appartenir à des dresseurs qui organisent des combats entre eux ou peuvent être sauvages.
@@ -23,4 +23,5 @@ Séparation des classes en package : Arnaud, Ethan, Elyan, Jules
 
 ## Contribution
 Vous trouverez ci-joint le lien concernant la contribution du projet:
+<br>
 https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult/blob/main/CONTRIBUTING.md
