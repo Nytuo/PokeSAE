@@ -17,9 +17,12 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats:
 
 ## Répartition du travail 
 ### Rendu 1
-Génération du diagramme UML : Arnaud
-Description des classes utilisées : Arnaud, Ethan 
-Séparation des classes en package : Arnaud, Ethan, Elyan, Jules
+
+- Génération du diagramme UML : Arnaud 
+- Description des classes utilisées : Arnaud, Ethan 
+- Séparation des classes en package : Arnaud, Ethan, Elyan, Jules
+
+
 
 ## Contribution
 Vous trouverez ci-joint le lien concernant la contribution du projet:
