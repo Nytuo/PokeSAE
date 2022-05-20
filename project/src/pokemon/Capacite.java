@@ -88,12 +88,12 @@ public class Capacite implements interfaces.ICapacite, interfaces.ICategorie, in
     }
 
     @Override
-    public int calculeDommage(/*IPokemon lanceur, IPokemon receveur*/) {
+    public int calculeDommage(interfaces.IPokemon lanceur, interfaces.IPokemon receveur) {
 /*        IType[] typeLanceur = lanceur.getEspece().getTypes();
         IType[] typeReceiveur = receveur.getEspece().getTypes();*/
-        int dommage = 0;
-        HashMap<String, String[]> csv = initializeFromCSV();
-        System.out.println(csv.get("Combat")[EnumCapacite.Combat.getId()]);
+        
+
+
 
         return dommage;
     }
@@ -103,22 +103,4 @@ public class Capacite implements interfaces.ICapacite, interfaces.ICategorie, in
         this.PP--;
     }
 
-    public HashMap<String,String[]> initializeFromCSV() {
-        HashMap<String,String[]> lines = new HashMap<>();
-        try {
-
-            String file = String.valueOf(new File("external/efficacites.csv"));
-            Scanner sc = new Scanner(new File(file));
-            sc.useDelimiter(";");
-            sc.nextLine();
-            while (sc.hasNext()) {
-                String[] line = sc.nextLine().split(";");
-                lines.put(line[0],line);
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        }
-        return lines;
-    }
 }

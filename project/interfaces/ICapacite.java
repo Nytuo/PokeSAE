@@ -20,7 +20,7 @@ public interface ICapacite extends interfaces.IAttaque {
 	interfaces.ICategorie getCategorie();
 	interfaces.IType getType();
 
-	int calculeDommage(/*IPokemon lanceur, IPokemon receveur*/);
+	int calculeDommage(interfaces.IPokemon lanceur, interfaces.IPokemon receveur);
 
 	void utilise();
 }
