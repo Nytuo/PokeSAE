@@ -18,21 +18,18 @@ public class Pokemon extends Species implements IPokemon {
     private double xp;
     private Stats stats;
     private Capacite[] known_capacities;
-    private int PVActuels;
-    private TreeMap<String,Integer> EV;
+    private TreeMap<String, Integer> EV;
     private static ArrayList<Integer> DV;
 
 
-    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer,String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID) {
+    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID) {
         super(name_of_species, types, baseStats, baseLevel, evolution, capacities);
         this.level = baseLevel;
         this.xp = xp;
         this.known_capacities = capacitiesPoke;
         this.stats = stats;
-
         Pokemon.name = name;
         this.ID = ID;
-        this.PVActuels = stats.getPV();
     }
 
     public IStat getStat() {
@@ -48,27 +45,30 @@ public class Pokemon extends Species implements IPokemon {
         return level;
 
     }
+
     public int getId() {
         return ID;
 
     }
+
     public String getNom() {
         return name;
 
     }
+
     public double getPourcentagePV() {
-        return ((stats.getPV() / baseStats.getPV())*100);
+        return ((stats.getPV() / baseStats.getPV()) * 100);
     }
 
     public IEspece getEspece() {
         return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities);
     }
+
     public void vaMuterEn(IEspece esp) {
-        new Pokemon(esp.getNom(), this.getNom(), this.types,(Stats) esp.getBaseStat(), this.level,this.evolution, this.capacities, this.level, this.xp, (Stats) esp.getBaseStat(), (Capacite[]) esp.getCapSet(), this.ID);
+        new Pokemon(esp.getNom(), this.getNom(), this.types, (Stats) esp.getBaseStat(), this.level, this.evolution, this.capacities, this.level, this.xp, (Stats) esp.getBaseStat(), (Capacite[]) esp.getCapSet(), this.ID);
     }
 
     public ICapacite[] getCapacitesApprises() {
-
         return this.known_capacities;
     }
 
@@ -77,29 +77,28 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public void remplaceCapacite(int i, ICapacite cap) throws Exception {
-        try{
-
-        this.known_capacities[i] = (Capacite) cap;
-        }catch (Exception e){
+        try {
+            this.known_capacities[i] = (Capacite) cap;
+        } catch (Exception e) {
             throw new Exception("Erreur de remplacement de capacité");
         }
     }
 
     public void gagneExperienceDe(IPokemon pok) {
-        this.xp+=(1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp())/7;
+        this.xp += (1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp()) / 7;
     }
 
     public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
-        this.PVActuels-=atk.calculeDommage(pok, this);
+        this.stats.setPV(this.stats.getPV() - atk.calculeDommage(pok, this));
     }
 
     public boolean estEvanoui() {
-        return this.PVActuels <= 0;
+        return this.stats.getPV() <= 0;
 
     }
 
     public boolean aChangeNiveau() {
-        return this.xp > (0.8*Math.pow(this.level,3)); //Formule: courbe d'experience
+        return this.xp > (0.8 * Math.pow(this.level, 3)); //Formule: courbe d'experience
     }
 
     public boolean peutMuter() {
@@ -107,7 +106,7 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public void soigne() {
-        this.PVActuels=this.stats.getPV();
+        this.stats.setPV(this.baseStats.getPV());
     }
 
 }
