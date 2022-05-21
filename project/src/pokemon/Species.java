@@ -14,17 +14,16 @@ public class Species implements IEspece{
     public int startLevel;
     public TreeMap<Integer,String> evolution;
     public Capacite[] capacities;
-    private int baseXp;
-    private int gainsXp;
+    private final int baseXp;
 
-    public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer,String> evolution, Capacite[] capacities) {
+    public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer,String> evolution, Capacite[] capacities, int xp) {
         this.nameOfSpecies = name_of_species;
         this.types = types;
         this.baseStats = baseStats;
         this.startLevel = start_level;
         this.evolution = evolution;
         this.capacities = capacities;
-        this.baseXp = 
+        this.baseXp = xp;
     }
 
     public IStat getBaseStat() { //stats de base

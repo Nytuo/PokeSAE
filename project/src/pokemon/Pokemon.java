@@ -23,7 +23,7 @@ public class Pokemon extends Species implements IPokemon {
 
 
     public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID) {
-        super(name_of_species, types, baseStats, baseLevel, evolution, capacities);
+        super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp);
         this.level = baseLevel;
         this.xp = xp;
         this.known_capacities = capacitiesPoke;
@@ -61,7 +61,7 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public IEspece getEspece() {
-        return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities);
+        return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities, (int) this.xp);
     }
 
     public void vaMuterEn(IEspece esp) {
