@@ -1,6 +1,7 @@
 package pokemon;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.TreeMap;
 
 
@@ -10,7 +11,7 @@ import interfaces.IEspece;
 import interfaces.IPokemon;
 import interfaces.IStat;
 
-public class Pokemon extends Species implements IPokemon, interfaces.IEchange {
+public class Pokemon extends Species implements IPokemon {
     private int ID;
     private static String name;
     private int level;
@@ -27,6 +28,8 @@ public class Pokemon extends Species implements IPokemon, interfaces.IEchange {
         this.level = baseLevel;
         this.xp = xp;
         this.known_capacities = capacitiesPoke;
+        this.stats = stats;
+
         Pokemon.name = name;
         this.ID = ID;
         this.PVActuels = stats.getPV();
@@ -54,7 +57,7 @@ public class Pokemon extends Species implements IPokemon, interfaces.IEchange {
 
     }
     public double getPourcentagePV() {
-        return stats.getPV();
+        return ((stats.getPV() / baseStats.getPV())*100);
     }
 
     public IEspece getEspece() {
@@ -66,11 +69,11 @@ public class Pokemon extends Species implements IPokemon, interfaces.IEchange {
 
     public ICapacite[] getCapacitesApprises() {
 
-        return new ICapacite[0];
+        return this.known_capacities;
     }
 
     public void apprendCapacites(ICapacite[] caps) {
-
+        this.known_capacities = (Capacite[]) caps;
     }
 
     public void remplaceCapacite(int i, ICapacite cap) throws Exception {
@@ -100,30 +103,11 @@ public class Pokemon extends Species implements IPokemon, interfaces.IEchange {
     }
 
     public boolean peutMuter() {
-        return this.evolution.containsKey(this.level) && (this.evolution.get(this.level) != this.nameOfSpecies);
+        return this.evolution.containsKey(this.level) && (!Objects.equals(this.evolution.get(this.level), this.nameOfSpecies));
     }
 
     public void soigne() {
         this.PVActuels=this.stats.getPV();
     }
 
-    @Override
-    public void setPokemon(IPokemon pok) {
-
-    }
-
-    @Override
-    public IPokemon echangeCombattant() {
-        return null;
-    }
-
-    @Override
-    public int calculeDommage(IPokemon lanceur, IPokemon receveur) {
-        return 0;
-    }
-
-    @Override
-    public void utilise() {
-
-    }
 }
