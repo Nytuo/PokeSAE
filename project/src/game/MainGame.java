@@ -1,10 +1,6 @@
 package game;
-import interfaces.IType;
-import dresseur.Dresseur;
 import pokemon.*;
 
-import javax.swing.*;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public class MainGame {
@@ -19,6 +15,5 @@ public class MainGame {
         capacites[0] = new Capacite("Plante",types[0],cat[0],20,10,11);
         Pokemon pokemon = new Pokemon("Bulbizarre", "Bulbizarre", types, stats, 1, new TreeMap<>(), capacites, 1, 0, stats, capacites, 1);
         System.out.println(pokemon.getNom());
-
     }
 }

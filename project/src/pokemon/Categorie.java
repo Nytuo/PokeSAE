@@ -1,8 +1,8 @@
 package pokemon;
 
 public class Categorie implements interfaces.ICategorie {
-    private String nom;
-    private boolean special;
+    private final String nom;
+    private final boolean special;
     public Categorie(String nom, boolean special) {
         this.nom = nom;
         this.special = special;

@@ -2,7 +2,7 @@ package pokemon;
 
 public class Types implements interfaces.IType {
 
-    private String nom;
+    private final String nom;
     public Types(String nom) {
         this.nom = nom;
     }

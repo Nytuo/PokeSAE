@@ -12,11 +12,11 @@ import interfaces.IPokemon;
 import interfaces.IStat;
 
 public class Pokemon extends Species implements IPokemon {
-    private int ID;
+    private final int ID;
     private static String name;
-    private int level;
+    private final int level;
     private double xp;
-    private Stats stats;
+    private final Stats stats;
     private Capacite[] known_capacities;
     private TreeMap<String, Integer> EV;
     private static ArrayList<Integer> DV;

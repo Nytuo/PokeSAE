@@ -16,7 +16,7 @@ import interfaces.IPokemon;
 import interfaces.IType;
 
 public class Pokedex implements IPokedex {
-    private ArrayList<String[]> pokedata = new ArrayList<String[]>();
+    private final ArrayList<String[]> pokedata = new ArrayList<String[]>();
 
     public Pokedex() {
         String file = new File("external/listePokemon1G.csv").getAbsolutePath();
@@ -190,7 +190,7 @@ public class Pokedex implements IPokedex {
 
         Combat(1), Dragon(2), Eau(3), Electrique(4), Feu(5), Glace(6), Insecte(7), Normal(8), Plante(9), Poison(10), Psy(11), Roche(12), Sol(13), Spectre(14), Vol(15);
 
-        private int id;
+        private final int id;
 
         EnumCapacite(int id) {
             this.id = id;
