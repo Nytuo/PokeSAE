@@ -1,107 +1,129 @@
 package pokemon;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
-public class Pokemon extends Species {
-    public int ID;
-    public static String name;
-    public double level;
-    public int xp;
-    public HashMap<String,Integer> stats;
-    public HashMap<String, HashMap<String, String>> known_capacities;
-    private ArrayList<Integer> EV;
+
+import interfaces.IAttaque;
+import interfaces.ICapacite;
+import interfaces.IEspece;
+import interfaces.IPokemon;
+import interfaces.IStat;
+
+public class Pokemon extends Species implements IPokemon, interfaces.IEchange {
+    private int ID;
+    private static String name;
+    private int level;
+    private double xp;
+    private Stats stats;
+    private Capacite[] known_capacities;
+    private int PVActuels;
+    private TreeMap<String,Integer> EV;
     private static ArrayList<Integer> DV;
 
 
-    public Pokemon(String name_of_species, ArrayList<String> types, ArrayList<Integer> base_stats, int start_level, ArrayList<String> evolution, ArrayList<String>  capacities, double level, int xp, HashMap<String,Integer> stats,  HashMap<String, HashMap<String, String>> capacities1, String name, int ID) {
-        super(name_of_species, types, base_stats, start_level, evolution, capacities);
-        this.level = level;
+    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer,String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID) {
+        super(name_of_species, types, baseStats, baseLevel, evolution, capacities);
+        this.level = baseLevel;
         this.xp = xp;
-        this.stats = stats;
-        this.known_capacities = capacities1;
+        this.known_capacities = capacitiesPoke;
         Pokemon.name = name;
         this.ID = ID;
-    }
-    private void evolution() {
-
+        this.PVActuels = stats.getPV();
     }
 
-    private void levelUp() {
-
-    }
-    private void soigner() {
-
-    }
-    private void rappeler() {
-
-    }
-    private void attaquer() {
-
-    }
-    public boolean isKO() {
-
-        return false;
+    public IStat getStat() {
+        return this.stats;
     }
 
-
-    public int getID() {
-        return ID;
-    }
-
-    public static String getName() {
-        return name;
-    }
-
-    public static void setName(String name) {
-        Pokemon.name = name;
-    }
-
-    public double getLevel() {
-        return level;
-    }
-
-    public void setLevel(double level) {
-        this.level = level;
-    }
-
-    public int getXp() {
+    public double getExperience() {
         return xp;
+
     }
 
-    public void setXp(int xp) {
-        this.xp = xp;
+    public int getNiveau() {
+        return level;
+
+    }
+    public int getId() {
+        return ID;
+
+    }
+    public String getNom() {
+        return name;
+
+    }
+    public double getPourcentagePV() {
+        return stats.getPV();
     }
 
-    public HashMap<String, Integer> getStats() {
-        return stats;
+    public IEspece getEspece() {
+        return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities);
+    }
+    public void vaMuterEn(IEspece esp) {
+        new Pokemon(esp.getNom(), this.getNom(), this.types,(Stats) esp.getBaseStat(), this.level,this.evolution, this.capacities, this.level, this.xp, (Stats) esp.getBaseStat(), (Capacite[]) esp.getCapSet(), this.ID);
     }
 
-    public void setStats(HashMap<String, Integer> stats) {
-        this.stats = stats;
+    public ICapacite[] getCapacitesApprises() {
+
+        return new ICapacite[0];
     }
 
-    public HashMap<String, HashMap<String, String>> getKnown_capacities() {
-        return known_capacities;
+    public void apprendCapacites(ICapacite[] caps) {
+
     }
 
-    public void setKnown_capacities(HashMap<String, HashMap<String, String>> known_capacities) {
-        this.known_capacities = known_capacities;
+    public void remplaceCapacite(int i, ICapacite cap) throws Exception {
+        try{
+
+        this.known_capacities[i] = (Capacite) cap;
+        }catch (Exception e){
+            throw new Exception("Erreur de remplacement de capacité");
+        }
     }
 
-    public ArrayList<Integer> getEV() {
-        return EV;
+    public void gagneExperienceDe(IPokemon pok) {
+        this.xp+=(1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp())/7;
     }
 
-    public void setEV(ArrayList<Integer> EV) {
-        this.EV = EV;
+    public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
+        this.PVActuels-=atk.calculeDommage(pok, this);
     }
 
-    public static ArrayList<Integer> getDV() {
-        return DV;
+    public boolean estEvanoui() {
+        return this.PVActuels <= 0;
+
     }
 
-    public static void setDV(ArrayList<Integer> DV) {
-        Pokemon.DV = DV;
+    public boolean aChangeNiveau() {
+        return this.xp > (0.8*Math.pow(this.level,3)); //Formule: courbe d'experience
+    }
+
+    public boolean peutMuter() {
+        return this.evolution.containsKey(this.level) && (this.evolution.get(this.level) != this.nameOfSpecies);
+    }
+
+    public void soigne() {
+        this.PVActuels=this.stats.getPV();
+    }
+
+    @Override
+    public void setPokemon(IPokemon pok) {
+
+    }
+
+    @Override
+    public IPokemon echangeCombattant() {
+        return null;
+    }
+
+    @Override
+    public int calculeDommage(IPokemon lanceur, IPokemon receveur) {
+        return 0;
+    }
+
+    @Override
+    public void utilise() {
+
     }
 }

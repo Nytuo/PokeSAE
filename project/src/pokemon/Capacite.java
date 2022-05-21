@@ -11,7 +11,7 @@ import pokedex.Pokedex;
  * La classe Capacite représente une capacité d'un pokemon.
  * Elle implémente les interfaces : ICapacite, IEspece et IType.
  */
-public class Capacite implements interfaces.ICapacite, interfaces.ICategorie, interfaces.IType {
+public class Capacite implements interfaces.ICapacite {
 
     /**
      * Le nom de la capacité.
@@ -70,14 +70,6 @@ public class Capacite implements interfaces.ICapacite, interfaces.ICategorie, in
     }
 
 
-    /**
-     * Donne Si la capacité est spéciale ou non.
-     * @return true si la capacité est spéciale, false sinon.
-     */
-    @Override
-    public boolean isSpecial() {
-        return categorie.toString().equals("Special");
-    }
 
     /**
      * Donne le nom de la capacité.
@@ -197,7 +189,7 @@ public class Capacite implements interfaces.ICapacite, interfaces.ICategorie, in
 
         //Calcul de la force en fonction du type de la capacité
         int force;
-        if (this.isSpecial()) {
+        if (categorie.isSpecial()) {
             force = lanceur.getStat().getSpecial();
         } else {
             force = lanceur.getStat().getForce();
