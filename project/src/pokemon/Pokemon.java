@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import interfaces.IAttaque;
 import interfaces.ICapacite;
@@ -19,110 +17,25 @@ public class Pokemon extends Species implements IPokemon, IStat {
     private static String name;
     private int level;
     private double xp;
-    private HashMap<String,Integer> stats;
-    private HashMap<String, HashMap<String, String>> known_capacities;
-    private static int pvMax;
-    private ArrayList<Integer> EV;
+    private TreeMap<String,Integer> stats;
+    /*private HashMap<String, HashMap<String, String>> known_capacities;*/
+    /*private static int pvMax;*/
+    private TreeMap<String,Integer> EV;
     private static ArrayList<Integer> DV;
 
 
-    public Pokemon(String name_of_species, ArrayList<String> types, TreeMap<String,Integer> baseStats, int baseLevel, ArrayList<String> evolution, ArrayList<String> capacities, int level, double xp, HashMap<String,Integer> stats,  HashMap<String, HashMap<String, String>> capacities1, String name, int ID) {
+    public Pokemon(String name_of_species, ArrayList<String> types, TreeMap<String,Integer> baseStats, int baseLevel, TreeMap<Integer,String> evolution, ArrayList<String> capacities, int level, double xp, HashMap<String,Integer> stats, /*HashMap<String,HashMap<String, String>> capacities1,*/ String name, int ID) {
         super(name_of_species, types, baseStats, baseLevel, evolution, capacities);
         this.level = baseLevel;
         this.xp = xp;
-        this.stats=stats; //pv,force,defence,special,vitesse
-        this.known_capacities = capacities1;
+        this.stats=baseStats; //pv,force,defence,special,vitesse
+        /*this.known_capacities = capacities1;*/
         Pokemon.name = name;
         this.ID = ID;
-        Pokemon.pvMax = stats.get("PV");
+        /*Pokemon.pvMax = stats.get("PV");*/
+        this.EV.putAll(baseStats);
+        this.EV.replaceAll((k,v) -> 0);
     }
-    
-    
-  
-    
-    /*private void evolution() {
-
-    }
-    
-
-    private void levelUp() {
-
-    }
-    private void soigne() {
-
-    }
-    private void rappeler() {
-
-    }
-    private void attaquer() {
-
-    }
-    public boolean isKO() {
-
-        return null;
-    }
-
-
-    public int getID() {
-        return ID;
-    }
-
-    public static String getName() {
-        return name;
-    }
-
-    public static void setName(String name) {
-        Pokemon.name = name;
-    }
-
-    public double getLevel() {
-        return level;
-    }
-
-    public void setLevel(double level) {
-        this.level = level;
-    }
-
-    public int getXp() {
-        return xp;
-    }
-
-    public void setXp(int xp) {
-        this.xp = xp;
-    }
-
-    public HashMap<String, Integer> getStats() {
-        return stats;
-    }
-
-    public void setStats(HashMap<String, Integer> stats) {
-        this.stats = stats;
-    }
-
-    public HashMap<String, HashMap<String, String>> getKnown_capacities() {
-        return known_capacities;
-    }
-
-    public void setKnown_capacities(HashMap<String, HashMap<String, String>> known_capacities) {
-        this.known_capacities = known_capacities;
-    }
-
-    public ArrayList<Integer> getEV() {
-        return EV;
-    }
-
-    public void setEV(ArrayList<Integer> EV) {
-        this.EV = EV;
-    }
-
-    public static ArrayList<Integer> getDV() {
-        return DV;
-    }
-
-    public static void setDV(ArrayList<Integer> DV) {
-        Pokemon.DV = DV;
-    }
-    */
     
     public IStat getStat() {
 		return null;
@@ -155,7 +68,7 @@ public class Pokemon extends Species implements IPokemon, IStat {
 	}
 	
 	public void vaMuterEn(IEspece esp) {
-		
+		new Pokemon(this.evolution.get(this.level),
 	}
 	
 	public ICapacite[] getCapacitesApprises() {
@@ -171,11 +84,11 @@ public class Pokemon extends Species implements IPokemon, IStat {
 	}
 	
 	public void gagneExperienceDe(IPokemon pok) {
-		this.xp+=(1.5 * pok.getNiveau() * pok.getBaseExp())/7);
+		this.xp+=(1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp())/7;
 	}
 	
 	public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
-		
+		this.stats.get(atk) .calculeDommage(pok, pok)
 	}
 	
 	public boolean estEvanoui() {
@@ -184,104 +97,58 @@ public class Pokemon extends Species implements IPokemon, IStat {
 	}
 	
 	public boolean aChangeNiveau() {
-		return false;
-		
+		return this.xp > (0.8*Math.pow(this.level,3)); //Formule: courbe d'experience
 	}
 	
 	public boolean peutMuter() {
-		return false;
+		return this.evolution.containsKey(this.level) && (this.evolution.get(this.level) != this.nameOfSpecies);
 	}
 	
 	public void soigne() {
-		
+		this.stats.replace("PV", )
 	}
 
-
-
-
-	@Override
 	public int getPV() {
-		return stats.get("PV");
+		return stats.get("PV-base");
 	}
 
-
-
-
-	@Override
 	public int getForce() {
-		// TODO Auto-generated method stub
-		return 0;
+		return stats.get("Force-base");
 	}
 
-
-
-
-	@Override
 	public int getDefense() {
-		// TODO Auto-generated method stub
-		return 0;
+		return stats.get("Défense-base");
 	}
 
-
-
-
-	@Override
 	public int getSpecial() {
-		// TODO Auto-generated method stub
-		return 0;
+		return stats.get("Spécial-base");
 	}
 
-
-
-
-	@Override
 	public int getVitesse() {
-		// TODO Auto-generated method stub
-		return 0;
+		return stats.get("Vitesse-base");
 	}
 
-
-
-
-	@Override
+	
+	
 	public void setPV(int i) {
-		// TODO Auto-generated method stub
-		
+		stats.replace("PV-base", i);
 	}
 
-
-
-
-	@Override
 	public void setForce(int i) {
-		// TODO Auto-generated method stub
-		
+		stats.replace("Force-base", i);
 	}
 
-
-
-
-	@Override
 	public void setDefense(int i) {
-		// TODO Auto-generated method stub
-		
+		stats.replace("Défense-base", i);
 	}
 
-
-
-
-	@Override
 	public void setVitesse(int i) {
-		// TODO Auto-generated method stub
-		
+		stats.replace("Vitesse-base", i);
 	}
 
-
-
-
-	@Override
 	public void setSpecial(int i) {
-		// TODO Auto-generated method stub
-		
+		stats.replace("Spécial-base", i);
 	}
+	
+
 }

@@ -141,12 +141,18 @@ public class Pokedex implements IPokedex{
                     	baseStats.put(pokedata.get(0)[i], Integer.parseInt(s[i]));
                     }
                     int baseLvl=Integer.parseInt(s[15]);
-                    String evol=s[17];
+                    TreeMap<Integer,String> evolution=new TreeMap<Integer,String>();
+                    int i=Integer.parseInt(s[0]);
+                    ///On crée la TreeMap des évolutions de l'espèce
+                    while(Integer.parseInt(pokedata.get(i)[16])!=0) {  
+                    	evolution.put(Integer.parseInt(pokedata.get(i)[16]),pokedata.get(i)[17]); 
+                    	i++;
+                    }
                     types.add(s[13]);
                     if(s[14] != " ")
                     	types.add(s[14]);
                     // TODO Ajouter les capacites de l'espece
-                    Species esp=new Species(nomEspece, types, baseStats, baseLvl, evol, null);
+                    Species esp=new Species(nomEspece, types, baseStats, baseLvl, evolution, null);
                     return esp;
                 }
             } catch (NumberFormatException ignored) {
@@ -154,7 +160,7 @@ public class Pokedex implements IPokedex{
             }
         	return null;
 		}
-		//2-12 (stats) 15 (baselvl) 13-14 (types)
+		//cases CSV: 2-12 (stats),13-14 (types),15 (baselvl), 
 
 
 	@Override

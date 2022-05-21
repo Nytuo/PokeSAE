@@ -1,7 +1,11 @@
 
 package pokedex;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
+
+import pokemon.Species;
 
 public class TestPokedex {
     public static void main(String[] args) {
@@ -20,5 +24,6 @@ public class TestPokedex {
                 pokedex.searchPokemon(name);
             }
         }
+        
     }
 }
