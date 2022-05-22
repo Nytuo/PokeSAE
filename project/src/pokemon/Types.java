@@ -13,7 +13,7 @@ public final class Types implements interfaces.IType {
     private final String nom;
 
     /**
-     * Constructeur de la classe Types
+     * Constructeur de la classe Types.
      * @param nom String (Le nom du type).
      */
 
@@ -22,8 +22,8 @@ public final class Types implements interfaces.IType {
     }
 
     /**
-     * Retourne le nom du type
-     * @return String nom. (Le nom du type associé)
+     * Retourne le nom du type.
+     * @return String nom. (Le nom du type associé).
      */
     @Override
     public String getNom() {
