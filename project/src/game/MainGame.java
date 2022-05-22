@@ -1,29 +1,27 @@
 package game;
+import pokemon.*;
 
-import dresseur.Dresseur;
+import java.time.LocalTime;
+import java.util.TreeMap;
+
 import pokedex.Pokedex;
-import pokemon.Pokemon;
-
-import javax.swing.*;
 
 public class MainGame {
     public static void main(String[] args) {
-/*        // Create the game window
-        JFrame window = new JFrame();
-        window.setVisible(true);
-        window.setResizable(false);
-        window.setSize(800, 600);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setTitle("Pokemoune");*/
-
-        Pokedex pokedex = new Pokedex();
-/*
-        Dresseur dresseur = new Dresseur("Arnaud",1, pokedex.generatePokemon(6));
-*/
-   /*     for (Pokemon p : dresseur.pokemons  ) {
-            System.out.println(p.name_of_species);
-        }*/
-
-
+        /*Types[] types = new Types[2];
+        types[0] = new Types("Feu");
+        types[1] = new Types("Eau");
+        Stats stats = new Stats(100, 100, 100, 100, 100);
+        Capacite[] capacites = new Capacite[2];
+        Categorie[] cat = new Categorie[2];
+        cat[0] = new Categorie("Plante", false);
+        capacites[0] = new Capacite("Plante",types[0],cat[0],20,10,11);
+        Pokemon pokemon = new Pokemon("Bulbizarre", "Bulbizarre", types, stats, 1, new TreeMap<>(), capacites, 1, 0, stats, capacites, 1, stats);
+        System.out.println(pokemon.nameOfSpecies);
+        */
+        Pokedex pkdx=new Pokedex();
+        pkdx.searchPokemon(1);
+        Pokemon[] ranch=(Pokemon[])pkdx.engendreRanch();
+        ranch.toString();
     }
 }

@@ -1,7 +1,6 @@
 package pokemon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Objects;
 import java.util.TreeMap;
 
 
@@ -10,145 +9,146 @@ import interfaces.ICapacite;
 import interfaces.IEspece;
 import interfaces.IPokemon;
 import interfaces.IStat;
-import pokedex.Pokedex;
 
-public class Pokemon extends Species implements IPokemon, IStat {
-    private int ID;
-    private static String name;
+public class Pokemon extends Species implements IPokemon {
+    private final int ID;
+    private String name;
     private int level;
     private double xp;
-    private TreeMap<String,Integer> stats;
-    /*private HashMap<String, HashMap<String, String>> known_capacities;*/
-    /*private static int pvMax;*/
-    private TreeMap<String,Integer> EV;
-    private static ArrayList<Integer> DV;
+    private Stats stats;
+    private Capacite[] known_capacities;
+    private TreeMap<String, Integer> EV;
+    private static TreeMap<String, Integer> DV;
 
+    private int PVActuel;
 
-    public Pokemon(String name_of_species, ArrayList<String> types, TreeMap<String,Integer> baseStats, int baseLevel, TreeMap<Integer,String> evolution, ArrayList<String> capacities, int level, double xp, HashMap<String,Integer> stats, /*HashMap<String,HashMap<String, String>> capacities1,*/ String name, int ID) {
-        super(name_of_species, types, baseStats, baseLevel, evolution, capacities);
+    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, double xp, Stats stats, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
+        super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
         this.level = baseLevel;
         this.xp = xp;
-        this.stats=baseStats; //pv,force,defence,special,vitesse
-        /*this.known_capacities = capacities1;*/
-        Pokemon.name = name;
+        this.known_capacities = capacitiesPoke;
+        this.stats = stats;
+        this.name = name;
         this.ID = ID;
-        /*Pokemon.pvMax = stats.get("PV");*/
-        this.EV.putAll(baseStats);
-        this.EV.replaceAll((k,v) -> 0);
+        this.PVActuel = this.stats.getPV();
+        this.EV = new TreeMap<>();
+        EV.put("PV", 0);
+        EV.put("Force", 0);
+        EV.put("Defense", 0);
+        EV.put("Special", 0);
+        EV.put("Vitesse", 0);
+        DV = new TreeMap<>();
+        DV.put("Force", (int) (Math.random() * (15)));
+        DV.put("Defense", (int) (Math.random() * (15)));
+        DV.put("Special", (int) (Math.random() * (15)));
+        DV.put("Vitesse", (int) (Math.random() * (15)));
+        DV.put("PV", toBit(DV.get("Force"), DV.get("Defense"), DV.get("Vitesse"), DV.get("Special")));
     }
-    
+
+    public static int toBit(int n1, int n2, int n3, int n4) {
+        String s = String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n1)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n2))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n3)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n4)))));
+        return Integer.parseInt(s, 2);
+    }
+    public void setNom(String name) {
+        this.name = name;
+    }
+
+
+    public static int getTheLastDigit(int n) {
+        return n % 10;
+    }
+
     public IStat getStat() {
-		return null;
+        return this.stats;
     }
-    
+
+    public TreeMap<String, Integer> getDV() {
+        return DV;
+    }
+
+    public TreeMap<String, Integer> getEV() {
+        return EV;
+    }
+
+    public void setEV(String Key, int Value) {
+        this.EV.replace(Key, Value);
+    }
+
     public double getExperience() {
-		return xp;
-    	
+        return xp;
+
     }
-    
+
     public int getNiveau() {
-		return level;
-    	
+        return level;
+
     }
-	public int getId() {
-		return ID;
-		
-	}
-	public String getNom() {
-		return name;
-		
-	}
-	public double getPourcentagePV() {
-		return stats.get("PV");
-	}
-	
-	public IEspece getEspece() {
-		return null;
-		
-	}
-	
-	public void vaMuterEn(IEspece esp) {
-		new Pokemon(this.evolution.get(this.level),
-	}
-	
-	public ICapacite[] getCapacitesApprises() {
-		return null;
-	}
-	
-	public void apprendCapacites(ICapacite[] caps) {
-		
-	}
-	
-	public void remplaceCapacite(int i, ICapacite cap) throws Exception {
-		
-	}
-	
-	public void gagneExperienceDe(IPokemon pok) {
-		this.xp+=(1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp())/7;
-	}
-	
-	public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
-		this.stats.get(atk) .calculeDommage(pok, pok)
-	}
-	
-	public boolean estEvanoui() {
-		return this.stats.get("PV") == 0;
-		
-	}
-	
-	public boolean aChangeNiveau() {
-		return this.xp > (0.8*Math.pow(this.level,3)); //Formule: courbe d'experience
-	}
-	
-	public boolean peutMuter() {
-		return this.evolution.containsKey(this.level) && (this.evolution.get(this.level) != this.nameOfSpecies);
-	}
-	
-	public void soigne() {
-		this.stats.replace("PV", )
-	}
 
-	public int getPV() {
-		return stats.get("PV-base");
-	}
+    public int getId() {
+        return ID;
 
-	public int getForce() {
-		return stats.get("Force-base");
-	}
+    }
 
-	public int getDefense() {
-		return stats.get("Défense-base");
-	}
+    public String getNom() {
+        return name;
 
-	public int getSpecial() {
-		return stats.get("Spécial-base");
-	}
+    }
 
-	public int getVitesse() {
-		return stats.get("Vitesse-base");
-	}
+    public double getPourcentagePV() {
+        return ((PVActuel / stats.getPV()) * 100);
+    }
 
-	
-	
-	public void setPV(int i) {
-		stats.replace("PV-base", i);
-	}
+    public IEspece getEspece() {
+        return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities, (int) this.xp, (Stats) this.getGainsStat());
+    }
 
-	public void setForce(int i) {
-		stats.replace("Force-base", i);
-	}
+    public void vaMuterEn(IEspece esp) {
+        this.nameOfSpecies = esp.getNom();
+        this.types = (Types[]) esp.getTypes();
+        this.baseStats = (Stats) esp.getBaseStat();
+        this.startLevel = this.level;
+        this.capacities = (Capacite[]) esp.getCapSet();
+        this.gainsStat = (Stats) esp.getGainsStat();
+    }
 
-	public void setDefense(int i) {
-		stats.replace("Défense-base", i);
-	}
+    public ICapacite[] getCapacitesApprises() {
+        return this.known_capacities;
+    }
 
-	public void setVitesse(int i) {
-		stats.replace("Vitesse-base", i);
-	}
+    public void apprendCapacites(ICapacite[] caps) {
+        this.known_capacities = (Capacite[]) caps;
+    }
 
-	public void setSpecial(int i) {
-		stats.replace("Spécial-base", i);
-	}
-	
+    public void remplaceCapacite(int i, ICapacite cap) throws Exception {
+        try {
+            this.known_capacities[i] = (Capacite) cap;
+        } catch (Exception e) {
+            throw new Exception("Erreur de remplacement de capacité");
+        }
+    }
+
+    public void gagneExperienceDe(IPokemon pok) {
+        this.xp += (1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp()) / 7;
+    }
+
+    public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
+        this.PVActuel -= atk.calculeDommage(pok, this);
+    }
+
+    public boolean estEvanoui() {
+        return this.PVActuel <= 0;
+    }
+
+    public boolean aChangeNiveau() {
+        return this.xp > (0.8 * Math.pow(this.level, 3)); //Formule: courbe d'experience
+    }
+
+    public boolean peutMuter() {
+        return this.evolution.containsKey(this.level) && (!Objects.equals(this.evolution.get(this.level), this.nameOfSpecies));
+    }
+
+    public void soigne() {
+        this.PVActuel = this.stats.getPV();
+    }
 
 }
