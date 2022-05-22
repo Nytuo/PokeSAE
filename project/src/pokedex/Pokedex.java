@@ -153,7 +153,7 @@ public class Pokedex implements IPokedex {
     		UUID id=UUID.randomUUID();
     		String idStr=""+id;
     		//création du ranch
-    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),esp.baseStats /* pas bonnes stats*/,capacitePoke, Integer.parseInt(idStr),esp.gainsStat);
+    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),capacitePoke, Integer.parseInt(idStr),esp.gainsStat);
     	}
     	return ranch;
     }
@@ -253,15 +253,49 @@ public class Pokedex implements IPokedex {
 
     @Override
     public ICapacite getCapacite(String nom) {
-        //TODO Necessite de lire le fichier CSV
-
+        for (String[] s : capacitedata) {
+            try {
+                if (s[0].equalsIgnoreCase(nom)) {
+                	
+                	Types type=new Types(s[6]);
+                	Categorie categorie;
+					if(s[5].equals("Physique"))
+                		categorie=new Categorie(s[5], false);
+                	else
+                		categorie=new Categorie(s[5], true);
+                	
+                    //Création capacite
+                    Capacite cap = new Capacite(s[0], type, categorie, Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
+                    return cap;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
         return null;
     }
 
 
     @Override
     public ICapacite getCapacite(int n) {
-        // TODO Necessite de lire le fichier CSV
+        for (String[] s : capacitedata) {
+            try {
+                if (Integer.parseInt(s[4]) == n) {
+                	//Creation type
+                	Types type=new Types(s[6]);
+                	//Creation categorie
+                	Categorie categorie;
+					if(s[5].equals("Physique"))
+                		categorie=new Categorie(s[5], false);
+                	else
+                		categorie=new Categorie(s[5], true);
+                	
+                    //Création capacite
+                    Capacite cap = new Capacite(s[0], type, categorie, Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
+                    return cap;
+                }
+            } catch (NumberFormatException ignored) {
+            }
+        }
         return null;
     }
 }
