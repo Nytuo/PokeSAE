@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"pokedex","l":"Pokedex.EnumCapacite"},{"p":"pokedex","l":"Pokedex"}];updateSearchResults();

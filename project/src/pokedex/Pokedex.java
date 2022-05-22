@@ -4,6 +4,7 @@ import pokemon.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -16,10 +17,18 @@ import interfaces.IPokedex;
 import interfaces.IPokemon;
 import interfaces.IType;
 
+/**
+ * @author testa
+ * La classe Pokedex permet au dresseur de se documenter sur chaque espèce de Pokémon et chaque attaque, et aussi d'établir des stratégies
+ * Elle implémente l'interface: IPokedex
+ */
 public class Pokedex implements IPokedex {
     private final ArrayList<String[]> pokedata = new ArrayList<String[]>();
     private final ArrayList<String[]> capacitedata = new ArrayList<String[]>();
 
+    /**
+     * Constructeur de la classe Pokedex qui va associer aux attributs le chemin des CSV
+     */
     public Pokedex() {
         String pokeFile = new File("external/listePokemon1G.csv").getAbsolutePath();
         try {
@@ -58,6 +67,10 @@ public class Pokedex implements IPokedex {
         return sb.toString();
     }
 
+    /**
+     * Permet de rechercher des informations sur un Pokémon à partir de son nom
+     * @param name	Le nom du Pokémon
+     */
     public void searchPokemon(String name) {
         System.out.println("Searching for " + name + "...");
         for (String[] s : pokedata) {
@@ -75,6 +88,10 @@ public class Pokedex implements IPokedex {
         System.out.println("Pokemon not found");
     }
 
+    /**
+     * Permet de rechercher des informations sur un Pokémon à partir de son numéro
+     * @param id	Le numéro du Pokémon
+     */
     public void searchPokemon(int id) {
         System.out.println("Searching for " + id + "...");
         for (String[] s : pokedata) {
@@ -94,6 +111,11 @@ public class Pokedex implements IPokedex {
     }
 
 
+    /**
+     * Donne le nom du Pokémon correspondant
+     * @param id	Le numéro du Pokémon
+     * @return le nom du Pokémon correspondant
+     */
     private String getPokemonById(int id) {
         for (String[] s : pokedata) {
             if (Integer.parseInt(s[0]) == (id)) {
@@ -103,6 +125,11 @@ public class Pokedex implements IPokedex {
         return null;
     }
 
+    /**
+     * Donne les évolutions du Pokémon.
+     * @param id	Le numéro du Pokémon
+     * @return un tableau des évolutions du Pokémon.
+     */
     private String[] getEvolution(int id) {
         id++;
         for (String[] s : pokedata) {
@@ -134,6 +161,10 @@ public class Pokedex implements IPokedex {
     }
 
 
+    /**
+     * Crée les 6 Pokémons qui seront attribués à un dresseur par la suite.
+     * @return un tableau de Pokémons.
+     */
     @Override
     public IPokemon[] engendreRanch() {
     	ArrayList<String> pokeLvl1=new ArrayList<String>();
@@ -144,21 +175,22 @@ public class Pokedex implements IPokedex {
     			pokeLvl1.add(s[1]);
     	}
     	for(int i=0;i<6;i++) {
-    		esp=(Species)getInfo(pokeLvl1.get((int) (Math.random()*(pokeLvl1.size()))));
+    		esp=(Species)getInfo(pokeLvl1.get((int) (Math.random()*pokeLvl1.size())));
     		//Capacites au hasard parmi les capacites dispo de l'espece
     		Capacite[] capacitePoke=new Capacite[4];
     		for(int j=0;j<4;j++)
-    			capacitePoke[i]=esp.capacities[(int)(Math.random()*(esp.capacities.length))];
-    		//ID aleatoire
-    		UUID id=UUID.randomUUID();
-    		String idStr=""+id;
+    			capacitePoke[j]=esp.capacities[(int)(Math.random()*(esp.capacities.length))];
     		//création du ranch
-    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),capacitePoke, Integer.parseInt(idStr),esp.gainsStat);
-    	}
+    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),capacitePoke, Integer.parseInt(LocalTime.now().toString().replaceAll("[:][-][.]*","").substring(0,8)),esp.gainsStat);    	}
     	return ranch;
     }
 
 
+    /**
+     * Donne un objet Species d'un Pokémon grâce à son nom.
+     * @param nomEspece.
+     * @return un objet Species.
+     */
     @Override
     public IEspece getInfo(String nomEspece) {
         Stats baseStats;
@@ -210,12 +242,20 @@ public class Pokedex implements IPokedex {
     }
     //cases CSV: 2-12 (stats),13-14 (types),15 (baselvl),
 
+    /**
+     * Donne l'efficacité d'un type sur un autre.
+     * @return la valeur de l'efficacité.
+     */
     @Override
     public Double getEfficacite(IType attaque, IType defense) {
         HashMap<String, String[]> csv = initializeFromCSV();
         return Double.valueOf(csv.get(attaque.getNom())[EnumCapacite.valueOf(defense.getNom()).getId()]);
     }
 
+    /**
+     * Initialise une HashMap reprennant le CSV.
+     * @return une HashMap reprennant le CSV.
+     */
     public HashMap<String, String[]> initializeFromCSV() {
         HashMap<String, String[]> lines = new HashMap<>();
         try {
@@ -235,6 +275,10 @@ public class Pokedex implements IPokedex {
         return lines;
     }
 
+    /**
+     * Permet d'associer chaque type à un chiffre pour l'indexer.
+     * 
+     */
     public enum EnumCapacite {
 
         Combat(1), Dragon(2), Eau(3), Electrique(4), Feu(5), Glace(6), Insecte(7), Normal(8), Plante(9), Poison(10), Psy(11), Roche(12), Sol(13), Spectre(14), Vol(15);
@@ -251,6 +295,10 @@ public class Pokedex implements IPokedex {
     }
 
 
+    /**
+     * Donne la capacité à partir de son nom.
+     * @return un objet Capacite correspondant.
+     */
     @Override
     public ICapacite getCapacite(String nom) {
         for (String[] s : capacitedata) {
@@ -275,6 +323,10 @@ public class Pokedex implements IPokedex {
     }
 
 
+    /**
+     * Donne la capacité à partir de son numéro.
+     * @return un objet Capacite correspondant.
+     */
     @Override
     public ICapacite getCapacite(int n) {
         for (String[] s : capacitedata) {
