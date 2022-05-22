@@ -30,7 +30,6 @@ public class Pokemon extends Species implements IPokemon {
         this.known_capacities = capacitiesPoke;
         this.name = name;
         this.ID = ID;
-        this.PVActuel = this.stats.getPV();
         this.EV = new TreeMap<>();
         EV.put("PV", 0);
         EV.put("Force", 0);
@@ -48,6 +47,7 @@ public class Pokemon extends Species implements IPokemon {
         int defense = ((((2 * (this.baseStats.getDefense() + this.getDV().get("Defense")) + this.getEV().get("Defense") / 4) * this.getNiveau()) / 100) + 5);
         int special = ((((2 * (this.baseStats.getSpecial() + this.getDV().get("Special")) + this.getEV().get("Special") / 4) * this.getNiveau()) / 100) + 5);
         int vitesse = ((((2 * (this.baseStats.getVitesse() + this.getDV().get("Vitesse")) + this.getEV().get("Vitesse") / 4) * this.getNiveau()) / 100) + 5);
+        this.PVActuel = PV;
         this.stats = new Stats(PV, force, defense, special, vitesse);
     }
 
