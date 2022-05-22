@@ -12,7 +12,7 @@ import interfaces.IStat;
 
 public class Pokemon extends Species implements IPokemon {
     private final int ID;
-    private static String name;
+    private String name;
     private int level;
     private double xp;
     private Stats stats;
@@ -22,13 +22,13 @@ public class Pokemon extends Species implements IPokemon {
 
     private int PVActuel;
 
-    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
+    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, double xp, Stats stats, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
         super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
         this.level = baseLevel;
         this.xp = xp;
         this.known_capacities = capacitiesPoke;
         this.stats = stats;
-        Pokemon.name = name;
+        this.name = name;
         this.ID = ID;
         this.PVActuel = this.stats.getPV();
         this.EV = new TreeMap<>();
@@ -49,6 +49,10 @@ public class Pokemon extends Species implements IPokemon {
         String s = String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n1)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n2))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n3)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n4)))));
         return Integer.parseInt(s, 2);
     }
+    public void setNom(String name) {
+        this.name = name;
+    }
+
 
     public static int getTheLastDigit(int n) {
         return n % 10;
@@ -132,7 +136,18 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public boolean estEvanoui() {
-        return this.PVActuel <= 0;
+        boolean evanoui = false;
+        int ppRestant=0;
+        for (Capacite c: this.known_capacities) {
+            ppRestant = c.getPP();
+        }
+        if (ppRestant == 0){
+            evanoui = true;
+        }
+        if (this.PVActuel <= 0) {
+            evanoui = true;
+        }
+        return evanoui;
     }
 
     public boolean aChangeNiveau() {
