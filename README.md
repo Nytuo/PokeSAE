@@ -3,10 +3,10 @@
 
 ## Membres de l'équipe
 
-- BEUX Arnaud
-- TESTA Ethan
-- GRUAU Elyan
-- MAHE Jules
+- <a href="https://github.com/Nytuo">BEUX Arnaud</a>
+- <a href="https://github.com/Aehnt">TESTA Ethan</a>
+- <a href="https://github.com/Elyan-Gruau">GRUAU Elyan</a>
+- <a href="https://github.com/ZaY-eZ">MAHE Jules</a>
 
 
 ## Présentation de la SAE
