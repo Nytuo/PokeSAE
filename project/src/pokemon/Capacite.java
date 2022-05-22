@@ -14,6 +14,11 @@ import pokedex.Pokedex;
 public class Capacite implements interfaces.ICapacite {
 
     /**
+     * Liste des capacités qui font un One Hit Kill.
+     */
+    List<String> OHKO = Arrays.asList("Abîme", "Empal'Korne", "Guillotine"); //Liste des capacités qui infligent des dommages OHKO
+
+    /**
      * Le nom de la capacité.
      */
     String nom;
@@ -73,6 +78,7 @@ public class Capacite implements interfaces.ICapacite {
 
     /**
      * Donne le nom de la capacité.
+     *
      * @return Le nom de la capacité.
      */
     @Override
@@ -82,6 +88,7 @@ public class Capacite implements interfaces.ICapacite {
 
     /**
      * Donne la précision de la capacité.
+     *
      * @return La précision de la capacité.
      */
     @Override
@@ -91,6 +98,7 @@ public class Capacite implements interfaces.ICapacite {
 
     /**
      * Donne la puissance de la capacité.
+     *
      * @return La puissance de la capacité.
      */
     @Override
@@ -100,6 +108,7 @@ public class Capacite implements interfaces.ICapacite {
 
     /**
      * Donne le nombre de PP restant de la capacité.
+     *
      * @return Le nombre de PP restant de la capacité.
      */
     @Override
@@ -117,6 +126,7 @@ public class Capacite implements interfaces.ICapacite {
 
     /**
      * Donne la catégorie de la capacité.
+     *
      * @return la categorie de la capacité.
      */
     @Override
@@ -126,6 +136,7 @@ public class Capacite implements interfaces.ICapacite {
 
     /**
      * Donne le type de la capacité.
+     *
      * @return Le type de la capacité.
      */
     @Override
@@ -143,7 +154,6 @@ public class Capacite implements interfaces.ICapacite {
     @Override
     public int calculeDommage(interfaces.IPokemon lanceur, interfaces.IPokemon receveur) {
         // Gestion des capacités qui infligent des dommages OHKO (On Hit Kill)
-        List<String> OHKO = Arrays.asList("Abîme", "Empal'Korne", "Guillotine"); //Liste des capacités qui infligent des dommages OHKO
         if (OHKO.contains(this.categorie.getNom())) {
             return receveur.getStat().getPV();
         }

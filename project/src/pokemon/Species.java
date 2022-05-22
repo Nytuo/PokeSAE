@@ -17,6 +17,7 @@ public class Species implements IEspece{
     public Capacite[] capacities;
     private final int baseXp;
 
+
     public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer,String> evolution, Capacite[] capacities, int xp, Stats gainsStat) {
         this.nameOfSpecies = name_of_species;
         this.types = types;

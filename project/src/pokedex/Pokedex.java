@@ -24,6 +24,7 @@ public class Pokedex implements IPokedex {
         String pokeFile = new File("external/listePokemon1G.csv").getAbsolutePath();
         try {
             Scanner sc = new Scanner(new File(pokeFile));
+
             sc.useDelimiter(",");
             while (sc.hasNext()) {
                 pokedata.add(sc.nextLine().split(";"));
@@ -106,8 +107,6 @@ public class Pokedex implements IPokedex {
         id++;
         for (String[] s : pokedata) {
             try {
-
-
                 if (Integer.parseInt(s[0]) == (id)) {
                     if (s[10].equals("1")) {
                         String[] evolutions = new String[2];
@@ -210,7 +209,6 @@ public class Pokedex implements IPokedex {
         return null;
     }
     //cases CSV: 2-12 (stats),13-14 (types),15 (baselvl),
-
 
     @Override
     public Double getEfficacite(IType attaque, IType defense) {
