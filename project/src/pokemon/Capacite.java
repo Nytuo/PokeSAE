@@ -12,6 +12,7 @@ import pokedex.Pokedex;
  * Elle implémente les interfaces : ICapacite, IEspece et IType.
  */
 public class Capacite implements interfaces.ICapacite {
+
     /**
      * Liste des capacités qui font un One Hit Kill.
      */
@@ -72,6 +73,7 @@ public class Capacite implements interfaces.ICapacite {
         this.PPmax = PP;
 
     }
+
 
 
     /**
@@ -210,11 +212,7 @@ public class Capacite implements interfaces.ICapacite {
      */
     @Override
     public void utilise() {
-        if (this.OHKO.contains(this.categorie.getNom())) {
-            this.PP -= 5;
-        } else {
-            this.PP--;
-        }
+        this.PP--;
     }
 
 }

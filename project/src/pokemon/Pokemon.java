@@ -22,6 +22,7 @@ public class Pokemon extends Species implements IPokemon {
 
     private int PVActuel;
 
+
     public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, double xp, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
         super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
         this.level = baseLevel;
@@ -96,6 +97,7 @@ public class Pokemon extends Species implements IPokemon {
 
     public String getNom() {
         return name;
+
 
     }
 

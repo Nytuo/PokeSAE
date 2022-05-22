@@ -11,12 +11,14 @@ public class Species implements IEspece{
     public String nameOfSpecies;
     public Types[] types;
     public Stats baseStats;
+    public Stats gainsStat;
     public int startLevel;
     public TreeMap<Integer,String> evolution;
     public Capacite[] capacities;
     private final int baseXp;
 
-    public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer,String> evolution, Capacite[] capacities, int xp) {
+
+    public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer,String> evolution, Capacite[] capacities, int xp, Stats gainsStat) {
         this.nameOfSpecies = name_of_species;
         this.types = types;
         this.baseStats = baseStats;
@@ -24,6 +26,7 @@ public class Species implements IEspece{
         this.evolution = evolution;
         this.capacities = capacities;
         this.baseXp = xp;
+        this.gainsStat=gainsStat;
     }
 
     public IStat getBaseStat() { //stats de base
@@ -44,7 +47,7 @@ public class Species implements IEspece{
     }
 
     public IStat getGainsStat() { //stats correspondant aux EV
-        return this.getBaseStat() ;
+        return this.gainsStat;
     }
 
     public ICapacite[] getCapSet() { //ensemble des capacités disponibles pour cette espèce
@@ -52,10 +55,10 @@ public class Species implements IEspece{
     }
 
     public IEspece getEvolution(int niveau) { //renvoie null si aucune evolution possible
-        if(this.evolution.get(niveau).isBlank())
-            return null;
+        if(this.evolution.containsKey(niveau))
+        	return new Pokedex().getInfo(this.evolution.get(niveau));
         else
-            return new Pokedex().getInfo(this.evolution.get(niveau));
+            return null;
     }
 
     public IType[] getTypes() { //une espece de pokemon peut avoir un ou deux types

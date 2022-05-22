@@ -16,6 +16,7 @@ public final class Types implements interfaces.IType {
      * Constructeur de la classe Types
      * @param nom String (Le nom du type).
      */
+
     public Types(String nom) {
         this.nom = nom;
     }
