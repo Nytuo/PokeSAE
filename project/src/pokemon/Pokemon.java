@@ -22,12 +22,11 @@ public class Pokemon extends Species implements IPokemon {
 
     private int PVActuel;
 
-    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, double xp, Stats stats, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
+    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, double xp, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
         super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
         this.level = baseLevel;
         this.xp = xp;
         this.known_capacities = capacitiesPoke;
-        this.stats = stats;
         this.name = name;
         this.ID = ID;
         this.PVActuel = this.stats.getPV();
@@ -43,19 +42,25 @@ public class Pokemon extends Species implements IPokemon {
         DV.put("Special", (int) (Math.random() * (15)));
         DV.put("Vitesse", (int) (Math.random() * (15)));
         DV.put("PV", toBit(DV.get("Force"), DV.get("Defense"), DV.get("Vitesse"), DV.get("Special")));
+        int PV = ((((2 * (this.baseStats.getPV() + this.getDV().get("PV")) + this.getEV().get("PV") / 4) * this.getNiveau()) / 100) + this.getNiveau() + 10);
+        int force = ((((2 * (this.baseStats.getForce() + this.getDV().get("Force")) + this.getEV().get("Force") / 4) * this.getNiveau()) / 100) + 5);
+        int defense = ((((2 * (this.baseStats.getDefense() + this.getDV().get("Defense")) + this.getEV().get("Defense") / 4) * this.getNiveau()) / 100) + 5);
+        int special = ((((2 * (this.baseStats.getSpecial() + this.getDV().get("Special")) + this.getEV().get("Special") / 4) * this.getNiveau()) / 100) + 5);
+        int vitesse = ((((2 * (this.baseStats.getVitesse() + this.getDV().get("Vitesse")) + this.getEV().get("Vitesse") / 4) * this.getNiveau()) / 100) + 5);
+        this.stats = new Stats(PV, force, defense, special, vitesse);
     }
 
     public static int toBit(int n1, int n2, int n3, int n4) {
         String s = String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n1)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n2))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n3)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n4)))));
         return Integer.parseInt(s, 2);
     }
-    public void setNom(String name) {
-        this.name = name;
-    }
-
 
     public static int getTheLastDigit(int n) {
         return n % 10;
+    }
+
+    public void setNom(String name) {
+        this.name = name;
     }
 
     public IStat getStat() {
@@ -137,11 +142,11 @@ public class Pokemon extends Species implements IPokemon {
 
     public boolean estEvanoui() {
         boolean evanoui = false;
-        int ppRestant=0;
-        for (Capacite c: this.known_capacities) {
+        int ppRestant = 0;
+        for (Capacite c : this.known_capacities) {
             ppRestant = c.getPP();
         }
-        if (ppRestant == 0){
+        if (ppRestant == 0) {
             evanoui = true;
         }
         if (this.PVActuel <= 0) {
@@ -152,6 +157,11 @@ public class Pokemon extends Species implements IPokemon {
 
     public boolean aChangeNiveau() {
         return this.xp > (0.8 * Math.pow(this.level, 3)); //Formule: courbe d'experience
+    }
+
+    public void levelUp() {
+        this.level++;
+        this.stats.setPV((((2 * (this.stats.getPV() + this.getDV().get("PV")) + this.getEV().get("PV") / 4) * this.getNiveau()) / 100) + this.getNiveau() + 10);
     }
 
     public boolean peutMuter() {
