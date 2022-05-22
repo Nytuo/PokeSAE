@@ -1,6 +1,5 @@
 package pokemon;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.TreeMap;
 
@@ -14,26 +13,61 @@ import interfaces.IStat;
 public class Pokemon extends Species implements IPokemon {
     private final int ID;
     private static String name;
-    private final int level;
+    private int level;
     private double xp;
-    private final Stats stats;
+    private Stats stats;
     private Capacite[] known_capacities;
     private TreeMap<String, Integer> EV;
-    private static ArrayList<Integer> DV;
+    private static TreeMap<String, Integer> DV;
 
+    private int PVActuel;
 
-    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID) {
-        super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp);
+    public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, int level, double xp, Stats stats, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
+        super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
         this.level = baseLevel;
         this.xp = xp;
         this.known_capacities = capacitiesPoke;
         this.stats = stats;
         Pokemon.name = name;
         this.ID = ID;
+        this.PVActuel = this.stats.getPV();
+        this.EV = new TreeMap<>();
+        EV.put("PV", 0);
+        EV.put("Force", 0);
+        EV.put("Defense", 0);
+        EV.put("Special", 0);
+        EV.put("Vitesse", 0);
+        DV = new TreeMap<>();
+        DV.put("Force", (int) (Math.random() * (15)));
+        DV.put("Defense", (int) (Math.random() * (15)));
+        DV.put("Special", (int) (Math.random() * (15)));
+        DV.put("Vitesse", (int) (Math.random() * (15)));
+        DV.put("PV", toBit(DV.get("Force"), DV.get("Defense"), DV.get("Vitesse"), DV.get("Special")));
+    }
+
+    public static int toBit(int n1, int n2, int n3, int n4) {
+        String s = String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n1)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n2))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n3)))) + String.valueOf(getTheLastDigit(Integer.parseInt(Integer.toBinaryString(n4)))));
+        return Integer.parseInt(s, 2);
+    }
+
+    public static int getTheLastDigit(int n) {
+        return n % 10;
     }
 
     public IStat getStat() {
         return this.stats;
+    }
+
+    public TreeMap<String, Integer> getDV() {
+        return DV;
+    }
+
+    public TreeMap<String, Integer> getEV() {
+        return EV;
+    }
+
+    public void setEV(String Key, int Value) {
+        this.EV.replace(Key, Value);
     }
 
     public double getExperience() {
@@ -57,15 +91,20 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public double getPourcentagePV() {
-        return ((stats.getPV() / baseStats.getPV()) * 100);
+        return ((PVActuel / stats.getPV()) * 100);
     }
 
     public IEspece getEspece() {
-        return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities, (int) this.xp);
+        return new Species(this.nameOfSpecies, this.types, this.baseStats, this.startLevel, this.evolution, this.capacities, (int) this.xp, (Stats) this.getGainsStat());
     }
 
     public void vaMuterEn(IEspece esp) {
-        new Pokemon(esp.getNom(), this.getNom(), this.types, (Stats) esp.getBaseStat(), this.level, this.evolution, this.capacities, this.level, this.xp, (Stats) esp.getBaseStat(), (Capacite[]) esp.getCapSet(), this.ID);
+        this.nameOfSpecies = esp.getNom();
+        this.types = (Types[]) esp.getTypes();
+        this.baseStats = (Stats) esp.getBaseStat();
+        this.startLevel = this.level;
+        this.capacities = (Capacite[]) esp.getCapSet();
+        this.gainsStat = (Stats) esp.getGainsStat();
     }
 
     public ICapacite[] getCapacitesApprises() {
@@ -89,12 +128,11 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
-        this.stats.setPV(this.stats.getPV() - atk.calculeDommage(pok, this));
+        this.PVActuel -= atk.calculeDommage(pok, this);
     }
 
     public boolean estEvanoui() {
-        return this.stats.getPV() <= 0;
-
+        return this.PVActuel <= 0;
     }
 
     public boolean aChangeNiveau() {
@@ -106,7 +144,7 @@ public class Pokemon extends Species implements IPokemon {
     }
 
     public void soigne() {
-        this.stats.setPV(this.baseStats.getPV());
+        this.PVActuel = this.stats.getPV();
     }
 
 }
