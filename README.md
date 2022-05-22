@@ -25,7 +25,7 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 
 
 ### Rendu 2
-- Capacite, Pokedex : Arnaud
+- Capacite, Pokedex, Pokemon : Arnaud
 - Pokemon, Pokedex : Ethan
 - Readme, contributing, PDF : Elyan 
 - Aide de classes, MD : Jules
