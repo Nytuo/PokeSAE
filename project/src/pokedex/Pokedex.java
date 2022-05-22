@@ -30,7 +30,7 @@ public class Pokedex implements IPokedex {
      * Constructeur de la classe Pokedex qui va associer aux attributs le chemin des CSV
      */
     public Pokedex() {
-        String pokeFile = new File("external/listePokemon1G.csv").getAbsolutePath();
+        String pokeFile = new File("project/external/listePokemon1G.csv").getAbsolutePath();
         try {
             Scanner sc = new Scanner(new File(pokeFile));
 
@@ -43,7 +43,7 @@ public class Pokedex implements IPokedex {
             System.out.println("File not found");
         }
         
-        String capaciteFile = new File("external/listeCapacites.csv").getAbsolutePath();
+        String capaciteFile = new File("project/external/listeCapacites.csv").getAbsolutePath();
         try {
             Scanner sc = new Scanner(new File(capaciteFile));
             sc.useDelimiter(",");
@@ -181,7 +181,7 @@ public class Pokedex implements IPokedex {
     		for(int j=0;j<4;j++)
     			capacitePoke[j]=esp.capacities[(int)(Math.random()*(esp.capacities.length))];
     		//création du ranch
-    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),capacitePoke, Integer.parseInt(LocalTime.now().toString().replaceAll("[:][-][.]*","").substring(0,8)),esp.gainsStat);    	}
+    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),capacitePoke, Integer.parseInt(LocalTime.now().toString().replaceAll("[:]*[-]*[.]*","").substring(0,8)),esp.gainsStat);    	}
     	return ranch;
     }
 
@@ -260,7 +260,7 @@ public class Pokedex implements IPokedex {
         HashMap<String, String[]> lines = new HashMap<>();
         try {
 
-            String file = String.valueOf(new File("external/efficacites.csv"));
+            String file = String.valueOf(new File("project/external/efficacites.csv"));
             Scanner sc = new Scanner(new File(file));
             sc.useDelimiter(";");
             sc.nextLine();
