@@ -2,6 +2,9 @@ package pokemon;
 
 /**
  * @author Arnaud BEUX
+ **/
+
+/**
  * Une classe qui permet de créer un type pour un Pokemon ou une capacité.
  * Exemple : Plante, Feu, Glace, etc...
  */
@@ -14,6 +17,7 @@ public final class Types implements interfaces.IType {
 
     /**
      * Constructeur de la classe Types.
+     *
      * @param nom String (Le nom du type).
      */
 
@@ -23,6 +27,7 @@ public final class Types implements interfaces.IType {
 
     /**
      * Retourne le nom du type.
+     *
      * @return String nom. (Le nom du type associé).
      */
     @Override

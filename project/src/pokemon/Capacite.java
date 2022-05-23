@@ -1,3 +1,7 @@
+/**
+ * @author BEUX Arnaud
+ */
+
 package pokemon;
 
 import java.util.*;

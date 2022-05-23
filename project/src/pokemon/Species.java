@@ -1,6 +1,7 @@
 package pokemon;
 
 import java.util.TreeMap;
+
 import interfaces.ICapacite;
 import interfaces.IEspece;
 import interfaces.IStat;
@@ -9,10 +10,13 @@ import pokedex.Pokedex;
 
 /**
  * @author testa/beux
+ **/
+
+/**
  * La classe Species représente l'espèce d'un Pokémon
  * Elle implémente l'interface IEspece
  */
-public class Species implements IEspece{
+public class Species implements IEspece {
     /**
      * Nom de l'espèce
      */
@@ -36,7 +40,7 @@ public class Species implements IEspece{
     /**
      * TreeMap des évolutions de cette espèce, où la clé correspond au niveau de l'évolution.
      */
-    public TreeMap<Integer,String> evolution;
+    public TreeMap<Integer, String> evolution;
     /**
      * Tableau des capacités qui peuvent être enseignées à cette espèce.
      */
@@ -49,6 +53,7 @@ public class Species implements IEspece{
 
     /**
      * Constructeur de la classe Species qui insert dans les variables les valeurs par défaut.
+     *
      * @param name_of_species
      * @param types
      * @param baseStats
@@ -58,7 +63,7 @@ public class Species implements IEspece{
      * @param xp
      * @param gainsStat
      */
-    public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer,String> evolution, Capacite[] capacities, int xp, Stats gainsStat) {
+    public Species(String name_of_species, Types[] types, Stats baseStats, int start_level, TreeMap<Integer, String> evolution, Capacite[] capacities, int xp, Stats gainsStat) {
         this.nameOfSpecies = name_of_species;
         this.types = types;
         this.baseStats = baseStats;
@@ -66,11 +71,12 @@ public class Species implements IEspece{
         this.evolution = evolution;
         this.capacities = capacities;
         this.baseXp = xp;
-        this.gainsStat=gainsStat;
+        this.gainsStat = gainsStat;
     }
 
     /**
      * Donne les stats de base de l'espèce.
+     *
      * @return un objet Stat correspondant aux stats de base de l'espèce.
      */
     public IStat getBaseStat() { //stats de base
@@ -80,6 +86,7 @@ public class Species implements IEspece{
 
     /**
      * Donne le nom de l'espèce.
+     *
      * @return le nom de l'espèce.
      */
     public String getNom() {
@@ -88,6 +95,7 @@ public class Species implements IEspece{
 
     /**
      * Donne le niveau de départ de l'espèce.
+     *
      * @return le niveau de départ de l'espèce.
      */
     public int getNiveauDepart() {
@@ -96,6 +104,7 @@ public class Species implements IEspece{
 
     /**
      * Donne l'expérience de départ de l'espèce.
+     *
      * @return l'expérience de départ de l'espèce.
      */
     public int getBaseExp() {
@@ -104,6 +113,7 @@ public class Species implements IEspece{
 
     /**
      * Donne les gains d'EV qu'obtiennent les vainqueurs contre cette espèce.
+     *
      * @return un objet Stat correspondant aux gainStat.
      */
     public IStat getGainsStat() { //stats correspondant aux EV
@@ -112,6 +122,7 @@ public class Species implements IEspece{
 
     /**
      * Donne toutes les capacités disponibles pour cette espèce.
+     *
      * @return un tableau d'objets Capacite.
      */
     public ICapacite[] getCapSet() {
@@ -120,17 +131,19 @@ public class Species implements IEspece{
 
     /**
      * Donne l'espèce correspondant à l'évolution de l'espèce actuelle si elle en possède une au niveau en paramètre.
+     *
      * @return un objet Species.
      */
     public IEspece getEvolution(int niveau) { //renvoie null si aucune evolution possible
-        if(this.evolution.containsKey(niveau))
-        	return new Pokedex().getInfo(this.evolution.get(niveau));
+        if (this.evolution.containsKey(niveau))
+            return new Pokedex().getInfo(this.evolution.get(niveau));
         else
             return null;
     }
 
     /**
      * Donne un tableau d'objets Types correspondant aux types de l'espèce.
+     *
      * @return un tableau d'objets Types.
      */
     public IType[] getTypes() { //une espece de pokemon peut avoir un ou deux types

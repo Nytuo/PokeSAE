@@ -2,8 +2,11 @@ package pokemon;
 
 /**
  * @author Beux
+ **/
+
+/**
  * La classe Stats représente les statistiques d'un Pokémon/d'une espèce.
- * Elle implémente l'interface IStat 
+ * Elle implémente l'interface IStat
  */
 public class Stats implements interfaces.IStat {
     /**
@@ -29,6 +32,7 @@ public class Stats implements interfaces.IStat {
 
     /**
      * Le constructeur de la classe Stats qui donne une valeur aux attributs
+     *
      * @param PV
      * @param force
      * @param defense
@@ -47,15 +51,17 @@ public class Stats implements interfaces.IStat {
 
     /**
      * Donne la valeur de l'attribut "PV".
+     *
      * @return l'attribut "PV".
      */
     @Override
     public int getPV() {
         return PV;
     }
-    
+
     /**
      * Donne la valeur de l'attribut "force".
+     *
      * @return l'attribut "force".
      */
     @Override
@@ -65,6 +71,7 @@ public class Stats implements interfaces.IStat {
 
     /**
      * Donne la valeur de l'attribut "defense".
+     *
      * @return l'attribut "defense".
      */
     @Override
@@ -74,6 +81,7 @@ public class Stats implements interfaces.IStat {
 
     /**
      * Donne la valeur de l'attribut "special".
+     *
      * @return l'attribut "special".
      */
     @Override
@@ -83,6 +91,7 @@ public class Stats implements interfaces.IStat {
 
     /**
      * Donne la valeur de l'attribut "vitesse".
+     *
      * @return l'attribut "vitesse".
      */
     @Override
@@ -90,7 +99,7 @@ public class Stats implements interfaces.IStat {
         return vitesse;
     }
 
-    
+
     /**
      * Attribue une valeur à l'attribut "PV".
      */

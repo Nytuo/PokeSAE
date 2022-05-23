@@ -19,6 +19,9 @@ import interfaces.IType;
 
 /**
  * @author testa
+ **/
+
+/**
  * La classe Pokedex permet au dresseur de se documenter sur chaque espèce de Pokémon et chaque attaque, et aussi d'établir des stratégies
  * Elle implémente l'interface: IPokedex
  */
@@ -42,7 +45,7 @@ public class Pokedex implements IPokedex {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
-        
+
         String capaciteFile = new File("project/external/listeCapacites.csv").getAbsolutePath();
         try {
             Scanner sc = new Scanner(new File(capaciteFile));
@@ -69,7 +72,8 @@ public class Pokedex implements IPokedex {
 
     /**
      * Permet de rechercher des informations sur un Pokémon à partir de son nom
-     * @param name	Le nom du Pokémon
+     *
+     * @param name Le nom du Pokémon
      */
     public void searchPokemon(String name) {
         System.out.println("Searching for " + name + "...");
@@ -90,7 +94,8 @@ public class Pokedex implements IPokedex {
 
     /**
      * Permet de rechercher des informations sur un Pokémon à partir de son numéro
-     * @param id	Le numéro du Pokémon
+     *
+     * @param id Le numéro du Pokémon
      */
     public void searchPokemon(int id) {
         System.out.println("Searching for " + id + "...");
@@ -113,7 +118,8 @@ public class Pokedex implements IPokedex {
 
     /**
      * Donne le nom du Pokémon correspondant
-     * @param id	Le numéro du Pokémon
+     *
+     * @param id Le numéro du Pokémon
      * @return le nom du Pokémon correspondant
      */
     private String getPokemonById(int id) {
@@ -127,7 +133,8 @@ public class Pokedex implements IPokedex {
 
     /**
      * Donne les évolutions du Pokémon.
-     * @param id	Le numéro du Pokémon
+     *
+     * @param id Le numéro du Pokémon
      * @return un tableau des évolutions du Pokémon.
      */
     private String[] getEvolution(int id) {
@@ -163,31 +170,34 @@ public class Pokedex implements IPokedex {
 
     /**
      * Crée les 6 Pokémons qui seront attribués à un dresseur par la suite.
+     *
      * @return un tableau de Pokémons.
      */
     @Override
     public IPokemon[] engendreRanch() {
-    	ArrayList<String> pokeLvl1=new ArrayList<String>();
-    	Pokemon[] ranch=new Pokemon[6];
-    	Species esp;
-    	for (String[] s : pokedata) {
-    		if(s[15].equals("1"))
-    			pokeLvl1.add(s[1]);
-    	}
-    	for(int i=0;i<6;i++) {
-    		esp=(Species)getInfo(pokeLvl1.get((int) (Math.random()*pokeLvl1.size())));
-    		//Capacites au hasard parmi les capacites dispo de l'espece
-    		Capacite[] capacitePoke=new Capacite[4];
-    		for(int j=0;j<4;j++)
-    			capacitePoke[j]=esp.capacities[(int)(Math.random()*(esp.capacities.length))];
-    		//création du ranch
-    		ranch[i]=new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats,esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(),capacitePoke, Integer.parseInt(LocalTime.now().toString().replaceAll("[:]*[-]*[.]*","").substring(0,8)),esp.gainsStat);    	}
-    	return ranch;
+        ArrayList<String> pokeLvl1 = new ArrayList<String>();
+        Pokemon[] ranch = new Pokemon[6];
+        Species esp;
+        for (String[] s : pokedata) {
+            if (s[15].equals("1"))
+                pokeLvl1.add(s[1]);
+        }
+        for (int i = 0; i < 6; i++) {
+            esp = (Species) getInfo(pokeLvl1.get((int) (Math.random() * pokeLvl1.size())));
+            //Capacites au hasard parmi les capacites dispo de l'espece
+            Capacite[] capacitePoke = new Capacite[4];
+            for (int j = 0; j < 4; j++)
+                capacitePoke[j] = esp.capacities[(int) (Math.random() * (esp.capacities.length))];
+            //création du ranch
+            ranch[i] = new Pokemon(esp.nameOfSpecies, esp.nameOfSpecies, esp.types, esp.baseStats, esp.startLevel, esp.evolution, esp.capacities, esp.getBaseExp(), capacitePoke, Integer.parseInt(LocalTime.now().toString().replaceAll("[:]*[-]*[.]*", "").substring(0, 8)), esp.gainsStat);
+        }
+        return ranch;
     }
 
 
     /**
      * Donne un objet Species d'un Pokémon grâce à son nom.
+     *
      * @param nomEspece.
      * @return un objet Species.
      */
@@ -195,14 +205,14 @@ public class Pokedex implements IPokedex {
     public IEspece getInfo(String nomEspece) {
         Stats baseStats;
         Stats gainStats;
-        Types[] types=new Types[2];
-        ArrayList<Capacite> capacitesArray=new ArrayList<Capacite>();
-        
+        Types[] types = new Types[2];
+        ArrayList<Capacite> capacitesArray = new ArrayList<Capacite>();
+
         for (String[] s : pokedata) {
             try {
                 if (s[1].equalsIgnoreCase(nomEspece)) {
-                	//Stats de base
-                    baseStats = new Stats(Integer.parseInt(s[2]),Integer.parseInt(s[3]),Integer.parseInt(s[4]),Integer.parseInt(s[5]),Integer.parseInt(s[6]));
+                    //Stats de base
+                    baseStats = new Stats(Integer.parseInt(s[2]), Integer.parseInt(s[3]), Integer.parseInt(s[4]), Integer.parseInt(s[5]), Integer.parseInt(s[6]));
                     //Niveau de base
                     int baseLvl = Integer.parseInt(s[15]);
                     //évolutions
@@ -213,26 +223,26 @@ public class Pokedex implements IPokedex {
                         i++;
                     }
                     //types
-                    types[0]=new Types(s[13]);
+                    types[0] = new Types(s[13]);
                     if (s[14] != " ")
-                    	types[1]=new Types(s[14]);
+                        types[1] = new Types(s[14]);
                     //gainStats
-                    gainStats = new Stats(Integer.parseInt(s[8]),Integer.parseInt(s[9]),Integer.parseInt(s[10]),Integer.parseInt(s[11]),Integer.parseInt(s[12]));
+                    gainStats = new Stats(Integer.parseInt(s[8]), Integer.parseInt(s[9]), Integer.parseInt(s[10]), Integer.parseInt(s[11]), Integer.parseInt(s[12]));
                     //Capacite
-                    for(String[] s1 : capacitedata) {
-                    	if(s1[6].equals(types[0].getNom()) || s1[6].equals(types[1].getNom())) {
-                    		if(s1[6].equals("Physique"))
-                    			capacitesArray.add(new Capacite(s1[0],new Types(s1[6]),new Categorie(s1[5], false),Integer.parseInt(s1[1]),Double.parseDouble(s1[2]),Integer.parseInt(s1[3])));
-                    		else 
-                    			capacitesArray.add(new Capacite(s1[0],new Types(s1[6]),new Categorie(s1[5], true),Integer.parseInt(s1[1]),Double.parseDouble(s1[2]),Integer.parseInt(s1[3])));
-                    	}
+                    for (String[] s1 : capacitedata) {
+                        if (s1[6].equals(types[0].getNom()) || s1[6].equals(types[1].getNom())) {
+                            if (s1[6].equals("Physique"))
+                                capacitesArray.add(new Capacite(s1[0], new Types(s1[6]), new Categorie(s1[5], false), Integer.parseInt(s1[1]), Double.parseDouble(s1[2]), Integer.parseInt(s1[3])));
+                            else
+                                capacitesArray.add(new Capacite(s1[0], new Types(s1[6]), new Categorie(s1[5], true), Integer.parseInt(s1[1]), Double.parseDouble(s1[2]), Integer.parseInt(s1[3])));
+                        }
                     }
                     //Species accepte uniquement tableau de Capacite, pas ArrayList
-                    Capacite[] capacites=new Capacite[capacitesArray.size()];
-                    for(int i1=0;i1<capacitesArray.size();i1++)
-                    	capacites[i1]=capacitesArray.get(i1);
+                    Capacite[] capacites = new Capacite[capacitesArray.size()];
+                    for (int i1 = 0; i1 < capacitesArray.size(); i1++)
+                        capacites[i1] = capacitesArray.get(i1);
                     //Création espèce
-                    Species esp = new Species(nomEspece, types, baseStats, baseLvl, evolution, capacites,0,gainStats);
+                    Species esp = new Species(nomEspece, types, baseStats, baseLvl, evolution, capacites, 0, gainStats);
                     return esp;
                 }
             } catch (NumberFormatException ignored) {
@@ -244,6 +254,7 @@ public class Pokedex implements IPokedex {
 
     /**
      * Donne l'efficacité d'un type sur un autre.
+     *
      * @return la valeur de l'efficacité.
      */
     @Override
@@ -254,6 +265,7 @@ public class Pokedex implements IPokedex {
 
     /**
      * Initialise une HashMap reprennant le CSV.
+     *
      * @return une HashMap reprennant le CSV.
      */
     public HashMap<String, String[]> initializeFromCSV() {
@@ -277,7 +289,6 @@ public class Pokedex implements IPokedex {
 
     /**
      * Permet d'associer chaque type à un chiffre pour l'indexer.
-     * 
      */
     public enum EnumCapacite {
 
@@ -297,6 +308,7 @@ public class Pokedex implements IPokedex {
 
     /**
      * Donne la capacité à partir de son nom.
+     *
      * @return un objet Capacite correspondant.
      */
     @Override
@@ -304,14 +316,14 @@ public class Pokedex implements IPokedex {
         for (String[] s : capacitedata) {
             try {
                 if (s[0].equalsIgnoreCase(nom)) {
-                	
-                	Types type=new Types(s[6]);
-                	Categorie categorie;
-					if(s[5].equals("Physique"))
-                		categorie=new Categorie(s[5], false);
-                	else
-                		categorie=new Categorie(s[5], true);
-                	
+
+                    Types type = new Types(s[6]);
+                    Categorie categorie;
+                    if (s[5].equals("Physique"))
+                        categorie = new Categorie(s[5], false);
+                    else
+                        categorie = new Categorie(s[5], true);
+
                     //Création capacite
                     Capacite cap = new Capacite(s[0], type, categorie, Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
                     return cap;
@@ -325,6 +337,7 @@ public class Pokedex implements IPokedex {
 
     /**
      * Donne la capacité à partir de son numéro.
+     *
      * @return un objet Capacite correspondant.
      */
     @Override
@@ -332,15 +345,15 @@ public class Pokedex implements IPokedex {
         for (String[] s : capacitedata) {
             try {
                 if (Integer.parseInt(s[4]) == n) {
-                	//Creation type
-                	Types type=new Types(s[6]);
-                	//Creation categorie
-                	Categorie categorie;
-					if(s[5].equals("Physique"))
-                		categorie=new Categorie(s[5], false);
-                	else
-                		categorie=new Categorie(s[5], true);
-                	
+                    //Creation type
+                    Types type = new Types(s[6]);
+                    //Creation categorie
+                    Categorie categorie;
+                    if (s[5].equals("Physique"))
+                        categorie = new Categorie(s[5], false);
+                    else
+                        categorie = new Categorie(s[5], true);
+
                     //Création capacite
                     Capacite cap = new Capacite(s[0], type, categorie, Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]));
                     return cap;

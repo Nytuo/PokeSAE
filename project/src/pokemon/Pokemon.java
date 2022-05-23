@@ -12,6 +12,9 @@ import interfaces.IStat;
 
 /**
  * @author testa/beux
+ **/
+
+/**
  * La classe Pokémon représente un Pokémon
  * Elle implémente IPokemon
  */
@@ -57,17 +60,18 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Constructeur de la classe Pokémon qui va construire le Pokémon.
-     * @param name_of_species		Le nom de l'espèce.
-     * @param name					Le nom du Pokémon.
-     * @param types					Les types du Pokémon.
-     * @param baseStats				Les statistiques de base de l'espèce du Pokémon.
-     * @param baseLevel				Le niveau de base du Pokémon.
-     * @param evolution				Les évolutions de l'espèce du Pokémon.
-     * @param capacities			Les capacites que peut apprendre l'espèce du Pokémon.
-     * @param xp					L'expérience de départ du Pokémon.
-     * @param capacitiesPoke		Les capacités apprises par le Pokémon.
-     * @param ID					L'ID unique du Pokémon.
-     * @param gainsStats			Les valeurs des EV que peuvent obtenir les vainqueurs contre l'espèce du Pokémon.
+     *
+     * @param name_of_species Le nom de l'espèce.
+     * @param name            Le nom du Pokémon.
+     * @param types           Les types du Pokémon.
+     * @param baseStats       Les statistiques de base de l'espèce du Pokémon.
+     * @param baseLevel       Le niveau de base du Pokémon.
+     * @param evolution       Les évolutions de l'espèce du Pokémon.
+     * @param capacities      Les capacites que peut apprendre l'espèce du Pokémon.
+     * @param xp              L'expérience de départ du Pokémon.
+     * @param capacitiesPoke  Les capacités apprises par le Pokémon.
+     * @param ID              L'ID unique du Pokémon.
+     * @param gainsStats      Les valeurs des EV que peuvent obtenir les vainqueurs contre l'espèce du Pokémon.
      */
     public Pokemon(String name_of_species, String name, Types[] types, Stats baseStats, int baseLevel, TreeMap<Integer, String> evolution, Capacite[] capacities, double xp, Capacite[] capacitiesPoke, int ID, Stats gainsStats) {
         super(name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
@@ -99,10 +103,11 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Prend le dernier bit de chaque paramètre et donne la valeur décimale des bit assemblés dans l'ordre des paramètres
-     * @param n1	Correspond au DV de la stat Force.
-     * @param n2	Correspond au DV de la stat Défense.
-     * @param n3	Correspond au DV de la stat Spécial.
-     * @param n4	Correspond au DV de la stat Vitesse.
+     *
+     * @param n1 Correspond au DV de la stat Force.
+     * @param n2 Correspond au DV de la stat Défense.
+     * @param n3 Correspond au DV de la stat Spécial.
+     * @param n4 Correspond au DV de la stat Vitesse.
      * @return la valeur décimale des bit assemblés dans l'ordre des paramètres.
      */
     public static int toBit(int n1, int n2, int n3, int n4) {
@@ -110,11 +115,12 @@ public class Pokemon extends Species implements IPokemon {
         return Integer.parseInt(s, 2);
     }
 
-    
+
     /**
      * Donne l'unité d'un nombre.
+     *
      * @param n Le nombre dont on veut l'unité
-     * @return	L'unité d'un nombre.
+     * @return L'unité d'un nombre.
      */
     public static int getTheLastDigit(int n) {
         return n % 10;
@@ -122,6 +128,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Change le nom du Pokémon.
+     *
      * @param name.
      */
     public void setNom(String name) {
@@ -130,6 +137,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne les stats du Pokémon.
+     *
      * @return un objet Stat.
      */
     public IStat getStat() {
@@ -138,6 +146,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne la TreeMap des DV du Pokémon.
+     *
      * @return une TreeMap des DV.
      */
     public TreeMap<String, Integer> getDV() {
@@ -146,6 +155,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne la TreeMap des EV du Pokémon.
+     *
      * @return une TreeMap des EV.
      */
     public TreeMap<String, Integer> getEV() {
@@ -154,7 +164,8 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Attribue une valeur à un EV en fonction de sa clé.
-     * @param Key	Clé de la TreeMap.
+     *
+     * @param Key   Clé de la TreeMap.
      * @param Value Valeur que l'on attribue à l'EV.
      */
     public void setEV(String Key, int Value) {
@@ -163,6 +174,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne l'expérience du Pokémon
+     *
      * @return l'expérience du Pokémon
      */
     public double getExperience() {
@@ -172,6 +184,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne le niveau du Pokémon.
+     *
      * @return le niveau du Pokémon.
      */
     public int getNiveau() {
@@ -181,6 +194,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne l'ID du Pokémon.
+     *
      * @return l'ID du Pokémon.
      */
     public int getId() {
@@ -190,6 +204,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne le nom du Pokémon.
+     *
      * @return le nom du Pokémon.
      */
     public String getNom() {
@@ -200,6 +215,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne le pourcentage actuel de PV du Pokémon.
+     *
      * @return le pourcentage actuel de PV du Pokémon.
      */
     public double getPourcentagePV() {
@@ -208,6 +224,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne l'espèce du Pokémon
+     *
      * @return un objet Species.
      */
     public IEspece getEspece() {
@@ -216,6 +233,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Cette méthode change l'espèce du Pokémon en l'espèce en laquelle il évolue.
+     *
      * @param esp
      */
     public void vaMuterEn(IEspece esp) {
@@ -229,6 +247,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne les capacités apprises par le Pokémon.
+     *
      * @return un tableau d'objets Capacite.
      */
     public ICapacite[] getCapacitesApprises() {
@@ -237,7 +256,8 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Cette méthode remplace les capacités apprises par un tableau de Capacite.
-     * @param caps	Le tableau de Capacite par lequel sera remplacé les capacités actuelles du Pokémon
+     *
+     * @param caps Le tableau de Capacite par lequel sera remplacé les capacités actuelles du Pokémon
      */
     public void apprendCapacites(ICapacite[] caps) {
         this.known_capacities = (Capacite[]) caps;
@@ -245,8 +265,9 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Cette méthode remplace une capacité du Pokémon par une autre
-     * @param i	L'index de la capacité que l'on souhaite remplacer
-     * @param cap	L'objet Capacite par lequel on souhaite remplacer la capacité actuelle
+     *
+     * @param i   L'index de la capacité que l'on souhaite remplacer
+     * @param cap L'objet Capacite par lequel on souhaite remplacer la capacité actuelle
      */
     public void remplaceCapacite(int i, ICapacite cap) throws Exception {
         try {
@@ -258,7 +279,8 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Cette méthode calcule l'expérience qu'obtient le Pokémon en battant un autre Pokémon.
-     * @param pok	Le Pokémon vaincu
+     *
+     * @param pok Le Pokémon vaincu
      */
     public void gagneExperienceDe(IPokemon pok) {
         this.xp += (1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp()) / 7;
@@ -266,8 +288,9 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Enlève la quantité de dégâts infligée par l'attaque adversaire.
-     * @param pok	Le pokémon adverse
-     * @param atk	L'attaque adverse
+     *
+     * @param pok Le pokémon adverse
+     * @param atk L'attaque adverse
      */
     public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
         this.PVActuel -= atk.calculeDommage(pok, this);
@@ -275,6 +298,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne l'état du Pokémon
+     *
      * @return l'état du Pokémon
      */
     public boolean estEvanoui() {
@@ -294,6 +318,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne l'état de changement de niveau, si un changement de niveau est réalisé
+     *
      * @return l'état de changement de niveau
      */
     public boolean aChangeNiveau() {
@@ -310,6 +335,7 @@ public class Pokemon extends Species implements IPokemon {
 
     /**
      * Donne l'état d'évolution du Pokémon/s'il peut évoluer.
+     *
      * @return l'état d'évolution du Pokémon.
      */
     public boolean peutMuter() {
