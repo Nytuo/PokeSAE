@@ -1,17 +1,15 @@
 /**
- * Université Côte d'Azur
- * IUT Côte d'Azur
- * Département Informatique
- * @date
- * ICategory.java
+ * Université Côte d'Azur IUT Côte d'Azur Département Informatique
+ *
+ * @date ICategory.java
  */
 package interfaces;
 
 /**
  * @author Leo Donati
- *
  */
 public interface ICategorie {
-	boolean isSpecial();
-	String getNom();
+  boolean isSpecial();
+
+  String getNom();
 }

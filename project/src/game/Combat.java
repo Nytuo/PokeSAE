@@ -1,8 +1,4 @@
 package game;
 
-import dresseur.Dresseur;
-import pokemon.Pokemon;
 
-public class Combat {
-
-}
+public class Combat {}
