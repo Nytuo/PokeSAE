@@ -281,7 +281,7 @@ public class Pokedex implements IPokedex {
      */
     public enum EnumCapacite {
 
-        Combat(1), Dragon(2), Eau(3), Electrique(4), Feu(5), Glace(6), Insecte(7), Normal(8), Plante(9), Poison(10), Psy(11), Roche(12), Sol(13), Spectre(14), Vol(15);
+        Combat(1), Dragon(2), Eau(3), Electrik(4), Feu(5), Glace(6), Insecte(7), Normal(8), Plante(9), Poison(10), Psy(11), Roche(12), Sol(13), Spectre(14), Vol(15);
 
         private final int id;
 

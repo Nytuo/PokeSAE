@@ -75,7 +75,6 @@ public class Capacite implements interfaces.ICapacite {
     }
 
 
-
     /**
      * Donne le nom de la capacité.
      *
@@ -191,9 +190,15 @@ public class Capacite implements interfaces.ICapacite {
         if (this.type == lanceur.getEspece().getTypes()[0] || this.type == lanceur.getEspece().getTypes()[1]) { //Si le pokemon lanceur possède le même type que la capacité
             STAB = 1.5;
         }
-
+        double EFFICACITE;
         //Calcul de l'efficacité
-        double EFFICACITE = Math.min(pokedex.getEfficacite(lanceur.getEspece().getTypes()[0], receveur.getEspece().getTypes()[0]), pokedex.getEfficacite(lanceur.getEspece().getTypes()[1], receveur.getEspece().getTypes()[1]));
+        double efficacite1 = pokedex.getEfficacite(lanceur.getEspece().getTypes()[0], receveur.getEspece().getTypes()[0]);
+        try {
+            double efficacite2 = pokedex.getEfficacite(lanceur.getEspece().getTypes()[1], receveur.getEspece().getTypes()[1]);
+            EFFICACITE = Math.min(efficacite1, efficacite2);
+        } catch (Exception e) {
+            EFFICACITE = efficacite1;
+        }
         double RANDOM = new Random().nextDouble((1 - 0.85)) + 0.85; //Nombre random entre 0.85 et 1
         double CM = STAB * EFFICACITE * RANDOM; //Calcul du Multiplicateur
 
