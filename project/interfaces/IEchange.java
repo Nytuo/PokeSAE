@@ -11,7 +11,7 @@ package interfaces;
  * @author Leo Donati
  *
  */
-public interface IEchange extends IAttaque {
-	public void setPokemon(IPokemon pok);
-	public IPokemon echangeCombattant(); 
+public interface IEchange extends interfaces.IAttaque {
+	public void setPokemon(interfaces.IPokemon pok);
+	public interfaces.IPokemon echangeCombattant();
 }

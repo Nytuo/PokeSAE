@@ -12,7 +12,7 @@ package interfaces;
  *
  */
 public interface IStrategy {
-	public IPokemon choisitCombattant();
-	public IPokemon choisitCombattantContre(IPokemon pok);
-	public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur);
+	public interfaces.IPokemon choisitCombattant();
+	public interfaces.IPokemon choisitCombattantContre(interfaces.IPokemon pok);
+	public interfaces.IAttaque choisitAttaque(interfaces.IPokemon attaquant, interfaces.IPokemon defenseur);
 }

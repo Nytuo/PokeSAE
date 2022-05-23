@@ -12,14 +12,14 @@ package interfaces;
  *
  */
 public interface IDresseur {
-	public void enseigne(IPokemon pok, ICapacite[] caps);
+	public void enseigne(interfaces.IPokemon pok, interfaces.ICapacite[] caps);
 	public void soigneRanch();
 	
-	public IPokemon choisitCombattant();
-	public IPokemon choisitCombattantContre(IPokemon pok);
-	public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur);
+	public interfaces.IPokemon choisitCombattant();
+	public interfaces.IPokemon choisitCombattantContre(interfaces.IPokemon pok);
+	public interfaces.IAttaque choisitAttaque(interfaces.IPokemon attaquant, interfaces.IPokemon defenseur);
 	
 	public int getNiveau();
 	public String getNom();
-	public IPokemon getPokemon(int i);
+	public interfaces.IPokemon getPokemon(int i);
 }

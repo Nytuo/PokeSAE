@@ -12,12 +12,12 @@ package interfaces;
  *
  */
 public interface IEspece {
-	public IStat getBaseStat();
+	public interfaces.IStat getBaseStat();
 	public String getNom();
 	public int getNiveauDepart();
 	public int getBaseExp();
-	public IStat getGainsStat();
-	public ICapacite[] getCapSet();
+	public interfaces.IStat getGainsStat();
+	public interfaces.ICapacite[] getCapSet();
 	public IEspece getEvolution(int niveau);  //renvoie null si aucune evolution possible
-	public IType[] getTypes();
+	public interfaces.IType[] getTypes();
 }

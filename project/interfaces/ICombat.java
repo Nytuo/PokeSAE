@@ -13,8 +13,8 @@ package interfaces;
  */
 public interface ICombat {
 	public void commence();
-	public IDresseur getDresseur1();
-	public IDresseur getDresseur2();
-	public ITour nouveauTour(IPokemon pok1, IAttaque atk1, IPokemon pok2, IAttaque atk2); 
+	public interfaces.IDresseur getDresseur1();
+	public interfaces.IDresseur getDresseur2();
+	public interfaces.ITour nouveauTour(interfaces.IPokemon pok1, interfaces.IAttaque atk1, interfaces.IPokemon pok2, interfaces.IAttaque atk2);
 	public void termine();
 }
