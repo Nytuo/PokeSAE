@@ -13,10 +13,11 @@ public class MainGame {
         for (Pokemon p : pokes) {
         System.out.println(p.getNom());
         System.out.println(p.getNiveau());
-        System.out.println(p.getStat());
+        System.out.println(p.getStat().getPV());
         System.out.println(p.getDV());
         System.out.println(p.getEV());
         System.out.println(p.getGainsStat());
+            System.out.println("\n-----------------------------------------------------\n");
         }
 
     }

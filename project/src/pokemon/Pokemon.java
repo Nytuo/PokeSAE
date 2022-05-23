@@ -2,8 +2,6 @@ package pokemon;
 
 import java.util.Objects;
 import java.util.TreeMap;
-
-
 import interfaces.IAttaque;
 import interfaces.ICapacite;
 import interfaces.IEspece;
@@ -50,7 +48,7 @@ public class Pokemon extends Species implements IPokemon {
     /**
      * Valeurs des DV du Pokémon
      */
-    private static TreeMap<String, Integer> DV;
+    private final TreeMap<String, Integer> DV;
 
     /**
      * PV actuels du Pokémon
