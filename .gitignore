@@ -88,3 +88,4 @@ lint/tmp/
 .idea/
 .classpath
 .project
+/.metadata/
