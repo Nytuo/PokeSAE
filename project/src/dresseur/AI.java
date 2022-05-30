@@ -33,7 +33,7 @@ public IPokemon choisitCombattant() {
 public IPokemon choisitCombattantContre(IPokemon pok) {
 	// TODO Auto-generated method stub
 	
-	return null;
+	return pok;
 }
 
 @Override
