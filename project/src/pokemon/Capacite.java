@@ -177,7 +177,7 @@ public class Capacite implements interfaces.ICapacite {
     // Gestion des capacités normales
     Pokedex pokedex =
         new Pokedex(); // Création d'une instance de la classe Pokedex pour acceder aux efficacités
-                       // des pokémons
+    // des pokémons
 
     // Gestion du même type
     double STAB = 1;
