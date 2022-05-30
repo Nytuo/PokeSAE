@@ -200,7 +200,7 @@ public class Capacite implements interfaces.ICapacite {
     } catch (Exception e) {
       EFFICACITE = efficacite1;
     }
-    double RANDOM = new Random().nextDouble()*(1 - 0.85) + 0.85; // Nombre random entre 0.85 et 1
+    double RANDOM = new Random().nextDouble() * (1 - 0.85) + 0.85; // Nombre random entre 0.85 et 1
     double CM = STAB * EFFICACITE * RANDOM; // Calcul du Multiplicateur
 
     // Calcul de la force en fonction du type de la capacité
