@@ -1,12 +1,23 @@
 package game;
 
-import java.util.Scanner;
-
+import interfaces.IDresseur;
 import interfaces.IEchange;
 import interfaces.IPokemon;
-import pokemon.Capacite;
 
 public class Echange implements IEchange {
+	
+	IDresseur dresseur;
+
+	IPokemon oldPok;
+	IPokemon newPok;
+	IPokemon defenseur;
+
+	public Echange(IDresseur dresseur, IPokemon oldPok, IPokemon defenseur) {
+
+		this.dresseur = dresseur;
+		this.oldPok = oldPok;
+		this.defenseur = defenseur;
+	}
 
 	@Override
 	public int calculeDommage(IPokemon lanceur, IPokemon receveur) {
@@ -15,31 +26,21 @@ public class Echange implements IEchange {
 	}
 
 	@Override
-	public void utilise() {		
+	public void utilise() {
 	}
 
 	@Override
 	public void setPokemon(IPokemon pok) {
-				
-		
+
+		this.newPok = pok;
 	}
 
 	@Override
 	public IPokemon echangeCombattant() {
 
-		Capacite[] equipe =
-		        (Capacite[])
-		            attaquant.getCapacitesApprises(); // R�cup�re toutes les capacit�s de l'attaquant
-
-		    Scanner scanner = new Scanner(System.in);
-
-		    System.out.print("Choose your new pokemon\n" + equipe);
-		    String numAttaque = scanner.nextLine();
-		    System.out.println();
-
-		    scanner.close();
+		this.setPokemon(this.dresseur.choisitCombattantContre(defenseur));
 		
-		return (IPokemon) this;
+		return this.newPok;
 	}
 
 }
