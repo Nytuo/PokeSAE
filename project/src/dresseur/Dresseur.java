@@ -1,102 +1,101 @@
 package dresseur;
 
+import game.Echange;
 import interfaces.IAttaque;
 import interfaces.ICapacite;
 import interfaces.IDresseur;
 import interfaces.IPokemon;
+import java.util.ArrayList;
+import java.util.Scanner;
 import pokemon.Capacite;
 import pokemon.Pokemon;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import game.Echange;
-
 public class Dresseur implements IDresseur {
-	public String name;
-	public int level = 0;
-	public ArrayList<Pokemon> pokemons;
+  public String name;
+  public int level = 0;
+  public ArrayList<Pokemon> pokemons;
 
-	public Dresseur(String name, int level, ArrayList<Pokemon> pokemons) {
+  public Dresseur(String name, int level, ArrayList<Pokemon> pokemons) {
 
-		this.name = name;
-		this.pokemons = pokemons;
+    this.name = name;
+    this.pokemons = pokemons;
 
-		for (Pokemon pok : pokemons) {
-			this.level += pok.getNiveau();
-		}
-	}
+    for (Pokemon pok : pokemons) {
+      this.level += pok.getNiveau();
+    }
+  }
 
-	@Override
-	public void enseigne(IPokemon pok, ICapacite[] caps) {
+  @Override
+  public void enseigne(IPokemon pok, ICapacite[] caps) {
 
-		pok.apprendCapacites(caps);
+    pok.apprendCapacites(caps);
+  }
 
-	}
+  @Override
+  public void soigneRanch() {
+    for (Pokemon pok : pokemons) {
+      pok.soigne();
+    }
+  }
 
-	@Override
-	public void soigneRanch() {
-		for (Pokemon pok : pokemons) {
-			pok.soigne();
-		}
-	}
+  @Override
+  public IPokemon choisitCombattant() {
 
-	@Override
-	public IPokemon choisitCombattant() {
+    return getPokemon(0);
+  }
 
-		return getPokemon(0);
-	}
+  @Override
+  public IPokemon choisitCombattantContre(IPokemon pok) {
 
-	@Override
-	public IPokemon choisitCombattantContre(IPokemon pok) {
+    Scanner scanner = new Scanner(System.in);
 
-		Scanner scanner = new Scanner(System.in);
+    System.out.print("Which pokemon will you send against \n" + pok + "\n" + this.pokemons);
+    String numPok = scanner.nextLine();
+    System.out.println();
 
-		System.out.print("Which pokemon will you send against \n" + pok + "\n" + this.pokemons);
-		String numPok = scanner.nextLine();
-		System.out.println();
+    scanner.close();
 
-		scanner.close();
+    return pokemons.get(Integer.valueOf(numPok));
+  }
 
-		return pokemons.get(Integer.valueOf(numPok));
-	}
+  @Override
+  public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
 
-	@Override
-	public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
+    Capacite[] capList =
+        (Capacite[]) attaquant.getCapacitesApprises(); // R�cup�re toutes les capacit�s de
+    // l'attaquant
 
-		Capacite[] capList = (Capacite[]) attaquant.getCapacitesApprises(); // R�cup�re toutes les capacit�s de
-																			// l'attaquant
+    Scanner scanner = new Scanner(System.in);
 
-		Scanner scanner = new Scanner(System.in);
+    System.out.print(
+        "Choose the move to use\n" + attaquant.getCapacitesApprises() + "4 : change pokemon");
+    String numAttaque = scanner.nextLine();
+    System.out.println();
 
-		System.out.print("Choose the move to use\n" + attaquant.getCapacitesApprises() + "4 : change pokemon");
-		String numAttaque = scanner.nextLine();
-		System.out.println();
+    scanner.close();
 
-		scanner.close();
+    if (Integer.valueOf(numAttaque) == 4) {
 
-		if (Integer.valueOf(numAttaque) == 4) {
+      return new Echange(this, attaquant, defenseur);
+    }
+    return capList[Integer.valueOf(numAttaque)];
+  }
 
-			return new Echange(this, attaquant, defenseur);
-		}
-		return capList[Integer.valueOf(numAttaque)];
-	}
+  @Override
+  public int getNiveau() {
 
-	@Override
-	public int getNiveau() {
+    return this.level;
+  }
 
-		return this.level;
-	}
+  @Override
+  public String getNom() {
 
-	@Override
-	public String getNom() {
+    return this.name;
+  }
 
-		return this.name;
-	}
+  @Override
+  public IPokemon getPokemon(int i) {
 
-	@Override
-	public IPokemon getPokemon(int i) {
-
-		return pokemons.get(i);
-	}
+    return pokemons.get(i);
+  }
 }

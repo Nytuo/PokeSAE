@@ -5,42 +5,40 @@ import interfaces.IEchange;
 import interfaces.IPokemon;
 
 public class Echange implements IEchange {
-	
-	IDresseur dresseur;
 
-	IPokemon oldPok;
-	IPokemon newPok;
-	IPokemon defenseur;
+  IDresseur dresseur;
 
-	public Echange(IDresseur dresseur, IPokemon oldPok, IPokemon defenseur) {
+  IPokemon oldPok;
+  IPokemon newPok;
+  IPokemon defenseur;
 
-		this.dresseur = dresseur;
-		this.oldPok = oldPok;
-		this.defenseur = defenseur;
-	}
+  public Echange(IDresseur dresseur, IPokemon oldPok, IPokemon defenseur) {
 
-	@Override
-	public int calculeDommage(IPokemon lanceur, IPokemon receveur) {
+    this.dresseur = dresseur;
+    this.oldPok = oldPok;
+    this.defenseur = defenseur;
+  }
 
-		return 0;
-	}
+  @Override
+  public int calculeDommage(IPokemon lanceur, IPokemon receveur) {
 
-	@Override
-	public void utilise() {
-	}
+    return 0;
+  }
 
-	@Override
-	public void setPokemon(IPokemon pok) {
+  @Override
+  public void utilise() {}
 
-		this.newPok = pok;
-	}
+  @Override
+  public void setPokemon(IPokemon pok) {
 
-	@Override
-	public IPokemon echangeCombattant() {
+    this.newPok = pok;
+  }
 
-		this.setPokemon(this.dresseur.choisitCombattantContre(defenseur));
-		
-		return this.newPok;
-	}
+  @Override
+  public IPokemon echangeCombattant() {
 
+    this.setPokemon(this.dresseur.choisitCombattantContre(defenseur));
+
+    return this.newPok;
+  }
 }
