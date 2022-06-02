@@ -18,8 +18,8 @@ import pokemon.Pokemon;
  * Chaque méthode de IStrategy correspond à la méthode homonyme de IDresseur
  */
 
-public class AI extends Dresseur implements IStrategy {
-  public AI(String name, int level, ArrayList<Pokemon> pokemons) {
+public class AIsimple extends Dresseur implements IStrategy {
+  public AIsimple(String name, int level, ArrayList<Pokemon> pokemons) {
     super(name, level, pokemons);
   }
 
