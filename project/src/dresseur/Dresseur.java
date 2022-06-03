@@ -64,7 +64,7 @@ public class Dresseur implements IDresseur {
   public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
 
     Capacite[] capList =
-        (Capacite[]) attaquant.getCapacitesApprises(); // R�cup�re toutes les capacit�s de
+        (Capacite[]) attaquant.getCapacitesApprises(); // Rï¿½cupï¿½re toutes les capacitï¿½s de
     // l'attaquant
 
     Scanner scanner = new Scanner(System.in);

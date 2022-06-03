@@ -30,6 +30,14 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 - Readme, contributing, PDF : Elyan 
 - Aide de classes, MD : Jules
 
+### Rendu 3
+- IAsimple : Elyan
+- Dresseur, Combat : Jules
+- MainGame : Arnaud
+- PDF, Intructions(MD) : Ethan 
+
+###  Instruction
+ <br> TODO </br>
 
 ## Contribution
 Vous trouverez <a href="https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult/blob/main/CONTRIBUTING.md"> ci-joint </a> le lien concernant la contribution du projet.
