@@ -14,7 +14,7 @@ public class Dresseur implements IDresseur {
   public String name;
   public int level = 0;
   public ArrayList<Pokemon> pokemons;
-  
+
   public int echangeRestant = 5;
 
   public Dresseur(String name, int level, ArrayList<Pokemon> pokemons) {
@@ -27,7 +27,6 @@ public class Dresseur implements IDresseur {
     }
   }
 
-  
   @Override
   public void enseigne(IPokemon pok, ICapacite[] caps) {
 
