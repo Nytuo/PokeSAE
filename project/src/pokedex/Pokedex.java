@@ -7,7 +7,6 @@ import interfaces.IPokemon;
 import interfaces.IType;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -28,7 +27,7 @@ public class Pokedex implements IPokedex {
 
   /** Constructeur de la classe Pokedex qui va associer aux attributs le chemin des CSV */
   public Pokedex() {
-    String pokeFile = new File("external/listePokemon1G.csv").getAbsolutePath();
+    String pokeFile = new File("project/external/listePokemon1G.csv").getAbsolutePath();
     try {
       Scanner sc = new Scanner(new File(pokeFile));
 
@@ -41,7 +40,7 @@ public class Pokedex implements IPokedex {
       System.out.println("File not found");
     }
 
-    String capaciteFile = new File("external/listeCapacites.csv").getAbsolutePath();
+    String capaciteFile = new File("project/external/listeCapacites.csv").getAbsolutePath();
     try {
       Scanner sc = new Scanner(new File(capaciteFile));
       sc.useDelimiter(",");
@@ -175,8 +174,16 @@ public class Pokedex implements IPokedex {
       esp = (Species) getInfo(pokeLvl1.get((int) (Math.random() * pokeLvl1.size())));
       // Capacites au hasard parmi les capacites dispo de l'espece
       Capacite[] capacitePoke = new Capacite[4];
-      for (int j = 0; j < 4; j++)
-        capacitePoke[j] = esp.capacities[(int) (Math.random() * (esp.capacities.length))];
+      ArrayList<Capacite> capList = new ArrayList<Capacite>();
+      int j = 0;
+      while (capList.size() < 4) {
+        Capacite currentCap = esp.capacities[(int) (Math.random() * (esp.capacities.length))];
+        if (!capList.contains(currentCap)) {
+          capList.add(currentCap);
+          capacitePoke[j] = currentCap;
+          j++;
+        }
+      }
       // création du ranch
       ranch[i] =
           new Pokemon(
@@ -187,10 +194,9 @@ public class Pokedex implements IPokedex {
               esp.startLevel,
               esp.evolution,
               esp.capacities,
-              esp.getBaseExp(),
+              (double) esp.getBaseExp(),
               capacitePoke,
-              Integer.parseInt(
-                  LocalTime.now().toString().replaceAll("[:]*[-]*[.]*", "").substring(0, 8)),
+              (int) (Math.random() * 151) + 1,
               esp.gainsStat);
     }
     return ranch;
@@ -199,7 +205,7 @@ public class Pokedex implements IPokedex {
   /**
    * Donne un objet Species d'un Pokémon grâce à son nom.
    *
-   * @param nomEspece.
+   * @param nomEspece
    * @return un objet Species.
    */
   @Override
@@ -299,7 +305,7 @@ public class Pokedex implements IPokedex {
     HashMap<String, String[]> lines = new HashMap<>();
     try {
 
-      String file = String.valueOf(new File("external/efficacites.csv"));
+      String file = String.valueOf(new File("project/external/efficacites.csv"));
       Scanner sc = new Scanner(new File(file));
       sc.useDelimiter(";");
       sc.nextLine();
@@ -366,11 +372,12 @@ public class Pokedex implements IPokedex {
                   type,
                   categorie,
                   Integer.parseInt(s[1]),
-                  Integer.parseInt(s[2]),
+                  Double.parseDouble(s[2]),
                   Integer.parseInt(s[3]));
           return cap;
         }
-      } catch (NumberFormatException ignored) {
+      } catch (NumberFormatException e) {
+        System.out.println("Erreur de format" + e.getMessage());
       }
     }
     return null;
