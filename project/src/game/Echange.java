@@ -27,8 +27,8 @@ public class Echange implements IEchange {
 
   @Override
   public void utilise() {
-	  
-	  this.dresseur.echangeRestant--;
+
+    this.dresseur.echangeRestant--;
   }
 
   @Override
