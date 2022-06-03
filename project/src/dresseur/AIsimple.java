@@ -9,11 +9,11 @@ import pokemon.Capacite;
 import pokemon.Pokemon;
 
 /**
- * Une strat�gie est utilis�e par les dresseurs non humains (IA) pour prendre les d�cisions Un
- * DresseurIA poss�de une r�f�rence sur une IStrategy � qui il d�l�gue la prise de d�cision Un
+ * Une stratégie est utilisée par les dresseurs non humains (IA) pour prendre les décisions Un
+ * DresseurIA possède une référence sur une IStrategy à qui il délègue la prise de décision Un
  * dresseur humain n'utilise pas IStrategy
  *
- * <p>Chaque m�thode de IStrategy correspond � la m�thode homonyme de IDresseur
+ * <p>Chaque méthode de IStrategy correspond à la méthode homonyme de IDresseur
  */
 public class AIsimple extends Dresseur implements IStrategy {
   public AIsimple(String name, int level, ArrayList<Pokemon> pokemons) {
@@ -38,10 +38,10 @@ public class AIsimple extends Dresseur implements IStrategy {
   @Override
   public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
     Capacite[] capList =
-        (Capacite[]) attaquant.getCapacitesApprises(); // R�cup�re toutes les capacit�s de
-    // l'attaquant
+        (Capacite[])
+            attaquant.getCapacitesApprises(); // Récupère toutes les capacités de l'attaquant
     Random r = new Random();
-    int numAttaque = r.nextInt((3)); // Choisit un nombre al�atoire entre 0 et 3
+    int numAttaque = r.nextInt((3)); // Choisit un nombre aléatoire entre 0 et 3
     return capList[numAttaque];
   }
 }
