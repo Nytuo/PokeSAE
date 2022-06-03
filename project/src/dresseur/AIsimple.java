@@ -31,7 +31,7 @@ public class AIsimple extends Dresseur implements IStrategy {
     // TODO Auto-generated method stub
     Random r = new Random();
     int numPok = r.nextInt((5));
-    
+
     return pokemons.get(numPok);
   }
 
