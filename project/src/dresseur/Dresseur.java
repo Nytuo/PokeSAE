@@ -14,6 +14,8 @@ public class Dresseur implements IDresseur {
   public String name;
   public int level = 0;
   public ArrayList<Pokemon> pokemons;
+  
+  public int echangeRestant = 5;
 
   public Dresseur(String name, int level, ArrayList<Pokemon> pokemons) {
 
@@ -25,6 +27,7 @@ public class Dresseur implements IDresseur {
     }
   }
 
+  
   @Override
   public void enseigne(IPokemon pok, ICapacite[] caps) {
 
@@ -50,12 +53,12 @@ public class Dresseur implements IDresseur {
     Scanner scanner = new Scanner(System.in);
 
     System.out.print("Which pokemon will you send against \n" + pok + "\n" + this.pokemons);
-    String numPok = scanner.nextLine();
+    int numPok = scanner.nextInt();
     System.out.println();
 
     scanner.close();
 
-    return pokemons.get(Integer.valueOf(numPok));
+    return pokemons.get(numPok);
   }
 
   @Override
@@ -69,16 +72,16 @@ public class Dresseur implements IDresseur {
 
     System.out.print(
         "Choose the move to use\n" + attaquant.getCapacitesApprises() + "4 : change pokemon");
-    String numAttaque = scanner.nextLine();
+    int numAttaque = scanner.nextInt();
     System.out.println();
 
     scanner.close();
 
-    if (Integer.valueOf(numAttaque) == 4) {
+    if (numAttaque == 4 && echangeRestant > 0) {
 
       return new Echange(this, attaquant, defenseur);
     }
-    return capList[Integer.valueOf(numAttaque)];
+    return capList[numAttaque];
   }
 
   @Override

@@ -1,18 +1,18 @@
 package game;
 
-import interfaces.IDresseur;
+import dresseur.Dresseur;
 import interfaces.IEchange;
 import interfaces.IPokemon;
 
 public class Echange implements IEchange {
 
-  IDresseur dresseur;
+  Dresseur dresseur;
 
   IPokemon oldPok;
   IPokemon newPok;
   IPokemon defenseur;
 
-  public Echange(IDresseur dresseur, IPokemon oldPok, IPokemon defenseur) {
+  public Echange(Dresseur dresseur, IPokemon oldPok, IPokemon defenseur) {
 
     this.dresseur = dresseur;
     this.oldPok = oldPok;
@@ -26,7 +26,10 @@ public class Echange implements IEchange {
   }
 
   @Override
-  public void utilise() {}
+  public void utilise() {
+	  
+	  this.dresseur.echangeRestant--;
+  }
 
   @Override
   public void setPokemon(IPokemon pok) {
