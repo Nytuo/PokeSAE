@@ -16,10 +16,8 @@ public class Capacite implements interfaces.ICapacite {
 
   /** Liste des capacités qui font un One Hit Kill. */
   List<String> OHKO =
-      Arrays.asList(
-          "Abîme",
-          "Empal'Korne",
-          "Guillotine"); // Liste des capacités qui infligent des dommages OHKO
+      Arrays.asList("Abîme", "Empal'Korne", "Guillotine"); // Liste des capacités qui infligent des
+  // dommages OHKO
 
   /** Le nom de la capacité. */
   String nom;
@@ -143,6 +141,12 @@ public class Capacite implements interfaces.ICapacite {
    */
   @Override
   public int calculeDommage(interfaces.IPokemon lanceur, interfaces.IPokemon receveur) {
+
+    double R = new Random().nextDouble() * (1 - this.getPrecision()) + this.getPrecision();
+    if (R > this.getPrecision()) {
+      return 0;
+    }
+
     // Gestion des capacités qui infligent des dommages OHKO (On Hit Kill)
     if (OHKO.contains(this.categorie.getNom())) {
       return receveur.getStat().getPV();
@@ -172,6 +176,12 @@ public class Capacite implements interfaces.ICapacite {
 
       case "Draco-Rage":
         return 40;
+
+        // case "Riposte":
+        // return 2*calculeDommage(receveur, lanceur);
+
+        // case "Patience":
+        // return 2*calculDommage(receveur, lanceur); des deux tours précedents
     }
 
     // Gestion des capacités normales
@@ -182,9 +192,16 @@ public class Capacite implements interfaces.ICapacite {
     // Gestion du même type
     double STAB = 1;
     if (this.type == lanceur.getEspece().getTypes()[0]
-        || this.type
-            == lanceur.getEspece()
-                .getTypes()[1]) { // Si le pokemon lanceur possède le même type que la capacité
+        || this.type == lanceur.getEspece().getTypes()[1]) { // Si le
+      // pokemon
+      // lanceur
+      // possède
+      // le
+      // même
+      // type
+      // que
+      // la
+      // capacité
       STAB = 1.5;
     }
     double EFFICACITE;
@@ -204,17 +221,20 @@ public class Capacite implements interfaces.ICapacite {
     double CM = STAB * EFFICACITE * RANDOM; // Calcul du Multiplicateur
 
     // Calcul de la force en fonction du type de la capacité
-    int force;
+    int att;
+    int def;
     if (categorie.isSpecial()) {
-      force = lanceur.getStat().getSpecial();
+      att = lanceur.getStat().getSpecial();
+      def = receveur.getStat().getSpecial();
     } else {
-      force = lanceur.getStat().getForce();
+      att = lanceur.getStat().getForce();
+      def = receveur.getStat().getDefense();
     }
     return (int)
-        (((((lanceur.getNiveau() * 0.4 + 2) * force * this.puissance)
-                    / (receveur.getStat().getDefense() * 50))
-                + 2)
-            * CM); // Calcul du nombre de dommage
+        (((((lanceur.getNiveau() * 0.4 + 2) * att * this.puissance) / (def * 50)) + 2)
+            * CM); // Calcul du
+    // nombre de
+    // dommage
   }
 
   /** Diminue le nombre de PP de la capacité quand cette dernière est utilisée. */

@@ -29,6 +29,8 @@ public class Species implements IEspece {
   public Capacite[] capacities;
   /** XP de base de cette espèce. */
   private final int baseXp;
+  /** L'ID de l'espèce */
+  public int ID;
 
   /**
    * Constructeur de la classe Species qui insert dans les variables les valeurs par défaut.
@@ -40,6 +42,7 @@ public class Species implements IEspece {
    * @param evolution
    * @param capacities
    * @param xp
+   * @param id
    * @param gainsStat
    */
   public Species(
@@ -49,7 +52,8 @@ public class Species implements IEspece {
       int start_level,
       TreeMap<Integer, String> evolution,
       Capacite[] capacities,
-      int xp,
+      int baseXp,
+      int id,
       Stats gainsStat) {
     this.nameOfSpecies = name_of_species;
     this.types = types;
@@ -57,7 +61,8 @@ public class Species implements IEspece {
     this.startLevel = start_level;
     this.evolution = evolution;
     this.capacities = capacities;
-    this.baseXp = xp;
+    this.baseXp = baseXp;
+    this.ID = id;
     this.gainsStat = gainsStat;
   }
 
@@ -123,7 +128,7 @@ public class Species implements IEspece {
    * @return un objet Species.
    */
   public IEspece getEvolution(int niveau) { // renvoie null si aucune evolution possible
-    if (this.evolution.containsKey(niveau))
+    if (this.evolution.containsKey(this.evolution.ceilingKey(niveau)))
       return new Pokedex().getInfo(this.evolution.get(niveau));
     else return null;
   }

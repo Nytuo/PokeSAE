@@ -109,55 +109,6 @@ public class Pokedex implements IPokedex {
   }
 
   /**
-   * Donne le nom du Pokémon correspondant
-   *
-   * @param id Le numéro du Pokémon
-   * @return le nom du Pokémon correspondant
-   */
-  private String getPokemonById(int id) {
-    for (String[] s : pokedata) {
-      if (Integer.parseInt(s[0]) == (id)) {
-        return s[1];
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Donne les évolutions du Pokémon.
-   *
-   * @param id Le numéro du Pokémon
-   * @return un tableau des évolutions du Pokémon.
-   */
-  private String[] getEvolution(int id) {
-    id++;
-    for (String[] s : pokedata) {
-      try {
-        if (Integer.parseInt(s[0]) == (id)) {
-          if (s[10].equals("1")) {
-            String[] evolutions = new String[2];
-            evolutions[0] = "";
-            evolutions[1] = "";
-            return evolutions;
-          } else {
-            String[] evolutions = new String[2];
-            evolutions[0] = s[1];
-            evolutions[1] = s[10];
-            return evolutions;
-          }
-        }
-      } catch (NumberFormatException ignored) {
-
-      }
-    }
-    String[] evolutions = new String[2];
-
-    evolutions[0] = "";
-    evolutions[1] = "";
-    return evolutions;
-  }
-
-  /**
    * Crée les 6 Pokémons qui seront attribués à un dresseur par la suite.
    *
    * @return un tableau de Pokémons.
@@ -194,9 +145,10 @@ public class Pokedex implements IPokedex {
               esp.startLevel,
               esp.evolution,
               esp.capacities,
-              (double) esp.getBaseExp(),
+              0.0,
+              esp.getBaseExp(),
               capacitePoke,
-              (int) (Math.random() * 151) + 1,
+              (int) (Math.random() * 15151) + 1,
               esp.gainsStat);
     }
     return ranch;
@@ -228,12 +180,16 @@ public class Pokedex implements IPokedex {
                   Integer.parseInt(s[6]));
           // Niveau de base
           int baseLvl = Integer.parseInt(s[15]);
+          // XP de base
+          int baseXp = Integer.parseInt(s[7]);
           // évolutions
+          int id = Integer.parseInt(s[0]);
+
           TreeMap<Integer, String> evolution = new TreeMap<Integer, String>();
-          int i = Integer.parseInt(s[0]);
-          while (Integer.parseInt(pokedata.get(i)[16]) != 0) {
-            evolution.put(Integer.parseInt(pokedata.get(i)[16]), pokedata.get(i)[17]);
-            i++;
+
+          while (Integer.parseInt(pokedata.get(id)[16]) != 0) {
+            evolution.put(Integer.parseInt(pokedata.get(id)[16]), pokedata.get(id)[17]);
+            id++;
           }
           // types
           types[0] = new Types(s[13]);
@@ -274,7 +230,9 @@ public class Pokedex implements IPokedex {
           for (int i1 = 0; i1 < capacitesArray.size(); i1++) capacites[i1] = capacitesArray.get(i1);
           // Création espèce
           Species esp =
-              new Species(nomEspece, types, baseStats, baseLvl, evolution, capacites, 0, gainStats);
+              new Species(
+                  nomEspece, types, baseStats, baseLvl, evolution, capacites, baseXp, id,
+                  gainStats);
           return esp;
         }
       } catch (NumberFormatException ignored) {
@@ -358,13 +316,13 @@ public class Pokedex implements IPokedex {
   public ICapacite getCapacite(String nom) {
     for (String[] s : capacitedata) {
       try {
+
         if (s[0].equalsIgnoreCase(nom)) {
 
           Types type = new Types(s[6]);
           Categorie categorie;
           if (s[5].equals("Physique")) categorie = new Categorie(s[5], false);
           else categorie = new Categorie(s[5], true);
-
           // Création capacite
           Capacite cap =
               new Capacite(

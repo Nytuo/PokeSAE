@@ -1,14 +1,18 @@
 package game;
 
+import dresseur.AIsimple;
+import dresseur.Dresseur;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.TreeMap;
 import javax.sound.sampled.*;
 import pokedex.Pokedex;
 import pokemon.*;
 
 public class MainGame {
+
+  static int nbSave;
+
   public static void main(String[] args)
       throws UnsupportedAudioFileException, LineUnavailableException, IOException,
           InterruptedException {
@@ -31,15 +35,57 @@ public class MainGame {
             "You have chosen Single Player mode.\n"
                 + "Insert the slot number of your save (will be created if doesn't exist): ");
         System.out.print("> ");
-        Pokemon[] pokes = loadSave(scanner.nextInt(), scanner);
+
+        Pokemon[] pokes = loadSave(setSave(scanner), scanner);
+        String dName = getNameFromSave(nbSave);
+
+        Dresseur moi = new Dresseur(dName, pokes);
+
         System.out.println("Loading complete.\n");
 
-        System.out.println("Your first pokémon is " + pokes[0].getNom() + "!");
-        System.out.println("Your second pokémon is " + pokes[1].getNom() + "!");
-        System.out.println("Your third pokémon is " + pokes[2].getNom() + "!");
-        System.out.println("Your fourth pokémon is " + pokes[3].getNom() + "!");
-        System.out.println("Your fifth pokémon is " + pokes[4].getNom() + "!");
-        System.out.println("Your sixth pokémon is " + pokes[5].getNom() + "!");
+        System.out.println(
+            "Your first pokémon is "
+                + pokes[0].getNom()
+                + "!"
+                + " HP : "
+                + pokes[0].getStat().getPV());
+        System.out.println(
+            "Your second pokémon is "
+                + pokes[1].getNom()
+                + "!"
+                + " HP : "
+                + pokes[1].getStat().getPV());
+        System.out.println(
+            "Your third pokémon is "
+                + pokes[2].getNom()
+                + "!"
+                + " HP : "
+                + pokes[2].getStat().getPV());
+        System.out.println(
+            "Your fourth pokémon is "
+                + pokes[3].getNom()
+                + "!"
+                + " HP : "
+                + pokes[3].getStat().getPV());
+        System.out.println(
+            "Your fifth pokémon is "
+                + pokes[4].getNom()
+                + "!"
+                + " HP : "
+                + pokes[4].getStat().getPV());
+        System.out.println(
+            "Your sixth pokémon is "
+                + pokes[5].getNom()
+                + "!"
+                + " HP : "
+                + pokes[5].getStat().getPV());
+
+        Pokedex pokedex = new Pokedex();
+        // AIsimple tyler = new AIsimple("Tyler", (Pokemon[]) pokedex.engendreRanch());
+        AIsimple dimitry = new AIsimple("dimitry", (Pokemon[]) pokedex.engendreRanch());
+
+        Combat combat = new Combat(moi, dimitry);
+        combat.commence();
 
       } else if (mode == 2) {
         System.out.println(
@@ -59,6 +105,12 @@ public class MainGame {
         selectGameMode = true;
       }
     }
+  }
+
+  public static int setSave(Scanner scanner) {
+
+    nbSave = scanner.nextInt();
+    return nbSave;
   }
 
   static ArrayList<String[]> getFromCSV(String filename) {
@@ -99,6 +151,7 @@ public class MainGame {
         }
       }
     }
+
     AudioListener listener = new AudioListener();
     AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile);
     try {
@@ -117,6 +170,8 @@ public class MainGame {
 
   static void writeToCSV(String filename, ArrayList<String[]> data) {
     try {
+      new File(System.getenv("APPDATA") + "\\PokemonSAE\\").mkdirs();
+
       FileWriter fileWriter =
           new FileWriter(System.getenv("APPDATA") + "\\PokemonSAE\\" + filename + ".csv");
       BufferedWriter writer = new BufferedWriter(fileWriter);
@@ -151,15 +206,17 @@ public class MainGame {
       System.out.print("Please enter your name: ");
       Scanner scanner2 = new Scanner(System.in);
       String name = scanner2.nextLine();
-      System.out.println("Hello " + name + "!\n");
+
+      System.out.println("\nHello " + name + "!\n");
       System.out.println("Are you ready to get your first pokemons?\n1. Yes\n2. No");
       System.out.print("> ");
       int ready = scanner.nextInt();
+
       if (ready == 1) {
         System.out.println("Great! Let's get started!\n");
       } else {
         System.out.println(
-            "Oh, you're not ready yet? Anyway, I'm will give you your first pokémons!\n");
+            "Oh, you're not ready yet? Anyway, I will give you your first pokémons!\n");
       }
       Pokedex pokedex = new Pokedex();
       pokes = (Pokemon[]) pokedex.engendreRanch();
@@ -170,33 +227,42 @@ public class MainGame {
     } else {
       System.out.println("Save found.\nLoading...");
 
+      Pokedex pokedex = new Pokedex();
+
       pokes = new Pokemon[6];
       for (int i = 0; i < 6; i++) {
-        Pokedex pokedex = new Pokedex();
-        Species z = (Species) pokedex.getInfo(data.get(i + 1)[0]);
-        Capacite[] cap = new Capacite[4];
+
+        Species esp = (Species) pokedex.getInfo(data.get(i + 1)[0]);
+        Capacite[] caps = new Capacite[4];
         for (int j = 0; j < 4; j++) {
-          cap[j] = (Capacite) pokedex.getCapacite(data.get(i + 1)[2 + j]);
+          caps[j] = (Capacite) pokedex.getCapacite(data.get(i + 1)[2 + j]);
         }
+
         pokes[i] =
             new Pokemon(
-                data.get(i)[0],
+                data.get(i + 1)[0],
                 data.get(i + 1)[1],
-                (Types[]) z.getTypes(),
-                (Stats) z.getBaseStat(),
-                z.getBaseExp(),
-                (TreeMap<Integer, String>) z.getEvolution(Integer.parseInt(data.get(i + 1)[7])),
-                cap,
+                (Types[]) esp.getTypes(),
+                (Stats) esp.getBaseStat(),
+                Integer.parseInt(data.get(i + 1)[7]),
+                esp.evolution,
+                (Capacite[]) esp.getCapSet(),
                 Double.parseDouble(data.get(i + 1)[6]),
-                (Capacite[]) z.getCapSet(),
+                esp.getBaseExp(),
+                caps,
                 Integer.parseInt(data.get(i + 1)[8]),
-                (Stats) z.getGainsStat());
+                (Stats) esp.getGainsStat());
       }
 
       System.out.println("Save loaded.");
     }
 
     return pokes;
+  }
+
+  static String getNameFromSave(int saveNumber) {
+    ArrayList<String[]> data = getFromCSV("saveSlot" + saveNumber);
+    return data.get(0)[0];
   }
 
   static void saveGame(Pokemon[] pokemon, String name, int Slotnb) {

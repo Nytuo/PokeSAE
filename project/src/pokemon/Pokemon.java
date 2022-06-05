@@ -59,11 +59,20 @@ public class Pokemon extends Species implements IPokemon {
       TreeMap<Integer, String> evolution,
       Capacite[] capacities,
       double xp,
+      int baseXp,
       Capacite[] capacitiesPoke,
       int ID,
       Stats gainsStats) {
     super(
-        name_of_species, types, baseStats, baseLevel, evolution, capacities, (int) xp, gainsStats);
+        name_of_species,
+        types,
+        baseStats,
+        baseLevel,
+        evolution,
+        capacities,
+        baseXp,
+        ID,
+        gainsStats);
     this.level = baseLevel;
     this.xp = xp;
     this.known_capacities = capacitiesPoke;
@@ -198,7 +207,7 @@ public class Pokemon extends Species implements IPokemon {
    * @return l'expérience du Pokémon
    */
   public double getExperience() {
-    return xp;
+    return this.xp;
   }
 
   /**
@@ -234,7 +243,7 @@ public class Pokemon extends Species implements IPokemon {
    * @return le pourcentage actuel de PV du Pokémon.
    */
   public double getPourcentagePV() {
-    return ((PVActuel / stats.getPV()) * 100);
+    return this.PVActuel * 100 / this.stats.getPV();
   }
 
   /**
@@ -250,7 +259,8 @@ public class Pokemon extends Species implements IPokemon {
         this.startLevel,
         this.evolution,
         this.capacities,
-        (int) this.xp,
+        this.getBaseExp(),
+        this.ID,
         (Stats) this.getGainsStat());
   }
 
@@ -307,6 +317,10 @@ public class Pokemon extends Species implements IPokemon {
    */
   public void gagneExperienceDe(IPokemon pok) {
     this.xp += (1.5 * pok.getNiveau() * ((IEspece) pok).getBaseExp()) / 7;
+
+    if (this.aChangeNiveau()) {
+      this.levelUp();
+    }
   }
 
   /**
@@ -325,18 +339,8 @@ public class Pokemon extends Species implements IPokemon {
    * @return l'état du Pokémon
    */
   public boolean estEvanoui() {
-    boolean evanoui = false;
-    int ppRestant = 0;
-    for (Capacite c : this.known_capacities) {
-      ppRestant = c.getPP();
-    }
-    if (ppRestant == 0) {
-      evanoui = true;
-    }
-    if (this.PVActuel <= 0) {
-      evanoui = true;
-    }
-    return evanoui;
+
+    return this.PVActuel <= 0;
   }
 
   /**
@@ -360,6 +364,29 @@ public class Pokemon extends Species implements IPokemon {
                 / 100)
             + this.getNiveau()
             + 10);
+    this.stats.setForce(
+        (((2 * (this.stats.getForce() + this.getDV().get("Force")) + this.getEV().get("Force") / 4)
+                    * this.getNiveau())
+                / 100)
+            + 5);
+    this.stats.setDefense(
+        (((2 * (this.stats.getDefense() + this.getDV().get("Defense"))
+                        + this.getEV().get("Defense") / 4)
+                    * this.getNiveau())
+                / 100)
+            + 5);
+    this.stats.setVitesse(
+        (((2 * (this.stats.getVitesse() + this.getDV().get("Vitesse"))
+                        + this.getEV().get("Vitesse") / 4)
+                    * this.getNiveau())
+                / 100)
+            + 5);
+    this.stats.setSpecial(
+        (((2 * (this.stats.getSpecial() + this.getDV().get("Special"))
+                        + this.getEV().get("Special") / 4)
+                    * this.getNiveau())
+                / 100)
+            + 5);
   }
 
   /**
@@ -368,8 +395,15 @@ public class Pokemon extends Species implements IPokemon {
    * @return l'état d'évolution du Pokémon.
    */
   public boolean peutMuter() {
-    return this.evolution.containsKey(this.level)
-        && (!Objects.equals(this.evolution.get(this.level), this.nameOfSpecies));
+
+    if (this.evolution.floorKey(this.level) == null) {
+      return false;
+    }
+
+    int key = this.evolution.floorKey(this.level);
+
+    return this.evolution.containsKey(key)
+        && (!Objects.equals(this.evolution.get(key), this.nameOfSpecies));
   }
 
   /** Cette méthode remet au maximum les PV du Pokémon. */
