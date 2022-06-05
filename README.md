@@ -31,9 +31,10 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 - Aide de classes, MD : Jules
 
 ### Rendu 3
-- IAsimple : Elyan
-- Dresseur, Combat : Jules
+- IAsimple : Elyan, Jules
+- Dresseur, Echange, Combat : Jules
 - MainGame : Arnaud
+- Tour, correction de bugs : Jules, Arnaud
 - PDF, Intructions(MD) : Ethan 
 
 ###  Instruction
