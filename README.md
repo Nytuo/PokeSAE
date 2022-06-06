@@ -38,10 +38,10 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 - PDF, Intructions(MD) : Ethan 
 
 ###  Instruction
-- Choisir un emplacement où le projet sera téléchargé depuis ce dépôt
-- Dans cet emplacement, ouvrir *Git Bash* et taper la commande ```git clone https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult```
-- Lancer Eclipse puis cliquer sur *File* puis *Open Projects from File System...*, cliquer sur *Directory* et sélectionner le dossier où se trouve le dépôt. Cliquer     ensuite sur *Finish*.
-- Il ne manque plus qu'à importer la bibliothèque JUnit. Pour se faire, faire un clic-droit sur le projet puis cliquer sur *Properties*, puis *Java Build Path*, puis *Libraries* et enfin cliquer sur *Classpath*, puis sur *Add Library*, puis *JUnit*, *Next >*, *Finish*, et pour terminer l'opération *Apply and Close*.   
+1 Choisir un emplacement où le projet sera téléchargé depuis ce dépôt
+2 Dans cet emplacement, ouvrir *Git Bash* et taper la commande ```git clone https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult```
+2 Lancer Eclipse puis cliquer sur *File* puis *Open Projects from File System...*, cliquer sur *Directory* et sélectionner le dossier où se trouve le dépôt. Cliquer     ensuite sur *Finish*.
+4 Il ne manque plus qu'à importer la bibliothèque JUnit. Pour se faire, faire un clic-droit sur le projet puis cliquer sur *Properties*, puis *Java Build Path*, puis *Libraries* et enfin cliquer sur *Classpath*, puis sur *Add Library*, puis *JUnit*, *Next >*, *Finish*, et pour terminer l'opération *Apply and Close*.   
 ## Contribution
 Vous trouverez <a href="https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult/blob/main/CONTRIBUTING.md"> ci-joint </a> le lien concernant la contribution du projet.
 
