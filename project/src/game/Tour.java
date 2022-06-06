@@ -1,5 +1,6 @@
 package game;
 
+import dresseur.AIsimple;
 import dresseur.Dresseur;
 import interfaces.IAttaque;
 import interfaces.IDresseur;
@@ -33,13 +34,20 @@ public class Tour implements ITour {
   public void commence() {
 
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-
-      attaque(dresseur1, pok1, atk1, pok2, atk2);
+      System.out.println("Turn of " + dresseur1.getNom() + " with " + pok1.getNom());
       attaque(dresseur2, pok2, atk2, pok1, atk1);
+      if (pok1 == Combat.pok1) {
+        System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+        attaque(dresseur1, pok1, atk1, pok2, atk2);
+      }
     } else {
 
-      attaque(dresseur2, pok2, atk2, pok1, atk1);
+      System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
       attaque(dresseur1, pok1, atk1, pok2, atk2);
+      if ( pok2==Combat.pok2) {
+        System.out.println("Turn of " + dresseur1.getNom() + " with " + pok1.getNom());
+        attaque(dresseur2, pok2, atk2, pok1, atk1);
+      }
     }
   }
 
@@ -50,50 +58,65 @@ public class Tour implements ITour {
 
     if (atk1.getClass() == Echange.class) {
       pok1.subitAttaqueDe(pok2, atk2);
+      System.out.println(
+          pok1.getNom()
+              + " get hurt by "
+              + ((Capacite) atk2).getNom()
+              + " from "
+              + pok2.getNom()
+              + " and remains only "
+              + pok1.getPourcentagePV()
+              + " % of his HP");
     } else if (atk2.getClass() == Echange.class) {
 
     } else {
-      System.out.println(atk2.calculeDommage(pok2, pok1) + " points de dommage");
+      System.out.println(atk2.calculeDommage(pok2, pok1) + " damages points");
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(
           pok1.getNom()
-              + " a subit "
+              + " get hurt by "
               + ((Capacite) atk2).getNom()
-              + " de "
+              + " from "
               + pok2.getNom()
-              + " PV restant : "
+              + " and remains only "
               + pok1.getPourcentagePV()
-              + " %");
+              + " % of his HP");
     }
 
-    if (pok1.estEvanoui()) {
+    if (this.pok1.estEvanoui()) {
 
-      System.out.println(pok2.getNom() + " a vaincu " + pok1.getNom() + "\n");
+      System.out.println(this.pok2.getNom() + " slain " + this.pok1.getNom() + "\n");
 
-      pok2.gagneExperienceDe(pok1);
-      System.out.println(pok2.getNom() + " a accumulé " + pok2.getExperience() + " xp\n");
+      this.pok2.gagneExperienceDe(this.pok1);
+      System.out.println(this.pok2.getNom() + " gained " + this.pok2.getExperience() + " xp\n");
 
-      ((Dresseur) dresseur1).pokeEnVie--;
-      if (((Dresseur) dresseur1).pokeEnVie > 0) {
-        atk1 = new Echange((Dresseur) dresseur1, pok1, pok2);
-        pok1 = ((Echange) atk1).echangeCombattant();
-        System.out.println(dresseur1.getNom() + " sent " + pok1.getNom());
+      ((Dresseur) this.dresseur1).pokeEnVie--;
+      if (((Dresseur) this.dresseur1).pokeEnVie > 0) {
+
+        Combat.pok1 =
+            new Echange((Dresseur) this.dresseur1, this.pok1, this.pok2).echangeCombattant();
+
+        System.out.println(this.dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
     }
 
-    if (pok2.estEvanoui()) {
+    if (this.pok2.estEvanoui()) {
 
-      System.out.println(pok1.getNom() + " a vaincu " + pok2.getNom() + "\n");
+      System.out.println(this.pok1.getNom() + " slain " + this.pok2.getNom());
 
-      pok1.gagneExperienceDe(pok2);
-      System.out.println(pok1.getNom() + " a accumulé " + pok1.getExperience() + " xp\n");
+      this.pok1.gagneExperienceDe(this.pok2);
+      System.out.println(this.pok1.getNom() + " gained " + this.pok1.getExperience() + " xp\n");
 
-      ((Dresseur) dresseur2).pokeEnVie--;
-      if (((Dresseur) dresseur2).pokeEnVie > 0) {
-        atk2 = new Echange((Dresseur) dresseur1, pok2, pok1);
-        pok2 = ((Echange) atk2).echangeCombattant();
-        System.out.println(dresseur2.getNom() + " sent " + pok2.getNom());
+      ((Dresseur) this.dresseur2).pokeEnVie--;
+      if (((Dresseur) this.dresseur2).pokeEnVie > 0) {
+        Combat.pok2 =
+            new Echange((AIsimple) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
+        System.out.println(this.dresseur2.getNom() + " sent " + Combat.pok2.getNom());
       }
     }
+  }
+
+  void passTour(Dresseur dresseur1) {
+    System.out.println("Pass his turn");
   }
 }

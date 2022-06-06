@@ -5,7 +5,9 @@ import interfaces.IAttaque;
 import interfaces.ICapacite;
 import interfaces.IDresseur;
 import interfaces.IPokemon;
+
 import java.util.Scanner;
+
 import pokedex.Pokedex;
 import pokemon.Capacite;
 import pokemon.Pokemon;
@@ -54,6 +56,7 @@ public class Dresseur implements IDresseur {
     Scanner scanner3 = new Scanner(System.in);
 
     int i = 0;
+    System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
     for (IPokemon poke : this.pokemons) {
       System.out.println(i + " : " + poke.getNom());
       i++;
@@ -63,7 +66,7 @@ public class Dresseur implements IDresseur {
 
     while ((numPok < 0 || numPok > 5)) {
 
-      System.out.print("\nWhich pokemon will you send against " + pok.getNom() + "\n");
+      System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
       numPok = scanner3.nextInt();
       System.out.println();
       if (getPokemon(numPok).estEvanoui()) {
@@ -83,51 +86,56 @@ public class Dresseur implements IDresseur {
     // l'attaquant
 
     Scanner scanner = new Scanner(System.in);
-    int i = 0;
+    int i = 1;
 
     if (capList[0].getPP() <= 0
         && capList[1].getPP() <= 0
         && capList[2].getPP() <= 0
         && capList[3].getPP() <= 0) {
-      for (i = 0; i < 4; i++) {
-        System.out.println(i + " : Lutte");
+      for (int j = 1; j < 5; j++) {
+        System.out.println(j + " : Lutte");
       }
     } else {
       for (ICapacite cap : attaquant.getCapacitesApprises()) {
-        System.out.println(i + " : " + cap.getNom() + "	PP : " + cap.getPP());
+        System.out.println(i + " : " + cap.getNom() + "	  |   PP : " + cap.getPP());
         i++;
       }
     }
     if (echangeRestant > 0) {
-      System.out.println("4 : change pokemon	left : " + this.echangeRestant + "\n");
+      System.out.println(i + " : change pokemon	  |   left : " + this.echangeRestant + "\n");
     }
 
-    int numAttaque = Integer.parseInt(scanner.nextLine());
-
-    while (numAttaque < 0 || numAttaque > (3 - Boolean.compare(false, echangeRestant > 0))) {
-      System.out.print("Choose the move to use :\n");
+    int numAttaque = -1;
+    do {
+      System.out.print("> ");
       numAttaque = scanner.nextInt();
-      if (capList[numAttaque].getPP() <= 0) {
-        System.out.println(
-            "Argh, " + getPokemon(numAttaque).getNom() + " cannot be used anymore !");
-        numAttaque = -1;
-        if (capList[0].getPP() <= 0
-            && capList[1].getPP() <= 0
-            && capList[2].getPP() <= 0
-            && capList[3].getPP() <= 0) {
-          return (IAttaque) new Pokedex().getCapacite("Lutte");
+      try {
+        if ((numAttaque == 5) && (echangeRestant < 1)) {
+          System.out.println("You can't change pokemon anymore");
+          numAttaque = -1;
         }
+        if (capList[numAttaque - 1].getPP() <= 0) {
+          System.out.println(
+              "Argh, " + capList[numAttaque - 1].getNom() + " cannot be used anymore !");
+          numAttaque = -1;
+          if (capList[0].getPP() <= 0
+              && capList[1].getPP() <= 0
+              && capList[2].getPP() <= 0
+              && capList[3].getPP() <= 0) {
+            return new Pokedex().getCapacite("Lutte");
+          }
+        }
+
+      } catch (ArrayIndexOutOfBoundsException ignored) {
+
       }
+    } while ((numAttaque == 5 && echangeRestant < 1) || numAttaque < 1 || numAttaque > 5);
 
-      System.out.println();
-    }
-
-    if ((numAttaque == 4) && (echangeRestant > 0)) {
-
+    if ((numAttaque == 5) && (echangeRestant > 0)) {
       return new Echange(this, attaquant, defenseur);
     }
 
-    return capList[numAttaque];
+    return capList[numAttaque - 1];
   }
 
   @Override

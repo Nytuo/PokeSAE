@@ -3,6 +3,8 @@
  */
 package pokemon;
 
+import game.Combat;
+import pokemon.Pokemon;
 import interfaces.ICategorie;
 import interfaces.IType;
 import java.util.*;
@@ -34,6 +36,7 @@ public class Capacite implements interfaces.ICapacite {
   /** La précision de la capacité. */
   double precision;
 
+  boolean switchPatience = false;
   /** Le nombre de PP de la capacité. */
   int PP;
 
@@ -177,11 +180,18 @@ public class Capacite implements interfaces.ICapacite {
       case "Draco-Rage":
         return 40;
 
-        // case "Riposte":
-        // return 2*calculeDommage(receveur, lanceur);
+      case "Riposte":
+        return 2 * ((Pokemon) receveur).getAppliedDamages().get(Combat.nbTour - 1);
 
-        // case "Patience":
-        // return 2*calculDommage(receveur, lanceur); des deux tours précedents
+      case "Patience":
+        if (switchPatience) {
+          switchPatience = false;
+          return 2 * ((Pokemon) receveur).getAppliedDamages().get(Combat.nbTour - 1)
+              + ((Pokemon) receveur).getAppliedDamages().get(Combat.nbTour - 2);
+        } else {
+          switchPatience = true;
+          return 0;
+        }
     }
 
     // Gestion des capacités normales

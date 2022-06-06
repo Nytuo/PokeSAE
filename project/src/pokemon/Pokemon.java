@@ -1,10 +1,13 @@
 package pokemon;
 
+import game.Combat;
 import interfaces.IAttaque;
 import interfaces.ICapacite;
 import interfaces.IEspece;
 import interfaces.IPokemon;
 import interfaces.IStat;
+
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.TreeMap;
 
@@ -32,7 +35,10 @@ public class Pokemon extends Species implements IPokemon {
   private final TreeMap<String, Integer> DV;
 
   /** PV actuels du Pokémon */
-  private int PVActuel;
+  public int PVActuel;
+
+  public TreeMap<Integer,Integer> degatSubit = new TreeMap<>();
+
 
   /**
    * Constructeur de la classe Pokémon qui va construire le Pokémon.
@@ -73,6 +79,7 @@ public class Pokemon extends Species implements IPokemon {
         baseXp,
         ID,
         gainsStats);
+    this.degatSubit.put(0,0);
     this.level = baseLevel;
     this.xp = xp;
     this.known_capacities = capacitiesPoke;
@@ -158,7 +165,7 @@ public class Pokemon extends Species implements IPokemon {
   /**
    * Change le nom du Pokémon.
    *
-   * @param name.
+   * @param name
    */
   public void setNom(String name) {
     this.name = name;
@@ -330,7 +337,9 @@ public class Pokemon extends Species implements IPokemon {
    * @param atk L'attaque adverse
    */
   public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
-    this.PVActuel -= atk.calculeDommage(pok, this);
+    int degats = atk.calculeDommage(pok,this);
+    degatSubit.put(Combat.nbTour, degats);
+    this.PVActuel -= degats;
   }
 
   /**
@@ -409,5 +418,8 @@ public class Pokemon extends Species implements IPokemon {
   /** Cette méthode remet au maximum les PV du Pokémon. */
   public void soigne() {
     this.PVActuel = this.stats.getPV();
+  }
+  public TreeMap<Integer,Integer> getAppliedDamages(){
+    return degatSubit;
   }
 }

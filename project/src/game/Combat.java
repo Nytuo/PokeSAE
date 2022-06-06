@@ -9,6 +9,8 @@ import interfaces.ITour;
 import pokemon.Capacite;
 import pokemon.Pokemon;
 
+import java.sql.SQLOutput;
+
 public class Combat implements ICombat {
 
   IDresseur dresseur1;
@@ -18,8 +20,9 @@ public class Combat implements ICombat {
   static IPokemon pok1;
   static IPokemon pok2;
 
-  static IAttaque atk1;
-  static IAttaque atk2;
+  public static IAttaque atk1;
+  public static IAttaque atk2;
+  public static int nbTour = 0;
 
   String gagnant;
 
@@ -31,26 +34,32 @@ public class Combat implements ICombat {
   @Override
   public void commence() {
 
-    System.out.println("\n\n" + dresseur1.getNom() + " VS " + dresseur2.getNom() + "\n");
+    System.out.println(
+        "--------------------------------------\n"
+            + dresseur1.getNom()
+            + " VS. "
+            + dresseur2.getNom());
 
     Combat.pok1 = dresseur1.choisitCombattant();
     Combat.pok2 = dresseur2.choisitCombattant();
 
-    System.out.println(Combat.pok1.getNom() + " VS " + Combat.pok2.getNom() + "\n");
+    System.out.println(Combat.pok1.getNom() + " VS. " + Combat.pok2.getNom() + "\n");
 
     while ((((Dresseur) dresseur1).pokeEnVie > 0) && (((Dresseur) dresseur2).pokeEnVie > 0)) {
-
+      System.out.println("-----------------------------------------------------");
+      System.out.println("Turn " + (nbTour + 1));
+      System.out.println("Choose the move to use : ");
       Combat.atk1 = dresseur1.choisitAttaque(Combat.pok1, Combat.pok2);
-      Combat.atk2 = dresseur2.choisitAttaque(Combat.pok2, Combat.pok1);
       if (Combat.atk1.getClass() == Echange.class) {
         System.out.println(dresseur1.getNom() + " used swap");
         Combat.pok1 = ((Echange) Combat.atk1).echangeCombattant();
         System.out.println(dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
+      Combat.atk2 = dresseur2.choisitAttaque(Combat.pok2, Combat.pok1);
       if (Combat.atk2.getClass() == Echange.class) {
         System.out.println(dresseur2.getNom() + " used swap");
         Combat.pok2 = ((Echange) Combat.atk2).echangeCombattant();
-        System.out.println(dresseur2.getNom() + " sent " + Combat.pok1.getNom());
+        System.out.println(dresseur2.getNom() + " sent " + Combat.pok2.getNom());
       }
 
       nouveauTour(Combat.pok1, Combat.atk1, Combat.pok2, Combat.atk2).commence();
@@ -84,7 +93,7 @@ public class Combat implements ICombat {
 
   @Override
   public ITour nouveauTour(IPokemon pok1, IAttaque atk1, IPokemon pok2, IAttaque atk2) {
-
+    nbTour++;
     return new Tour(pok1, atk1, pok2, atk2, dresseur1, dresseur2);
   }
 
@@ -92,12 +101,14 @@ public class Combat implements ICombat {
   public void termine() {
 
     Dresseur dresseur1 = (Dresseur) getDresseur1();
-
-    System.out.println(gagnant + " won the fight");
+    System.out.println("-----------------------------------------------------");
+    System.out.println(gagnant + " won the fight! Congratulations!");
 
     resetAllandEvolve(dresseur1);
+    if (MainGame.nbSave != 0) {
 
-    MainGame.saveGame(dresseur1.pokemons, dresseur1.name, MainGame.nbSave);
+      MainGame.saveGame(dresseur1.pokemons, dresseur1.name, MainGame.nbSave);
+    }
   }
 
   public void resetAllandEvolve(Dresseur dresseur) {
@@ -111,9 +122,9 @@ public class Combat implements ICombat {
         cap.resetPP();
       }
       if (pok.peutMuter()) {
-        System.out.println("Quoi ?!\n" + pok.getNom() + " évolue ?!");
+        System.out.println("What ?!\n" + pok.getNom() + " evolve ?!");
         pok.vaMuterEn(pok.getEvolution(pok.getNiveau()));
-        System.out.println("Iel est devenu un " + pok.getNom());
+        System.out.println("It became a " + pok.getNom());
       }
     }
   }
