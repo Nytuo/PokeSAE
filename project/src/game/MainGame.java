@@ -16,7 +16,7 @@ public class MainGame {
   public static void main(String[] args)
       throws UnsupportedAudioFileException, LineUnavailableException, IOException,
           InterruptedException {
-    playClip(new File("project/external/pokemonMainTitle.wav"));
+    playClip(new File("external/pokemonMainTitle.wav"));
     System.out.println(
         "                                 ,'\\\n"
             + "    _.----.        ____         ,'  _\\   ___    ___     ____\n"
