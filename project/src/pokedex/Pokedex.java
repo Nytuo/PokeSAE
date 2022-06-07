@@ -31,7 +31,7 @@ public class Pokedex implements IPokedex {
      * Constructeur de la classe Pokedex qui va associer aux attributs le chemin des CSV
      */
     public Pokedex() {
-        String pokeFile = new File("project/external/listePokemon1G.csv").getAbsolutePath();
+        String pokeFile = new File("external/listePokemon1G.csv").getAbsolutePath();
         try {
             Scanner sc = new Scanner(new File(pokeFile));
 
@@ -44,7 +44,7 @@ public class Pokedex implements IPokedex {
             System.out.println("File not found");
         }
 
-        String capaciteFile = new File("project/external/listeCapacites.csv").getAbsolutePath();
+        String capaciteFile = new File("external/listeCapacites.csv").getAbsolutePath();
         try {
             Scanner sc = new Scanner(new File(capaciteFile));
             sc.useDelimiter(",");
@@ -280,7 +280,7 @@ public class Pokedex implements IPokedex {
     public HashMap<String, String[]> initializeFromCSV() {
         HashMap<String, String[]> lines = new HashMap<>();
         try {
-            String file = String.valueOf(new File("project/external/efficacites.csv"));
+            String file = String.valueOf(new File("external/efficacites.csv"));
             Scanner sc = new Scanner(new File(file));
             sc.useDelimiter(";");
             sc.nextLine();
