@@ -1,10 +1,6 @@
 package pokemon;
 
 /**
- * @author Beux
- */
-
-/**
  * La classe Stats représente les statistiques d'un Pokémon/d'une espèce. Elle implémente
  * l'interface IStat
  */
@@ -23,11 +19,11 @@ public class Stats implements interfaces.IStat {
   /**
    * Le constructeur de la classe Stats qui donne une valeur aux attributs
    *
-   * @param PV
-   * @param force
-   * @param defense
-   * @param special
-   * @param vitesse
+   * @param PV PV du Pokémon
+   * @param force Force du Pokémon
+   * @param defense Défense du Pokémon
+   * @param special Spécial du Pokémon
+   * @param vitesse Vitesse du Pokémon
    */
   public Stats(int PV, int force, int defense, int special, int vitesse) {
     this.PV = PV;

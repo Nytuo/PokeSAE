@@ -7,10 +7,6 @@ import interfaces.IType;
 import java.util.TreeMap;
 import pokedex.Pokedex;
 
-/**
- * @author testa/beux
- */
-
 /** La classe Species représente l'espèce d'un Pokémon Elle implémente l'interface IEspece */
 public class Species implements IEspece {
   /** Nom de l'espèce */
@@ -35,15 +31,14 @@ public class Species implements IEspece {
   /**
    * Constructeur de la classe Species qui insert dans les variables les valeurs par défaut.
    *
-   * @param name_of_species
-   * @param types
-   * @param baseStats
-   * @param start_level
-   * @param evolution
-   * @param capacities
-   * @param xp
-   * @param id
-   * @param gainsStat
+   * @param name_of_species Nom de l'espèce
+   * @param types Types de l'espèce
+   * @param baseStats Statistiques de base de l'espèce
+   * @param start_level Niveau de départ de l'espèce
+   * @param evolution Evolutions de l'espèce
+   * @param capacities Capacités de l'espèce
+   * @param id ID de l'espèce
+   * @param gainsStat Gains en EV que vont obtenir les Pokémons vainqueurs contre cette espèce.
    */
   public Species(
       String name_of_species,

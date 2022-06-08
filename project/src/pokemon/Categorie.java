@@ -1,10 +1,6 @@
 package pokemon;
 
 /**
- * @author beux
- */
-
-/**
  * La classe Categorie représente la catégorie d'une Capacite. Elle implémente l'interface
  * ICategorie.
  */
@@ -14,6 +10,12 @@ public class Categorie implements interfaces.ICategorie {
   /** true: Capacite spéciale; false: Capacite physique. */
   private final boolean special;
 
+  /**
+   * Le constructeur de la classe Categorie.
+   *
+   * @param nom String (Le nom de la catégorie).
+   * @param special boolean (true: Capacite spéciale; false: Capacite physique).
+   */
   public Categorie(String nom, boolean special) {
     this.nom = nom;
     this.special = special;

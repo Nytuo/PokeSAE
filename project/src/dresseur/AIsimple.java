@@ -11,21 +11,37 @@ import pokemon.Pokemon;
 /**
  * Une stratégie est utilisée par les dresseurs non humains (IA) pour prendre les décisions Un
  * DresseurIA possède une référence sur une IStrategy à qui il délègue la prise de décision Un
- * dresseur humain n'utilise pas IStrategy
- *
- * <p>Chaque méthode de IStrategy correspond à la méthode homonyme de IDresseur
+ * dresseur humain n'utilise pas IStrategy. Chaque méthode de IStrategy correspond à la méthode
+ * homonyme de IDresseur
  */
 public class AIsimple extends Dresseur implements IStrategy {
+  /**
+   * Constructeur de la classe AIsimple qui se charge de remplir le constructeur de Dresseur
+   *
+   * @param name Nom du dresseur (IA)
+   * @param pokemons Liste des pokemons du dresseur (IA)
+   */
   public AIsimple(String name, Pokemon[] pokemons) {
     super(name, pokemons);
   }
 
+  /**
+   * Méthode qui permet de choisir le premier pokemon du dresseur (IA) lors 1er tour de combat
+   *
+   * @return Le premier pokemon de la liste des pokemons du dresseur (IA)
+   */
   @Override
   public IPokemon choisitCombattant() {
-    // TODO Auto-generated method stub
     return getPokemon(0);
   }
 
+  /**
+   * Méthode qui permet de choisir un pokemon au hasard dans la liste des pokemons du dresseur (IA)
+   * (pendant le tour)
+   *
+   * @param pok Pokemon Adverse
+   * @return Un pokemon au hasard dans la liste des pokemons du dresseur (IA) (non évanouie)
+   */
   @Override
   public IPokemon choisitCombattantContre(IPokemon pok) {
     // TODO Auto-generated method stub
@@ -44,6 +60,15 @@ public class AIsimple extends Dresseur implements IStrategy {
     return getPokemon(numPok);
   }
 
+  /**
+   * Méthode qui permet de choisir une attaque au hasard dans la liste des attaques du pokemon (IA).
+   * La capacité choisie doit avoir des PPs restants.
+   * Si le nombre de PP de toutes les capacités est égal à 0, la capacité choisie est "Lutte".
+   *
+   * @param attaquant Pokemon du dresseur (IA)
+   * @param defenseur Pokemon Adverse
+   * @return Une attaque au hasard dans la liste des attaques du pokemon (IA), sous conditions
+   */
   @Override
   public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
     Capacite[] capList =
@@ -55,14 +80,13 @@ public class AIsimple extends Dresseur implements IStrategy {
 
     while (numAttaque < 0 || numAttaque > nbCap) {
       numAttaque = r.nextInt((nbCap));
-      ;
       if (capList[numAttaque].getPP() <= 0) {
         numAttaque = -1;
         if (capList[0].getPP() <= 0
             && capList[1].getPP() <= 0
             && capList[2].getPP() <= 0
             && capList[3].getPP() <= 0) {
-          return (IAttaque) new Pokedex().getCapacite("Lutte");
+          return new Pokedex().getCapacite("Lutte");
         }
       }
       System.out.println();

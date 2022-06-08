@@ -4,7 +4,6 @@
 package pokemon;
 
 import game.Combat;
-import pokemon.Pokemon;
 import interfaces.ICategorie;
 import interfaces.IType;
 import java.util.*;

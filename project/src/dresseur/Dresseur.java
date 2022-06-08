@@ -12,15 +12,33 @@ import pokedex.Pokedex;
 import pokemon.Capacite;
 import pokemon.Pokemon;
 
+/**
+ * La classe Dresseur représente un dresseur caractérisé par : un nom, un niveau (somme des niveaux
+ * des pokémons et une liste de pokemons. Dresseur implémente l'interface IDresseur.
+ */
 public class Dresseur implements IDresseur {
+  /** Le nom du dresseur */
   public String name;
+
+  /** Le niveau du dresseur */
   public int level = 0;
+
+  /** La liste des pokemons */
   public Pokemon[] pokemons;
 
+  /** Nombre d'échanges restants pour le dresseur pendant le Combat */
   public int echangeRestant = 5;
 
+  /** Le nombre de pokémons du Dresseur encore en vie */
   public int pokeEnVie = 6;
 
+  /**
+   * Le constructeur de la classe Dresseur initialise le niveau du dresseur en fonction des
+   * pokémons, son nom et la liste de pokémons
+   *
+   * @param name Le nom du dresseur
+   * @param pokemons La liste des pokemons du dresseur
+   */
   public Dresseur(String name, Pokemon[] pokemons) {
 
     this.name = name;
@@ -31,12 +49,19 @@ public class Dresseur implements IDresseur {
     }
   }
 
+  /**
+   * Permet au dresseur de faire apprendre de nouvelles capacitées à un de ses pokémons
+   *
+   * @param pok Le pokémon qui apprendra la nouvelle capacité
+   * @param caps La liste des capacités disponibles à l'apprentissage
+   */
   @Override
   public void enseigne(IPokemon pok, ICapacite[] caps) {
 
     pok.apprendCapacites(caps);
   }
 
+  /** Permet de soigner l'ensemble des pokémons du dresseur */
   @Override
   public void soigneRanch() {
     for (Pokemon pok : pokemons) {
@@ -44,12 +69,23 @@ public class Dresseur implements IDresseur {
     }
   }
 
+  /**
+   * Méthode qui permet de choisir le premier pokemon du dresseur lors 1er tour de combat
+   *
+   * @return Le premier pokemon de la liste des pokemons du dresseur
+   */
   @Override
   public IPokemon choisitCombattant() {
 
     return getPokemon(0);
   }
 
+  /**
+   * Permet à l'utilisateur de choisir un pokemon de remplacement contre un pokémon ennemi
+   *
+   * @param pok Le pokémon ennemi
+   * @return Le pokemon choisi par l'utilisateur (non évanoui)
+   */
   @Override
   public IPokemon choisitCombattantContre(IPokemon pok) {
 
@@ -78,6 +114,14 @@ public class Dresseur implements IDresseur {
     return getPokemon(numPok);
   }
 
+  /**
+   * Permet de choisir une attaque à utiliser par un pokémon contre un pokémon ennemi
+   * Gère également le cas de l'échange de pokémon
+   * L'attaque sera "Lutte" si le pokémon n'a plus de PP sur ses capacités
+   * @param attaquant le pokémon du dresseur
+   * @param defenseur le pokémon ennemi
+   * @return l'attaque choisie
+   */
   @Override
   public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
 
@@ -105,7 +149,7 @@ public class Dresseur implements IDresseur {
       System.out.println(i + " : change pokemon	  |   left : " + this.echangeRestant + "\n");
     }
 
-    int numAttaque = -1;
+    int numAttaque;
     do {
       System.out.print("> ");
       numAttaque = scanner.nextInt();
@@ -131,31 +175,44 @@ public class Dresseur implements IDresseur {
       }
     } while ((numAttaque == 5 && echangeRestant < 1) || numAttaque < 1 || numAttaque > 5);
 
-    if ((numAttaque == 5) && (echangeRestant > 0)) {
+    if ((numAttaque == 5)) {
       return new Echange(this, attaquant, defenseur);
     }
 
     return capList[numAttaque - 1];
   }
 
+  /** Permet d'obtenir le niveau du Dresseur (somme des niveaux de tous ses pokémons)
+   * @return le niveau du Dresseur
+   */
   @Override
   public int getNiveau() {
 
     return this.level;
   }
 
+  /** Permet d'obtenir le nom du Dresseur
+   * @return le nom du Dresseur
+   */
   @Override
   public String getNom() {
 
     return this.name;
   }
 
+  /** Permet d'obtenir le pokémon au rang i dans la liste des pokémons du dresseur
+   * @param i le rang du pokémon dans la liste
+   * @return le pokémon au rang i
+   */
   @Override
   public IPokemon getPokemon(int i) {
 
     return pokemons[i];
   }
 
+  /** Permet de savoir si tout les pokemons du dresseur sont évanouis
+   * @return true si tout les pokémons sont évanouis, false sinon
+   */
   public Boolean allDown() {
 
     for (Pokemon pok : this.pokemons) {

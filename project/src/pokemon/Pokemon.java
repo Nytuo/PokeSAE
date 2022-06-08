@@ -7,13 +7,8 @@ import interfaces.IEspece;
 import interfaces.IPokemon;
 import interfaces.IStat;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.TreeMap;
-
-/**
- * @author testa/beux
- */
 
 /** La classe Pokémon représente un Pokémon Elle implémente IPokemon */
 public class Pokemon extends Species implements IPokemon {
@@ -28,7 +23,7 @@ public class Pokemon extends Species implements IPokemon {
   /** Statistiques du Pokémon */
   private Stats stats;
   /** Capacités apprises par le Pokémon */
-  private Capacite[] known_capacities;
+  private Capacite[] knownCapacities;
   /** Valeurs des EV du Pokémon */
   private TreeMap<String, Integer> EV;
   /** Valeurs des DV du Pokémon */
@@ -37,8 +32,8 @@ public class Pokemon extends Species implements IPokemon {
   /** PV actuels du Pokémon */
   public int PVActuel;
 
-  public TreeMap<Integer,Integer> degatSubit = new TreeMap<>();
-
+  /** Treemap des dégats subit par le pokémon tour après tour */
+  public TreeMap<Integer, Integer> degatSubit = new TreeMap<>();
 
   /**
    * Constructeur de la classe Pokémon qui va construire le Pokémon.
@@ -79,10 +74,10 @@ public class Pokemon extends Species implements IPokemon {
         baseXp,
         ID,
         gainsStats);
-    this.degatSubit.put(0,0);
+    this.degatSubit.put(0, 0);
     this.level = baseLevel;
     this.xp = xp;
-    this.known_capacities = capacitiesPoke;
+    this.knownCapacities = capacitiesPoke;
     this.name = name;
     this.ID = ID;
     this.EV = new TreeMap<>();
@@ -165,7 +160,7 @@ public class Pokemon extends Species implements IPokemon {
   /**
    * Change le nom du Pokémon.
    *
-   * @param name
+   * @param name Le nouveau nom du Pokémon.
    */
   public void setNom(String name) {
     this.name = name;
@@ -250,7 +245,7 @@ public class Pokemon extends Species implements IPokemon {
    * @return le pourcentage actuel de PV du Pokémon.
    */
   public double getPourcentagePV() {
-    return this.PVActuel * 100 / this.stats.getPV();
+    return (double) this.PVActuel * 100 / this.stats.getPV();
   }
 
   /**
@@ -274,7 +269,7 @@ public class Pokemon extends Species implements IPokemon {
   /**
    * Cette méthode change l'espèce du Pokémon en l'espèce en laquelle il évolue.
    *
-   * @param esp
+   * @param esp L'espèce à laquelle il évolue.
    */
   public void vaMuterEn(IEspece esp) {
     this.nameOfSpecies = esp.getNom();
@@ -291,7 +286,7 @@ public class Pokemon extends Species implements IPokemon {
    * @return un tableau d'objets Capacite.
    */
   public ICapacite[] getCapacitesApprises() {
-    return this.known_capacities;
+    return this.knownCapacities;
   }
 
   /**
@@ -300,7 +295,7 @@ public class Pokemon extends Species implements IPokemon {
    * @param caps Le tableau de Capacite par lequel sera remplacé les capacités actuelles du Pokémon
    */
   public void apprendCapacites(ICapacite[] caps) {
-    this.known_capacities = (Capacite[]) caps;
+    this.knownCapacities = (Capacite[]) caps;
   }
 
   /**
@@ -311,7 +306,7 @@ public class Pokemon extends Species implements IPokemon {
    */
   public void remplaceCapacite(int i, ICapacite cap) throws Exception {
     try {
-      this.known_capacities[i] = (Capacite) cap;
+      this.knownCapacities[i] = (Capacite) cap;
     } catch (Exception e) {
       throw new Exception("Erreur de remplacement de capacité");
     }
@@ -337,7 +332,7 @@ public class Pokemon extends Species implements IPokemon {
    * @param atk L'attaque adverse
    */
   public void subitAttaqueDe(IPokemon pok, IAttaque atk) {
-    int degats = atk.calculeDommage(pok,this);
+    int degats = atk.calculeDommage(pok, this);
     degatSubit.put(Combat.nbTour, degats);
     this.PVActuel -= degats;
   }
@@ -419,7 +414,13 @@ public class Pokemon extends Species implements IPokemon {
   public void soigne() {
     this.PVActuel = this.stats.getPV();
   }
-  public TreeMap<Integer,Integer> getAppliedDamages(){
+
+  /**
+   * Cette méthode renvoie la TreeMap des dommages subis par le Pokémon.
+   *
+   * @return la TreeMap des dommages subis par le Pokémon.
+   */
+  public TreeMap<Integer, Integer> getAppliedDamages() {
     return degatSubit;
   }
 }

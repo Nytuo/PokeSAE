@@ -1,10 +1,6 @@
 package pokemon;
 
 /**
- * @author Arnaud BEUX
- */
-
-/**
  * Une classe qui permet de créer un type pour un Pokemon ou une capacité. Exemple : Plante, Feu,
  * Glace, etc...
  */

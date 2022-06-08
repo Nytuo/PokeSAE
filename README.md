@@ -29,13 +29,17 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 - Pokemon, Pokedex : Ethan
 - Readme, contributing, PDF : Elyan 
 - Aide de classes, MD : Jules
+- JavaDoc : Arnaud
+- Tests : Arnaud
 
 ### Rendu 3
 - IAsimple : Elyan, Jules
-- Dresseur, Echange, Combat : Jules
+- Echange : Jules
 - MainGame : Arnaud
-- Tour, correction de bugs : Jules, Arnaud
+- Tour, Combat et Dresseur : Jules, Arnaud (Correction de bugs)
 - PDF, Intructions(MD) : Ethan 
+- JavaDoc : Arnaud
+- Tests : N/A
 
 ###  Instruction
 1. **Choisir un emplacement** où le projet sera téléchargé depuis ce dépôt

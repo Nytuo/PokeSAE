@@ -8,29 +8,48 @@ import interfaces.IPokemon;
 import interfaces.ITour;
 import pokemon.Capacite;
 import pokemon.Pokemon;
-
-import java.sql.SQLOutput;
-
+/** La classe Combat gère les combats. Elle implémente l'interface ICombat. */
 public class Combat implements ICombat {
 
+  /** Le joueur 1 */
   IDresseur dresseur1;
-  IDresseur dresseur2;
-  ITour tour;
 
+  /** Le joueur 2 */
+  IDresseur dresseur2;
+
+  /** Pokémon du joueur 1 */
   static IPokemon pok1;
+
+  /** Pokémon du joueur 2 */
   static IPokemon pok2;
 
+  /** L'attaque du pokémon du joueur 1 */
   public static IAttaque atk1;
+
+  /** L'attaque du pokémon du joueur 2 */
   public static IAttaque atk2;
+
+  /** Le nombre de tours éffectué lors du combat. */
   public static int nbTour = 0;
 
+  /** Le nom du gagnant */
   String gagnant;
 
+  /**
+   * Le constructeur de la classe Combat.
+   *
+   * @param dresseur1 Dresseur 1 (Joueur 1)
+   * @param dresseur2 Dresseur 2 (Joueur 2 (principalement l'IA))
+   */
   public Combat(IDresseur dresseur1, IDresseur dresseur2) {
     this.dresseur1 = dresseur1;
     this.dresseur2 = dresseur2;
   }
 
+  /**
+   * Méthode permettant de commencer le combat et de créé des tours tant que l'un des deux dresseurs
+   * ne peut plus se battre
+   */
   @Override
   public void commence() {
 
@@ -70,6 +89,7 @@ public class Combat implements ICombat {
     this.termine();
   }
 
+  /** Methode permettant de determiner le gagnant du combat. */
   private void setGagnant() {
 
     if (((Dresseur) dresseur2).pokeEnVie == 0) {
@@ -79,24 +99,44 @@ public class Combat implements ICombat {
     }
   }
 
+  /**
+   * Obtenir le dresseur 1
+   *
+   * @return IDresseur dresseur1
+   */
   @Override
   public IDresseur getDresseur1() {
 
     return dresseur1;
   }
 
+  /**
+   * Obtenir le dresseur 2
+   *
+   * @return IDresseur dresseur2
+   */
   @Override
   public IDresseur getDresseur2() {
 
     return dresseur2;
   }
 
+  /**
+   * Créé un nouveau tour et incrémente le compte tour.
+   *
+   * @param pok1 Le pokémon du joueur 1
+   * @param atk1 L'attaque du pokémon du joueur 1
+   * @param pok2 Le pokémon du joueur 2
+   * @param atk2 L'attaque du pokémon du joueur 2
+   * @return Un nouveau tour
+   */
   @Override
   public ITour nouveauTour(IPokemon pok1, IAttaque atk1, IPokemon pok2, IAttaque atk2) {
     nbTour++;
     return new Tour(pok1, atk1, pok2, atk2, dresseur1, dresseur2);
   }
 
+  /** Affiche la fin du combat et le gagnant et remet à zéro les pokémons et le dresseur. */
   @Override
   public void termine() {
 
@@ -111,6 +151,11 @@ public class Combat implements ICombat {
     }
   }
 
+  /**
+   * Méthode permettant de réinitialiser les pokémon et d'évoluer les pokémon.
+   *
+   * @param dresseur Le dresseur
+   */
   public void resetAllandEvolve(Dresseur dresseur) {
 
     dresseur.echangeRestant = 5;
