@@ -105,7 +105,11 @@ public class Dresseur implements IDresseur {
     int i = 1;
     System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
     for (IPokemon poke : this.pokemons) {
-      System.out.println(i + " : " + poke.getNom() + poke.estEvanoui());
+      String down="";
+      if (poke.estEvanoui()) {
+    	  down=" KO";
+      }
+      System.out.println(i + " : " + poke.getNom() + down );
       i++;
     }
 
