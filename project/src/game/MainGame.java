@@ -9,14 +9,33 @@ import javax.sound.sampled.*;
 import pokedex.Pokedex;
 import pokemon.*;
 
+/** Classe de lancement du jeu et menu principal */
 public class MainGame {
 
+  /** Numéro de la sauvegarde sélectionner */
   static int nbSave = 0;
 
+  /** methode main de lancement du menu
+   * @param args les arguments de la ligne de commande
+   * @throws UnsupportedAudioFileException exception levée si le format de l'audio n'est pas supporté
+   * @throws LineUnavailableException exception levée si la ligne audio n'est pas disponible
+   * @throws IOException exception levée si une erreur d'entrée/sortie est rencontrée
+   * @throws InterruptedException exception levée si l'exécution du programme est interrompue
+   */
   public static void main(String[] args)
       throws UnsupportedAudioFileException, LineUnavailableException, IOException,
           InterruptedException {
-    playClip(new File("external/pokemonMainTitle.wav"));
+    try {
+
+      playClip(new File("external/pokemonMainTitle.wav"));
+    } catch (FileNotFoundException e) {
+      try {
+        playClip(new File("project/external/pokemonMainTitle.wav"));
+
+      } catch (Exception e2) {
+        System.out.println("Error while playing sound");
+      }
+    }
     System.out.println(
         "                                 ,'\\\n"
             + "    _.----.        ____         ,'  _\\   ___    ___     ____\n"
@@ -93,40 +112,48 @@ public class MainGame {
         System.exit(0);
       } else {
         System.out.println("Invalid input. Please try again.");
-        selectGameMode = true;
       }
     }
   }
 
+  /**
+   * Permet d'afficher les pokémons d'un joueur au début de partie
+   *
+   * @param pokes pokémons du joueur
+   */
   private static void showPokemon(Pokemon[] pokes) {
     System.out.println(
         "Your first pokémon is " + pokes[0].getNom() + "!" + " Level : " + pokes[0].getNiveau());
     System.out.println(
-        "Your second pokémon is "
-            + pokes[1].getNom()
-            + "!"
-            + " Level : "
-            + pokes[1].getNiveau());
+        "Your second pokémon is " + pokes[1].getNom() + "!" + " Level : " + pokes[1].getNiveau());
     System.out.println(
         "Your third pokémon is " + pokes[2].getNom() + "!" + " Level : " + pokes[2].getNiveau());
     System.out.println(
-        "Your fourth pokémon is "
-            + pokes[3].getNom()
-            + "!"
-            + " Level : "
-            + pokes[3].getNiveau());
+        "Your fourth pokémon is " + pokes[3].getNom() + "!" + " Level : " + pokes[3].getNiveau());
     System.out.println(
         "Your fifth pokémon is " + pokes[4].getNom() + "!" + " Level : " + pokes[4].getNiveau());
     System.out.println(
         "Your sixth pokémon is " + pokes[5].getNom() + "!" + " Level : " + pokes[5].getNiveau());
   }
 
+  /**
+   * Mets le numéro de sauvegarde choisi par l'utilisateur dans la variable nbSave.
+   *
+   * @param scanner Scanner
+   * @return nbSave int
+   */
   public static int setSave(Scanner scanner) {
 
     nbSave = scanner.nextInt();
     return nbSave;
   }
 
+  /**
+   * Charge le fichier csv et renvoie un tableau 2D contenant les données
+   *
+   * @param filename le nom du fichier csv
+   * @return un tableau 2D contenant les données (ArrayList<String[]>)
+   */
   static ArrayList<String[]> getFromCSV(String filename) {
     ArrayList<String[]> data = new ArrayList<>();
     try {
@@ -144,9 +171,16 @@ public class MainGame {
     return data;
   }
 
+  /**
+   * Joue la musique du fond du jeu
+   *
+   * @param clipFile le fichier de musique
+   * @throws IOException Si une erreur est survenue lors de la lecture du fichier
+   * @throws UnsupportedAudioFileException Si le format de la musique n'est pas supporté
+   * @throws LineUnavailableException Si le format de la musique n'est pas supporté
+   */
   private static void playClip(File clipFile)
-      throws IOException, UnsupportedAudioFileException, LineUnavailableException,
-          InterruptedException {
+      throws IOException, UnsupportedAudioFileException, LineUnavailableException {
     class AudioListener implements LineListener {
       private boolean done = false;
 
@@ -182,6 +216,12 @@ public class MainGame {
     }
   }
 
+  /**
+   * Ecrit les données dans un fichier CSV
+   *
+   * @param filename nom du fichier
+   * @param data données à écrire
+   */
   static void writeToCSV(String filename, ArrayList<String[]> data) {
     try {
       new File(System.getenv("APPDATA") + "\\PokemonSAE\\").mkdirs();
@@ -205,10 +245,18 @@ public class MainGame {
     }
   }
 
+  /**
+   * Chargement de la sauvegarde si existante, sinon création d'une nouvelle sauvegarde
+   *
+   * @param saveNumber numéro de la sauvegarde à charger
+   * @param scanner scanner pour lire le numéro de la sauvegarde
+   * @return la liste des pokémons (au format Pokemon) obtenu depuis la sauvegarde
+   */
   static Pokemon[] loadSave(int saveNumber, Scanner scanner) {
     System.out.println("You have chosen Slot " + saveNumber + ".\nLoading...");
     ArrayList<String[]> data = getFromCSV("saveSlot" + saveNumber);
     Pokemon[] pokes;
+    // Si la sauvegarde n'existe pas, on crée une nouvelle
     if (data.size() == 0) {
       System.out.println(
           "Hi, I'm the professor Raoult! Welcome to the world of Pokémon ! You love to fight against poor creatures, then you are at the good place!\n"
@@ -271,14 +319,29 @@ public class MainGame {
     return pokes;
   }
 
+  /**
+   * Récupération du nom du dresseur depuis la sauvegarde
+   *
+   * @param saveNumber numéro de la sauvegarde
+   * @return nom du dresseur
+   */
   static String getNameFromSave(int saveNumber) {
     ArrayList<String[]> data = getFromCSV("saveSlot" + saveNumber);
     return data.get(0)[0];
   }
 
+  /**
+   * Sauvegarde le nom du dresseur et les attributs principales des pokémons dans un fichier CSV
+   *
+   * @param pokemon les pokémons à sauvegarder
+   * @param name le nom du dresseur
+   * @param Slotnb le numéro du slot de sauvegarde
+   */
   static void saveGame(Pokemon[] pokemon, String name, int Slotnb) {
     ArrayList<String[]> data = new ArrayList<>();
+    // Ajout du nom du dresseur
     data.add(new String[] {name});
+    // Ajout des attributs principaux des pokémons
     for (int i = 0; i < 6; i++) {
       String[] laLigne = new String[14];
       laLigne[0] = pokemon[i].getEspece().getNom();
@@ -297,7 +360,7 @@ public class MainGame {
       laLigne[13] = String.valueOf(pokemon[i].getStat().getVitesse());
       data.add(laLigne);
     }
-
+    // enregistrement des données dans un fichier CSV
     writeToCSV("saveSlot" + Slotnb, data);
   }
 }

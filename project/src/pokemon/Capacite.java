@@ -35,7 +35,9 @@ public class Capacite implements interfaces.ICapacite {
   /** La précision de la capacité. */
   double precision;
 
+  /** variable permettant de toogle l'utilisation de la capacité "patience" */
   boolean switchPatience = false;
+
   /** Le nombre de PP de la capacité. */
   int PP;
 

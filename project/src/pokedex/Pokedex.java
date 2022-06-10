@@ -27,9 +27,8 @@ public class Pokedex implements IPokedex {
 
   /** Constructeur de la classe Pokedex qui va associer aux attributs les données des CSV */
   public Pokedex() {
-    String pokeFile = new File("external/listePokemon1G.csv").getAbsolutePath();
     try {
-      Scanner sc = new Scanner(new File(pokeFile));
+      Scanner sc = new Scanner(new File("external/listePokemon1G.csv"));
 
       sc.useDelimiter(",");
       while (sc.hasNext()) {
@@ -37,19 +36,38 @@ public class Pokedex implements IPokedex {
       }
       sc.close();
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      try {
+        Scanner sc = new Scanner(new File("project/external/listePokemon1G.csv"));
+
+        sc.useDelimiter(",");
+        while (sc.hasNext()) {
+          pokedata.add(sc.nextLine().split(";"));
+        }
+        sc.close();
+
+      } catch (Exception e2) {
+        System.out.println("File not found");
+      }
     }
 
-    String capaciteFile = new File("external/listeCapacites.csv").getAbsolutePath();
     try {
-      Scanner sc = new Scanner(new File(capaciteFile));
+      Scanner sc = new Scanner(new File("external/listeCapacites.csv"));
       sc.useDelimiter(",");
       while (sc.hasNext()) {
         capacitedata.add(sc.nextLine().split(";"));
       }
       sc.close();
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      try {
+        Scanner sc = new Scanner(new File("project/external/listeCapacites.csv"));
+        sc.useDelimiter(",");
+        while (sc.hasNext()) {
+          capacitedata.add(sc.nextLine().split(";"));
+        }
+        sc.close();
+      } catch (Exception e2) {
+        System.out.println("File not found");
+      }
     }
   }
 
@@ -176,7 +194,7 @@ public class Pokedex implements IPokedex {
   /**
    * Donne un objet Species d'un Pokémon grâce à son nom.
    *
-   * @param nomEspece
+   * @param nomEspece Le nom de l'espece du Pokémon
    * @return un objet Species.
    */
   @Override
@@ -283,8 +301,8 @@ public class Pokedex implements IPokedex {
   public HashMap<String, String[]> initializeFromCSV() {
     HashMap<String, String[]> lines = new HashMap<>();
     try {
-      String file = String.valueOf(new File("external/efficacites.csv"));
-      Scanner sc = new Scanner(new File(file));
+
+      Scanner sc = new Scanner(new File("external/efficacites.csv"));
       sc.useDelimiter(";");
       sc.nextLine();
       while (sc.hasNext()) {
@@ -293,40 +311,71 @@ public class Pokedex implements IPokedex {
       }
       sc.close();
     } catch (FileNotFoundException e) {
-      System.out.println("File not found");
+      try {
+        Scanner sc = new Scanner(new File("project/external/efficacites.csv"));
+        sc.useDelimiter(";");
+        sc.nextLine();
+        while (sc.hasNext()) {
+          String[] line = sc.nextLine().split(";");
+          lines.put(line[0], line);
+        }
+        sc.close();
+      } catch (Exception e2) {
+        System.out.println("File not found");
+      }
     }
     return lines;
   }
 
   /** Permet d'associer chaque type à un chiffre pour l'indexer. */
   public enum EnumCapacite {
+    /** Capacité Combat */
     Combat(1),
+    /** Capacité Dragon */
     Dragon(2),
+    /** Capacité Eau */
     Eau(3),
+    /** Capacité Electrik */
     Electrik(4),
+    /** Capacité Feu */
     Feu(5),
+    /** Capacité Glace */
     Glace(6),
+    /** Capacité Insecte */
     Insecte(7),
+
+    /** Capacité Normal */
     Normal(8),
+    /** Capacité Plante */
     Plante(9),
+    /** Capacité Poison */
     Poison(10),
+    /** Capacité Psy */
     Psy(11),
+    /** Capacité Roche */
     Roche(12),
+    /** Capacité Sol */
     Sol(13),
+    /** Capacité spectre */
     Spectre(14),
+    /** Capacité de vol */
     Vol(15);
 
     /** id de la capacité */
     private final int id;
 
-    /** Constructeur de l'enum.
+    /**
+     * Constructeur de l'enum.
+     *
      * @param id id de la capacité
      */
     EnumCapacite(int id) {
       this.id = id;
     }
 
-    /** Retourne l'id de la capacité.
+    /**
+     * Retourne l'id de la capacité.
+     *
      * @return l'id de la capacité
      */
     public int getId() {

@@ -37,6 +37,7 @@ public class Species implements IEspece {
    * @param start_level Niveau de départ de l'espèce
    * @param evolution Evolutions de l'espèce
    * @param capacities Capacités de l'espèce
+   * @param baseXp XP de base de l'espèce
    * @param id ID de l'espèce
    * @param gainsStat Gains en EV que vont obtenir les Pokémons vainqueurs contre cette espèce.
    */

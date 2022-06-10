@@ -47,6 +47,7 @@ public class Pokemon extends Species implements IPokemon {
    * @param capacities Les capacites que peut apprendre l'espèce du Pokémon.
    * @param xp L'expérience de départ du Pokémon.
    * @param capacitiesPoke Les capacités apprises par le Pokémon.
+   * @param baseXp L'expérience de base du Pokémon.
    * @param ID L'ID unique du Pokémon.
    * @param gainsStats Les valeurs des EV que peuvent obtenir les vainqueurs contre l'espèce du
    *     Pokémon.

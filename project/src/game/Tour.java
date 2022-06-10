@@ -29,10 +29,15 @@ public class Tour implements ITour {
   /** Dresseur 2 (Joueur 2 (principalement l'IA)) */
   IDresseur dresseur2;
 
+  /** nombre de pokémon en vie du joueur 1 (deprecated) */
   int pokes1EnVie;
+
+  /** nombre de pokémon en vie pour le joueur 2 (deprecated) */
   int pokes2EnVie;
 
-  /** Constructeur de la classe Tour
+  /**
+   * Constructeur de la classe Tour
+   *
    * @param pok1 Pokémon du joueur 1
    * @param atk1 Attaque du pokémon du joueur 1
    * @param pok2 Pokémon du joueur 2
