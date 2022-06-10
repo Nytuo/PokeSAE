@@ -52,10 +52,9 @@ public class Combat implements ICombat {
    */
   @Override
   public void commence() {
-
+	  System.out.println("\n\n--------------------------[ Turn "+(nbTour + 1)+" ]---------------------------");
     System.out.println(
-        "———————————————————————————————————————————\n"
-            + dresseur1.getNom()
+            dresseur1.getNom()
             + " VS. "
             + dresseur2.getNom());
 
@@ -65,8 +64,7 @@ public class Combat implements ICombat {
     System.out.println(Combat.pok1.getNom() + " VS. " + Combat.pok2.getNom() + "\n");
 
     while ((((Dresseur) dresseur1).pokeEnVie > 0) && (((Dresseur) dresseur2).pokeEnVie > 0)) {
-      System.out.println("-----------------------------------------------------");
-      System.out.println("Turn " + (nbTour + 1));
+      
       System.out.println("Choose the move to use : ");
       Combat.atk1 = dresseur1.choisitAttaque(Combat.pok1, Combat.pok2);
       if (Combat.atk1.getClass() == Echange.class) {
