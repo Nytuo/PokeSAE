@@ -122,18 +122,11 @@ public class MainGame {
    * @param pokes pokémons du joueur
    */
   private static void showPokemon(Pokemon[] pokes) {
-    System.out.println(
-        "Your first pokémon is " + pokes[0].getNom() + "!" + " Level : " + pokes[0].getNiveau());
-    System.out.println(
-        "Your second pokémon is " + pokes[1].getNom() + "!" + " Level : " + pokes[1].getNiveau());
-    System.out.println(
-        "Your third pokémon is " + pokes[2].getNom() + "!" + " Level : " + pokes[2].getNiveau());
-    System.out.println(
-        "Your fourth pokémon is " + pokes[3].getNom() + "!" + " Level : " + pokes[3].getNiveau());
-    System.out.println(
-        "Your fifth pokémon is " + pokes[4].getNom() + "!" + " Level : " + pokes[4].getNiveau());
-    System.out.println(
-        "Your sixth pokémon is " + pokes[5].getNom() + "!" + " Level : " + pokes[5].getNiveau());
+    String[] nb = {"first","second","third","fourth","fifth","sixth"};
+	  for (int i = 0; i < pokes.length; i++ ) {
+		  System.out.println(
+			        "Your "+nb[i]+" pokémon is " + pokes[i].getNom() + "!" + " Level : " + pokes[i].getNiveau());
+	  }
   }
 
   /**
