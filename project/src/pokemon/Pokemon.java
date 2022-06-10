@@ -336,6 +336,9 @@ public class Pokemon extends Species implements IPokemon {
     int degats = atk.calculeDommage(pok, this);
     degatSubit.put(Combat.nbTour, degats);
     this.PVActuel -= degats;
+    if (this.PVActuel < 0) {
+    	this.PVActuel = 0;
+    }
   }
 
   /**

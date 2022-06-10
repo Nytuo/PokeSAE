@@ -119,7 +119,7 @@ public class Tour implements ITour {
               + " from "
               + pok2.getNom()
               + " and remains only "
-              + pok1.getPourcentagePV()
+              + String.format("%.2f", pok1.getPourcentagePV())
               + " % of his HP");
     }
 
@@ -128,7 +128,7 @@ public class Tour implements ITour {
       System.out.println(this.pok2.getNom() + " slain " + this.pok1.getNom() + "\n");
 
       this.pok2.gagneExperienceDe(this.pok1);
-      System.out.println(this.pok2.getNom() + " gained " + this.pok2.getExperience() + " xp\n");
+      System.out.println(this.pok2.getNom() + " gained " +  String.format("%.2f",this.pok2.getExperience() ) + " xp\n");
 
       ((Dresseur) this.dresseur1).pokeEnVie--;
       if (((Dresseur) this.dresseur1).pokeEnVie > 0) {
