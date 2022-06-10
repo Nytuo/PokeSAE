@@ -100,4 +100,24 @@ public class IAcomplexe extends Dresseur implements IStrategy {
 
 	    return capList[numAttaque];
 	  }
+	  
+	  public void minmax() {
+		  //TODO retourne l'action choisie par TourMax()
+	  }
+	  
+	  public void tourMax(int nb) {
+		  // si nb correspond à une fin de partie, alors retourner utilite(nb)
+		  //u= (un nombre très petit(negatif)), a=null
+		  //pour chaque paire(a',nb) donnée par transition(n)
+		  // 	si l'utilité de tourMin(nb') > u alors a=a' , u= utilite() de tourMin
+		  //retourne l'utilite u et l'action a // l'action ne sert qu'à la fin de la racine.
+	  }
+	  
+	  public void tourMin(int nb) {
+		// si nb correspond à une fin de partie, alors retourner utilite(nb)
+		  //u= (un nombre très petit(negatif)), a=null
+		  //pour chaque paire(a',nb) donnée par transition(n)
+		  // 	si l'utilité de tourMax(nb') < u alors a=a' , u= utilite() de tourMax(nb')
+		  //retourne l'utilite u et l'action a
+	  }
 }
