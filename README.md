@@ -41,6 +41,11 @@ Dans cette SAE, nous allons nous concentrer uniquement sur l'aspect des combats 
 - JavaDoc : Arnaud
 - Tests : N/A
 
+### Rendu 4
+- Modifications graphiques: Elyan
+- Tests:
+- PDF:
+
 ###  Instruction
 1. **Choisir un emplacement** où le projet sera téléchargé depuis ce dépôt
 2. Dans cet emplacement, **ouvrir Git Bash** et taper la commande ```git clone https://github.com/IUT-DEPT-INFO-UCA/pokae-ProfRaoult```
