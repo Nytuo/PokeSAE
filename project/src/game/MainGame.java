@@ -259,7 +259,7 @@ public class MainGame {
     // Si la sauvegarde n'existe pas, on crée une nouvelle
     if (data.size() == 0) {
       System.out.println(
-          "Hi, I'm the professor Raoult! Welcome to the world of Pokémon ! You love to fight against poor creatures, then you are at the good place!\n"
+          "Hi, I'm the professor Raoult! Welcome to the world of Pokémon ! You love to fight against poor creatures, then you are at the right place!\n"
               + "I'm here to give you your pokémons! But First things first, what's your name ?\n");
       System.out.print("My name is : ");
       Scanner scanner2 = new Scanner(System.in);

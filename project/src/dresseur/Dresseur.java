@@ -74,10 +74,21 @@ public class Dresseur implements IDresseur {
    *
    * @return Le premier pokemon de la liste des pokemons du dresseur
    */
+  
   @Override
   public IPokemon choisitCombattant() {
+	  Scanner scanner3 = new Scanner(System.in);
+	 
+	  int numPok = 0;
+	  
+	  while ((numPok < 1 || numPok > 6)) {
 
-    return getPokemon(0);
+	      System.out.print("\nWhich pokemon will you send first ?\n");
+	      numPok = scanner3.nextInt();
+	      System.out.println();
+	      
+	  }
+    return getPokemon(numPok-1);
   }
 
   /**
@@ -91,27 +102,27 @@ public class Dresseur implements IDresseur {
 
     Scanner scanner3 = new Scanner(System.in);
 
-    int i = 0;
+    int i = 1;
     System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
     for (IPokemon poke : this.pokemons) {
-      System.out.println(i + " : " + poke.getNom());
+      System.out.println(i + " : " + poke.getNom() + poke.estEvanoui());
       i++;
     }
 
     int numPok = Integer.parseInt(scanner3.nextLine());
 
-    while ((numPok < 0 || numPok > 5)) {
+    while ((numPok < 1 || numPok > 6)) {
 
       System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
       numPok = scanner3.nextInt();
       System.out.println();
-      if (getPokemon(numPok).estEvanoui()) {
-        System.out.println("Argh, " + getPokemon(numPok).getNom() + " is KO !");
-        numPok = 6;
+      if (getPokemon(numPok-1).estEvanoui()) {
+        System.out.println("Argh, " + getPokemon(numPok-1).getNom() + " is KO !");
+        numPok = 0;
       }
     }
 
-    return getPokemon(numPok);
+    return getPokemon(numPok-1);
   }
 
   /**
@@ -156,12 +167,12 @@ public class Dresseur implements IDresseur {
       try {
         if ((numAttaque == 5) && (echangeRestant < 1)) {
           System.out.println("You can't change pokemon anymore");
-          numAttaque = -1;
+          numAttaque = 0;
         }
         if (capList[numAttaque - 1].getPP() <= 0) {
           System.out.println(
               "Argh, " + capList[numAttaque - 1].getNom() + " cannot be used anymore !");
-          numAttaque = -1;
+          numAttaque = 0;
           if (capList[0].getPP() <= 0
               && capList[1].getPP() <= 0
               && capList[2].getPP() <= 0
