@@ -54,7 +54,7 @@ public class Combat implements ICombat {
   public void commence() {
 
     System.out.println(
-        "--------------------------------------\n"
+        "———————————————————————————————————————————\n"
             + dresseur1.getNom()
             + " VS. "
             + dresseur2.getNom());
@@ -141,7 +141,7 @@ public class Combat implements ICombat {
   public void termine() {
 
     Dresseur dresseur1 = (Dresseur) getDresseur1();
-    System.out.println("-----------------------------------------------------");
+    System.out.println("————————————————————————————————————————————————————");
     System.out.println(gagnant + " won the fight! Congratulations!");
 
     resetAllandEvolve(dresseur1);
