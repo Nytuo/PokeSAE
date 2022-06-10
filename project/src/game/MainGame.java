@@ -274,7 +274,7 @@ public class MainGame {
       Pokedex pokedex = new Pokedex();
       pokes = (Pokemon[]) pokedex.engendreRanch();
       System.out.println(
-          "Creating new save...\nPlease do not power off the computer during the process.");
+          "[SAVE] - Creating new save...\n[SAVE] - Please do not power off the computer during the process.");
       saveGame(pokes, name, saveNumber);
 
       System.out.println("[SAVE] - Save created.");
