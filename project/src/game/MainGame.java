@@ -127,8 +127,6 @@ public class MainGame {
 		  System.out.println(
 			        "Your "+nb[i]+" pokémon is " + pokes[i].getNom() + "!" + " Level : " + pokes[i].getNiveau());
 	  }
-	  
- 
   }
 
   /**

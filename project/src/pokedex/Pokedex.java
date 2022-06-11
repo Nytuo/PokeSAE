@@ -93,7 +93,7 @@ public class Pokedex implements IPokedex {
         sb.append("\n");
         byLine = stockLine;
       }
-      sb.append(String.format("%10$s%16s" + maxLength + "s", "| " + s[0] + " : ", s[1] + " |"));
+      sb.append(String.format("%10s%16s" + maxLength + "s", "| " + s[0] + " : ", s[1] + " |"));
 
       byLine--;
     }
