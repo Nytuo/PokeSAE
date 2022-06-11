@@ -83,7 +83,7 @@ public class Dresseur implements IDresseur {
 	  
 	  while ((numPok < 1 || numPok > 6)) {
 
-	      System.out.print("\nWhich pokemon will you send first ?\n");
+	      System.out.print("\nWhich pokemon will you send first ?\n> ");
 	      numPok = scanner3.nextInt();
 	      System.out.println();
 	      
@@ -101,15 +101,25 @@ public class Dresseur implements IDresseur {
   public IPokemon choisitCombattantContre(IPokemon pok) {
 
     Scanner scanner3 = new Scanner(System.in);
-
+    String spaceCarac = " ";
     int i = 1;
     System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
+    int maxPokeNameLength = 0;
+    for (IPokemon poke : this.pokemons) {
+    	 int pokeNameLength = poke.getNom().length();
+    	 if (pokeNameLength > maxPokeNameLength) {
+    		 maxPokeNameLength = pokeNameLength; 
+    	 }
+    }
+    
     for (IPokemon poke : this.pokemons) {
       String down="";
       if (poke.estEvanoui()) {
-    	  down=" KO";
+    	  down=" [KO]";
       }
-      System.out.println(i + " : " + poke.getNom() + down );
+      System.out.println("    "+i + " - " + poke.getNom() 
+      +spaceCarac.repeat(maxPokeNameLength - poke.getNom().length())
+      + down );
       i++;
     }
 
@@ -143,7 +153,9 @@ public class Dresseur implements IDresseur {
     Capacite[] capList = (Capacite[]) attaquant.getCapacitesApprises(); // Récupère toutes les
     // capacités de
     // l'attaquant
-
+    String msg = "change pokemon";
+	int maxCapLength = msg.length();
+	String spaceCarac = " ";
     Scanner scanner = new Scanner(System.in);
     int i = 1;
 
@@ -155,13 +167,25 @@ public class Dresseur implements IDresseur {
         System.out.println(j + " : Lutte");
       }
     } else {
+    	//Gestion de l'affichage
+    	 
+    	
+    	for (ICapacite cap : attaquant.getCapacitesApprises()) {
+            int capLength = cap.getNom().length();
+            if ( capLength > maxCapLength) {
+            	maxCapLength = capLength; 
+            }
+          }
+    	
       for (ICapacite cap : attaquant.getCapacitesApprises()) {
-        System.out.println(i + " : " + cap.getNom() + "	  |   PP : " + cap.getPP());
+    	int capLength = cap.getNom().length();
+    	String newSpaceCarac = spaceCarac.repeat(maxCapLength-capLength+1);
+        System.out.println("    "+i + " : " + cap.getNom() + newSpaceCarac+"|   PP : " + cap.getPP());
         i++;
       }
     }
     if (echangeRestant > 0) {
-      System.out.println(i + " : change pokemon	  |   left : " + this.echangeRestant + "\n");
+      System.out.println("    "+i + " : "+msg+ " ".repeat(maxCapLength-msg.length()+1)+"|   left : " + this.echangeRestant + "\n");
     }
 
     int numAttaque;
