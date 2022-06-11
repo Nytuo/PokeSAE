@@ -64,7 +64,7 @@ public class Tour implements ITour {
   public void commence() {
 
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-      System.out.println("Turn of " + dresseur1.getNom() + " with " + pok1.getNom());
+      System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
       attaque(dresseur2, pok2, atk2, pok1, atk1);
       if (pok1 == Combat.pok1) {
         System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
@@ -72,10 +72,10 @@ public class Tour implements ITour {
       }
     } else {
 
-      System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+      System.out.println( "◀"+dresseur2.getNom() + "▶ : " );
       attaque(dresseur1, pok1, atk1, pok2, atk2);
       if (pok2 == Combat.pok2) {
-        System.out.println("Turn of " + dresseur1.getNom() + " with " + pok1.getNom());
+        System.out.println( "◀"+dresseur1.getNom() + "▶ : " );
         attaque(dresseur2, pok2, atk2, pok1, atk1);
       }
     }
@@ -99,36 +99,59 @@ public class Tour implements ITour {
     if (atk1.getClass() == Echange.class) {
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(
-          pok1.getNom()
-              + " get hurt by "
-              + ((Capacite) atk2).getNom()
-              + " from "
-              + pok2.getNom()
-              + " and remains only "
-              + pok1.getPourcentagePV()
-              + " % of his HP");
+    		  "    "
+    		  +pok2.getNom()
+    		  +" : "
+    		  +((Capacite) atk2).getNom()
+    		  +" --> "
+    		  +pok1.getNom()
+    		  +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
+    		  );
+      
+      /*System.out.println(
+      pok1.getNom()
+      + " get hurt by "
+      + ((Capacite) atk2).getNom()
+      + " from "+ pok2.getNom()
+      + " and remains only "
+      + pok1.getPourcentagePV()
+      + " % of his HP");
+      */
     } else if (atk2.getClass() == Echange.class) {
 
     } else {
-      System.out.println(atk2.calculeDommage(pok2, pok1) + " damages points");
+      //System.out.println(atk2.calculeDommage(pok2, pok1) + " damages points");
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(
+    		  "    "
+    		  +pok2.getNom()
+    		  +" : "
+    		  +((Capacite) atk2).getNom()
+    		  +" --> "
+    		  +atk2.calculeDommage(pok2, pok1)
+    		  +" DMG to "
+    		  +pok1.getNom()
+    		  +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
+    		  );
+    		
+     /* System.out.println(
           pok1.getNom()
               + " get hurt by "
               + ((Capacite) atk2).getNom()
               + " from "
               + pok2.getNom()
               + " and remains only "
-              + pok1.getPourcentagePV()
+              + String.format("%.2f", pok1.getPourcentagePV())
               + " % of his HP");
+    
+    */
     }
-
     if (this.pok1.estEvanoui()) {
 
       System.out.println(this.pok2.getNom() + " slain " + this.pok1.getNom() + "\n");
 
       this.pok2.gagneExperienceDe(this.pok1);
-      System.out.println(this.pok2.getNom() + " gained " + this.pok2.getExperience() + " xp\n");
+      System.out.println(this.pok2.getNom() + " gained " +  String.format("%.2f",this.pok2.getExperience() ) + " xp\n");
 
       ((Dresseur) this.dresseur1).pokeEnVie--;
       if (((Dresseur) this.dresseur1).pokeEnVie > 0) {
@@ -145,13 +168,13 @@ public class Tour implements ITour {
       System.out.println(this.pok1.getNom() + " slain " + this.pok2.getNom());
 
       this.pok1.gagneExperienceDe(this.pok2);
-      System.out.println(this.pok1.getNom() + " gained " + this.pok1.getExperience() + " xp\n");
+      System.out.println(this.pok1.getNom() + " gained " + String.format("%.2f",this.pok1.getExperience()) + " xp\n");
 
       ((Dresseur) this.dresseur2).pokeEnVie--;
       if (((Dresseur) this.dresseur2).pokeEnVie > 0) {
         Combat.pok2 =
             new Echange((AIsimple) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
-        System.out.println(this.dresseur2.getNom() + " sent " + Combat.pok2.getNom());
+        System.out.println(this.dresseur2.getNom() + " sent " + Combat.pok2.getNom()+"\n");
       }
     }
   }

@@ -74,10 +74,21 @@ public class Dresseur implements IDresseur {
    *
    * @return Le premier pokemon de la liste des pokemons du dresseur
    */
+  
   @Override
   public IPokemon choisitCombattant() {
+	  Scanner scanner3 = new Scanner(System.in);
+	 
+	  int numPok = 0;
+	  
+	  while ((numPok < 1 || numPok > 6)) {
 
-    return getPokemon(0);
+	      System.out.print("\nWhich pokemon will you send first ?\n> ");
+	      numPok = scanner3.nextInt();
+	      System.out.println();
+	      
+	  }
+    return getPokemon(numPok-1);
   }
 
   /**
@@ -90,28 +101,42 @@ public class Dresseur implements IDresseur {
   public IPokemon choisitCombattantContre(IPokemon pok) {
 
     Scanner scanner3 = new Scanner(System.in);
-
-    int i = 0;
+    String spaceCarac = " ";
+    int i = 1;
     System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
+    int maxPokeNameLength = 0;
     for (IPokemon poke : this.pokemons) {
-      System.out.println(i + " : " + poke.getNom());
+    	 int pokeNameLength = poke.getNom().length();
+    	 if (pokeNameLength > maxPokeNameLength) {
+    		 maxPokeNameLength = pokeNameLength; 
+    	 }
+    }
+    
+    for (IPokemon poke : this.pokemons) {
+      String down="";
+      if (poke.estEvanoui()) {
+    	  down=" [KO]";
+      }
+      System.out.println("    "+i + " - " + poke.getNom() 
+      +spaceCarac.repeat(maxPokeNameLength - poke.getNom().length())
+      + down );
       i++;
     }
 
     int numPok = Integer.parseInt(scanner3.nextLine());
 
-    while ((numPok < 0 || numPok > 5)) {
+    while ((numPok < 1 || numPok > 6)) {
 
       System.out.print("\nWhich pokemon will you send against " + pok.getNom() + " ?\n");
       numPok = scanner3.nextInt();
       System.out.println();
-      if (getPokemon(numPok).estEvanoui()) {
-        System.out.println("Argh, " + getPokemon(numPok).getNom() + " is KO !");
-        numPok = 6;
+      if (getPokemon(numPok-1).estEvanoui()) {
+        System.out.println("Argh, " + getPokemon(numPok-1).getNom() + " is KO !");
+        numPok = 0;
       }
     }
 
-    return getPokemon(numPok);
+    return getPokemon(numPok-1);
   }
 
   /**
@@ -128,7 +153,9 @@ public class Dresseur implements IDresseur {
     Capacite[] capList = (Capacite[]) attaquant.getCapacitesApprises(); // Récupère toutes les
     // capacités de
     // l'attaquant
-
+    String msg = "change pokemon";
+	int maxCapLength = msg.length();
+	String spaceCarac = " ";
     Scanner scanner = new Scanner(System.in);
     int i = 1;
 
@@ -140,13 +167,25 @@ public class Dresseur implements IDresseur {
         System.out.println(j + " : Lutte");
       }
     } else {
+    	//Gestion de l'affichage
+    	 
+    	
+    	for (ICapacite cap : attaquant.getCapacitesApprises()) {
+            int capLength = cap.getNom().length();
+            if ( capLength > maxCapLength) {
+            	maxCapLength = capLength; 
+            }
+          }
+    	
       for (ICapacite cap : attaquant.getCapacitesApprises()) {
-        System.out.println(i + " : " + cap.getNom() + "	  |   PP : " + cap.getPP());
+    	int capLength = cap.getNom().length();
+    	String newSpaceCarac = spaceCarac.repeat(maxCapLength-capLength+1);
+        System.out.println("    "+i + " : " + cap.getNom() + newSpaceCarac+"|   PP : " + cap.getPP());
         i++;
       }
     }
     if (echangeRestant > 0) {
-      System.out.println(i + " : change pokemon	  |   left : " + this.echangeRestant + "\n");
+      System.out.println("    "+i + " : "+msg+ " ".repeat(maxCapLength-msg.length()+1)+"|   left : " + this.echangeRestant + "\n");
     }
 
     int numAttaque;
@@ -156,12 +195,12 @@ public class Dresseur implements IDresseur {
       try {
         if ((numAttaque == 5) && (echangeRestant < 1)) {
           System.out.println("You can't change pokemon anymore");
-          numAttaque = -1;
+          numAttaque = 0;
         }
         if (capList[numAttaque - 1].getPP() <= 0) {
           System.out.println(
               "Argh, " + capList[numAttaque - 1].getNom() + " cannot be used anymore !");
-          numAttaque = -1;
+          numAttaque = 0;
           if (capList[0].getPP() <= 0
               && capList[1].getPP() <= 0
               && capList[2].getPP() <= 0

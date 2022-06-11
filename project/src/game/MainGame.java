@@ -53,7 +53,7 @@ public class MainGame {
     boolean selectGameMode = true;
     while (selectGameMode) {
       System.out.println(
-          "--------------------------------------------------------------------------------");
+  		  "————————————————————————————————————————————————————————————————————————————————");
       System.out.println(
           "What do you want to do ?\n1. Go Single Player\n2. Go Multi Player\n3. View all pokémons\n4. Search a pokemon\n5. Exit");
       System.out.print("> ");
@@ -71,19 +71,19 @@ public class MainGame {
 
         Dresseur joueur = new Dresseur(dName, pokes);
 
-        System.out.println("Loading complete.\n");
+        System.out.println("[SAVE] - Loading complete.\n");
 
         showPokemon(pokes);
 
         Pokedex pokedex = new Pokedex();
-        AIsimple dresseurIA = new AIsimple("dimitry", (Pokemon[]) pokedex.engendreRanch());
+        AIsimple dresseurIA = new AIsimple("Dimitry", (Pokemon[]) pokedex.engendreRanch());
 
         Combat combat = new Combat(joueur, dresseurIA);
         combat.commence();
 
       } else if (mode == 2) {
         System.out.println(
-            "\n------------------------------------------\nWelcome to the Pokemon Game -- ULTIMATE WARRIORS!\n------------------------------------------");
+            "\n————————————————————————————————————————————————\nWelcome to the Pokemon Game -- ULTIMATE WARRIORS!\n————————————————————————————————————————————————");
         System.out.print("Please enter your name: ");
         Scanner scanner2 = new Scanner(System.in);
         String name = scanner2.nextLine();
@@ -122,7 +122,7 @@ public class MainGame {
    * @param pokes pokémons du joueur
    */
   private static void showPokemon(Pokemon[] pokes) {
-    String[] nb = {"first","second","third","fourth","fifth","sixth"};
+	  String[] nb = {"first","second","third","fourth","fifth","sixth"};
 	  for (int i = 0; i < pokes.length; i++ ) {
 		  System.out.println(
 			        "Your "+nb[i]+" pokémon is " + pokes[i].getNom() + "!" + " Level : " + pokes[i].getNiveau());
@@ -246,13 +246,13 @@ public class MainGame {
    * @return la liste des pokémons (au format Pokemon) obtenu depuis la sauvegarde
    */
   static Pokemon[] loadSave(int saveNumber, Scanner scanner) {
-    System.out.println("You have chosen Slot " + saveNumber + ".\nLoading...");
+    System.out.println("[SAVE] - You have chosen Slot " + saveNumber + ".\n[SAVE] - Loading...");
     ArrayList<String[]> data = getFromCSV("saveSlot" + saveNumber);
     Pokemon[] pokes;
     // Si la sauvegarde n'existe pas, on crée une nouvelle
     if (data.size() == 0) {
       System.out.println(
-          "Hi, I'm the professor Raoult! Welcome to the world of Pokémon ! You love to fight against poor creatures, then you are at the good place!\n"
+          "Hi, I'm the professor Raoult! Welcome to the world of Pokémon ! You love to fight against poor creatures, then you are at the right place!\n"
               + "I'm here to give you your pokémons! But First things first, what's your name ?\n");
       System.out.print("My name is : ");
       Scanner scanner2 = new Scanner(System.in);
@@ -272,13 +272,13 @@ public class MainGame {
       Pokedex pokedex = new Pokedex();
       pokes = (Pokemon[]) pokedex.engendreRanch();
       System.out.println(
-          "Creating new save...\nPlease do not power off the computer during the process.");
+          "[SAVE] - Creating new save...\n[SAVE] - Please do not power off the computer during the process.");
       saveGame(pokes, name, saveNumber);
 
-      System.out.println("Save created.");
+      System.out.println("[SAVE] - Save created.");
 
     } else {
-      System.out.println("Save found.\nLoading...");
+      System.out.println("[SAVE] - Save found.\n[SAVE] - Loading...");
 
       Pokedex pokedex = new Pokedex();
 
@@ -307,7 +307,7 @@ public class MainGame {
                 (Stats) esp.getGainsStat());
       }
 
-      System.out.println("Save loaded.");
+      System.out.println("[SAVE] - Save loaded.");
     }
     return pokes;
   }
