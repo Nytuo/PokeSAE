@@ -1,5 +1,5 @@
-package dresseur;
+package test;
 
-public class testAIsimple {
+public class IATest {
   public static void main(String[] args) {}
 }

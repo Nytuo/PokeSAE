@@ -1,5 +1,6 @@
 package game;
 
+import dresseur.AIcomplexe;
 import dresseur.AIsimple;
 import dresseur.Dresseur;
 import java.io.*;
@@ -60,7 +61,7 @@ public class MainGame {
       Scanner scanner = new Scanner(System.in);
       int mode = scanner.nextInt();
       selectGameMode = mode != 1 && mode != 2;
-      if (mode == 1) {
+      if (mode == 1) { // Campagne
         System.out.println(
             "You have chosen Single Player mode.\n"
                 + "Insert the slot number of your save (Between 1 and infinite, will be created if doesn't exist): ");
@@ -81,7 +82,7 @@ public class MainGame {
         Combat combat = new Combat(joueur, dresseurIA);
         combat.commence();
 
-      } else if (mode == 2) {
+      } else if (mode == 2) { // Multijoueur
         System.out.println(
             "\n————————————————————————————————————————————————\nWelcome to the Pokemon Game -- ULTIMATE WARRIORS!\n————————————————————————————————————————————————");
         System.out.print("Please enter your name: ");
@@ -92,14 +93,14 @@ public class MainGame {
         showPokemon(pokes);
 
         Dresseur joueur = new Dresseur(name, pokes);
-
         AIsimple dresseurAI = new AIsimple("Dimitry", (Pokemon[]) pokedex.engendreRanch());
         Combat combat = new Combat(joueur, dresseurAI);
         combat.commence();
-      } else if (mode == 3) {
+        
+      } else if (mode == 3) { // Voir tout les pokémons
         System.out.println(new Pokedex().toString());
 
-      } else if (mode == 4) {
+      } else if (mode == 4) { // rechercher un pokemon
         Scanner podexScan = new Scanner(System.in);
         System.out.print("Please enter the name (or id) of the pokemon you want to search: ");
         if (podexScan.hasNextInt()) {
@@ -107,9 +108,22 @@ public class MainGame {
         } else {
           new Pokedex().searchPokemon(podexScan.nextLine());
         }
-      } else if (mode == 5) {
+        
+        
+      }else if (mode == 12) { //DEBUG: IA TESTER
+          System.out.println(
+                  "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
+              Pokedex pokedex = new Pokedex();
+              AIcomplexe dresseurAIcomplexe = new AIcomplexe("IA L2", (Pokemon[]) pokedex.engendreRanch(),2);
+              AIsimple dresseurAIsimple = new AIsimple("IA L1", (Pokemon[]) pokedex.engendreRanch());
+              Combat combat = new Combat(dresseurAIcomplexe, dresseurAIsimple);
+              combat.commence();
+              
+      } 
+      else if (mode == 5) {
         System.out.println("See you next time !");
         System.exit(0);
+        
       } else {
         System.out.println("Invalid input. Please try again.");
       }
