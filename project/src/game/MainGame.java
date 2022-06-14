@@ -111,13 +111,34 @@ public class MainGame {
         
         
       }else if (mode == 12) { //DEBUG: IA TESTER
-          System.out.println(
-                  "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
+          System.out.println("\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
+          String nomIA1 = "Nule";
+          String nomIA2 = "Fort";
+          int winIA1 = 0;
+          int winIA2 = 0;
+          int gameNum=10;
+          for (int i=0; i<gameNum;i++) {
+        	  
+              
               Pokedex pokedex = new Pokedex();
-              AIcomplexe dresseurAIcomplexe = new AIcomplexe("IA L2", (Pokemon[]) pokedex.engendreRanch(),2);
-              AIsimple dresseurAIsimple = new AIsimple("IA L1", (Pokemon[]) pokedex.engendreRanch());
-              Combat combat = new Combat(dresseurAIcomplexe, dresseurAIsimple);
+              AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(),1);
+              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),1);
+              Combat combat = new Combat(IA2, IA1);
               combat.commence();
+             
+             if (combat.gagnant == nomIA1) {
+            	 winIA1 ++;
+             }
+             if (combat.gagnant == nomIA2) {
+            	 winIA2 ++;
+             }
+          }
+          float winrateIA1=winIA1;
+          float winrateIA2=winIA2;
+          System.out.println("Winrates:\n"+nomIA1+": "+winrateIA1+"\n"+nomIA2+": "+winrateIA2);
+          
+        
+         
               
       } 
       else if (mode == 5) {
