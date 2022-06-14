@@ -1,5 +1,6 @@
 package game;
 
+import dresseur.AIcomplexe;
 import dresseur.AIsimple;
 import dresseur.Dresseur;
 import interfaces.IAttaque;
@@ -108,15 +109,7 @@ public class Tour implements ITour {
     		  +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
     		  );
       
-      /*System.out.println(
-      pok1.getNom()
-      + " get hurt by "
-      + ((Capacite) atk2).getNom()
-      + " from "+ pok2.getNom()
-      + " and remains only "
-      + pok1.getPourcentagePV()
-      + " % of his HP");
-      */
+    
     } else if (atk2.getClass() == Echange.class) {
 
     } else {
@@ -134,17 +127,7 @@ public class Tour implements ITour {
     		  +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
     		  );
     		
-     /* System.out.println(
-          pok1.getNom()
-              + " get hurt by "
-              + ((Capacite) atk2).getNom()
-              + " from "
-              + pok2.getNom()
-              + " and remains only "
-              + String.format("%.2f", pok1.getPourcentagePV())
-              + " % of his HP");
-    
-    */
+  
     }
     if (this.pok1.estEvanoui()) {
 
@@ -173,7 +156,7 @@ public class Tour implements ITour {
       ((Dresseur) this.dresseur2).pokeEnVie--;
       if (((Dresseur) this.dresseur2).pokeEnVie > 0) {
         Combat.pok2 =
-            new Echange((AIsimple) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
+            new Echange((AIcomplexe) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
         System.out.println(this.dresseur2.getNom() + " sent " + Combat.pok2.getNom()+"\n");
       }
     }
