@@ -122,14 +122,14 @@ public class MainGame {
               
               Pokedex pokedex = new Pokedex();
               AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(),1);
-              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),1);
+              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),3);
               Combat combat = new Combat(IA2, IA1);
               combat.commence();
              
              if (combat.gagnant == nomIA1) {
             	 winIA1 ++;
              }
-             if (combat.gagnant == nomIA2) {
+             else  {
             	 winIA2 ++;
              }
           }
