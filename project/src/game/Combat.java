@@ -63,7 +63,7 @@ public class Combat implements ICombat {
 
     System.out.println(Combat.pok1.getNom() + " VS. " + Combat.pok2.getNom() + "\n");
 
-    while ((((Dresseur) dresseur1).pokeEnVie > 0) && (((Dresseur) dresseur2).pokeEnVie > 0)) {
+    while ((((Dresseur) dresseur1).pokeEnVie > 0) && (((Dresseur) dresseur2).pokeEnVie > 0) && nbTour<1000) {
       if (nbTour>0) { System.out.println("\n\n<--------------------------[ Turn "+(nbTour + 1)+" ]--------------------------->\n");}
       System.out.println("Choose the move to use : ");
       Combat.atk1 = dresseur1.choisitAttaque(Combat.pok1, Combat.pok2);
