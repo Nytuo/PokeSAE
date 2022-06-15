@@ -117,23 +117,21 @@ public class Tour implements ITour {
       + pok1.getPourcentagePV()
       + " % of his HP");
       */
-    } else if (atk2.getClass() == Echange.class) {
-
-    } else {
-      //System.out.println(atk2.calculeDommage(pok2, pok1) + " damages points");
+    } else if (atk2.getClass() != Echange.class) {
+//System.out.println(atk2.calculeDommage(pok2, pok1) + " damages points");
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(
-    		  "    "
-    		  +pok2.getNom()
-    		  +" : "
-    		  +((Capacite) atk2).getNom()
-    		  +" --> "
-    		  +atk2.calculeDommage(pok2, pok1)
-    		  +" DMG to "
-    		  +pok1.getNom()
-    		  +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
-    		  );
-    		
+              "    "
+                      +pok2.getNom()
+                      +" : "
+                      +((Capacite) atk2).getNom()
+                      +" --> "
+                      +atk2.calculeDommage(pok2, pok1)
+                      +" DMG to "
+                      +pok1.getNom()
+                      +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
+      );
+
      /* System.out.println(
           pok1.getNom()
               + " get hurt by "
@@ -143,7 +141,7 @@ public class Tour implements ITour {
               + " and remains only "
               + String.format("%.2f", pok1.getPourcentagePV())
               + " % of his HP");
-    
+
     */
     }
     if (this.pok1.estEvanoui()) {
