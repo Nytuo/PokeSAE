@@ -2,12 +2,15 @@ package dresseur;
 
 import java.util.Random;
 
+
 import interfaces.IAttaque;
 import interfaces.IPokemon;
 import interfaces.IStrategy;
+import interfaces.IType;
 import pokedex.Pokedex;
 import pokemon.Capacite;
 import pokemon.Pokemon;
+import pokedex.Pokedex;
 
 public class AIcomplexe extends Dresseur implements IStrategy {
 	/**
@@ -37,13 +40,16 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  
 	  @Override
 	  public IPokemon choisitCombattant() {
-		 //TODO Choix strategique à faire
-		  // A voir
 		  int numPok = 0;
 		  if (degré ==1) {
-			  numPok=choisitCombattantContreIAd1() ;// A completer
+			  // 1 Random
+			  numPok=choisitCombattantContreIAd1() ;
 		  }
-		  // 2 Choisit le pokemon avec le plus gros PV
+		  else if (degré==2) {
+			  // 2 Choisit le pokemon avec le plus gros PV
+			  numPok=getMaxPVPokeIndex();
+		  }
+		  
 		  // 3 Choisit le pokémon qui la meilleur ratio PV/Dégat (Fait la moyene pondérée avec les PP des capacités)
 		  // 4
 		  else {
@@ -64,12 +70,22 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   */
 	  @Override
 	  public IPokemon choisitCombattantContre(IPokemon pok) {
-	    // TODO Choix strategique à faire
+	   
 		  int numPok = -1;
+		  //1 Random
 		  if (degré==1) {
 			  numPok=choisitCombattantContreIAd1();
 		  }
-		  // Choisit le pokemon avec le plus gros PV
+		  // 2 Choisit le pokemon avec le plus gros PV
+		  else if (degré==2) {
+			  
+			  numPok=getMaxPVPokeIndex();
+		  }
+		  else if (degré==3) {
+			  numPok=getBestPokeIndexAgainst(pok);
+		  }
+		  // 3 Choisit un pokemon qui à un avantage de type contre pok
+		 
 		  
 		  
 		  else {
@@ -234,8 +250,53 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  return bestCapIndex;
 	  }
 	  
+	  public int getMaxPVPokeIndex() {
+		  int maxPV=0;
+		  int maxPVindex=-1;
+		  int i=0;
+		  for (Pokemon poke:pokemons) {
+			  int pokePV=poke.getStat().getPV();
+			  if (pokePV>maxPV && !poke.estEvanoui()) {
+				  maxPV=pokePV;
+				  maxPVindex=i;
+			  }
+			  i++;
+		  }
+		  return maxPVindex;
+	  }
+	  
+	  public boolean estDeTypeSup(IPokemon atta,IPokemon def) {
+		  float total=0;
+		  IType[] typesAtta = atta.getEspece().getTypes();
+		  IType[] typesDef = def.getEspece().getTypes();
+		  //il faut parcourir le fameux tableau avec les types contradictoires.
+		  for (int i=0; i< typesAtta.size() ;i++) {
+			  
+			  total+=Pokedex.getEfficacite(typesAtta[i], typesDef[j]);
+		  }
+		  
+		  
+		  return total;//retourner si le total est avantageux.
+	  }
+	  
+	  public int getBestPokeIndexAgainst(IPokemon pok) {
+		 
+		 ;
+		  IType[] typesAdv = pok.getEspece().getTypes();
+		  System.out.println("type adversaire " + typesAdv[0].getNom() );
+		  System.out.println("type adversaire " + typesAdv[1].getNom() );
+		  for (int i=0; i<pokemons.length;i++) {// Pour chaque poke de mon ranch
+			  //Je regarde si mon pokemon à le dessus sur un ou deux des type de l'ADV
+			  // je compte combien il en a, s'il en a plus que le max rencontré, je garde son nom et son index
+			  
+			  
+		  }
+		  return 0;
+	  }
 	  public void duno() {
 		  // classe les pokémons du plus tanké au plus agréssif 
 		  // grâce à PV/ moyPond(capacités)
 	  }
+	  
+	 
 }
