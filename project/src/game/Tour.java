@@ -159,9 +159,7 @@ public class Tour implements ITour {
 
         System.out.println(this.dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
-    }
-
-    if (this.pok2.estEvanoui()) {
+    }else if(this.pok2.estEvanoui()) {
 
       System.out.println(this.pok1.getNom() + " slain " + this.pok2.getNom());
 
