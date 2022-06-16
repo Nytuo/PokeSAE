@@ -2,7 +2,7 @@ package dresseur;
 
 import java.util.Random;
 
-
+import game.Echange;
 import interfaces.IAttaque;
 import interfaces.IPokemon;
 import interfaces.IStrategy;
@@ -19,6 +19,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   * @param name Nom du dresseur (IA)
 	   * @param pokemons Liste des pokemons du dresseur (IA)
 	   */
+		Pokedex pokedex= new Pokedex();// Il est générer ici pour que l'execution soit plus rapide.
 	public int degré ;
 	public AIcomplexe(String name, Pokemon[] pokemons,int d) {
 		super(name, pokemons);
@@ -41,6 +42,8 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  @Override
 	  public IPokemon choisitCombattant() {
 		  int numPok = 0;
+		  
+		  
 		  if (degré ==1) {
 			  // 1 Random
 			  numPok=choisitCombattantContreIAd1() ;
@@ -72,6 +75,9 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  public IPokemon choisitCombattantContre(IPokemon pok) {
 	   
 		  int numPok = -1;
+		
+		  
+		  
 		  //1 Random
 		  if (degré==1) {
 			  numPok=choisitCombattantContreIAd1();
@@ -132,6 +138,13 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   */
 	  @Override
 	  public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
+		  // SI les pokémons se font 0 de dégats
+		  if (isOpposedType(attaquant,defenseur)) {
+			  
+			  return new Echange(this, attaquant, defenseur);
+				  
+		 }
+		  
 		  Capacite[] capListAttaquant =
 			        (Capacite[])
 			            attaquant.getCapacitesApprises(); // Récupère toutes les capacités de l'attaquant
@@ -266,25 +279,22 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  }
 	  
 	  public boolean estDeTypeSup(IPokemon atta,IPokemon def) {
+		  //retourne vrai un pokémon a le desus sur un autre
 		  float total=0;
-		  IType[] typesAtta = atta.getEspece().getTypes();
-		  IType[] typesDef = def.getEspece().getTypes();
-		  //il faut parcourir le fameux tableau avec les types contradictoires.
-		  for (int i=0; i< typesAtta.size() ;i++) {
-			  
-			  total+=Pokedex.getEfficacite(typesAtta[i], typesDef[j]);
+		  for (IType typePok1:atta.getEspece().getTypes()) {
+				 for (IType typePok2:atta.getEspece().getTypes()) {
+					 total+=pokedex.getEfficacite(typePok1, typePok2);
+				 }
+				
 		  }
-		  
-		  
-		  return total;//retourner si le total est avantageux.
+		  return total>1;//retourner si le total est avantageux.
 	  }
 	  
 	  public int getBestPokeIndexAgainst(IPokemon pok) {
+		
 		 
-		 ;
-		  IType[] typesAdv = pok.getEspece().getTypes();
-		  System.out.println("type adversaire " + typesAdv[0].getNom() );
-		  System.out.println("type adversaire " + typesAdv[1].getNom() );
+		  
+		  
 		  for (int i=0; i<pokemons.length;i++) {// Pour chaque poke de mon ranch
 			  //Je regarde si mon pokemon à le dessus sur un ou deux des type de l'ADV
 			  // je compte combien il en a, s'il en a plus que le max rencontré, je garde son nom et son index
@@ -298,5 +308,21 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  // grâce à PV/ moyPond(capacités)
 	  }
 	  
-	 
+	 public boolean isOpposedType(IPokemon atta,IPokemon def) {
+		 // retourne vrai si deux pokémons sont de type contraires.
+		 for (IType typePok1:atta.getEspece().getTypes()) {
+			 for (IType typePok2:atta.getEspece().getTypes()) {
+				 if (typePok1.getNom()!="" && typePok2.getNom()!="" ) {
+					 double value =pokedex.getEfficacite(typePok1, typePok2);
+					System.out.println(typePok1.getNom()+" et "+typePok2.getNom()+"->valeur :"+value);
+					 if (pokedex.getEfficacite(typePok1, typePok2) == 0.0) {
+						 System.out.println("TRUEEEEEEEEEEEEEEEE");
+						 return true;
+					 }
+				 }
+				 
+			 }
+		 }
+		 return false;
+	 }
 }
