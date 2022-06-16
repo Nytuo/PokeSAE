@@ -50,7 +50,7 @@ public class AIsimple extends Dresseur implements IStrategy {
     int numPok = 6;
     while (numPok == 6) {
 
-      numPok = r.nextInt((5));
+      numPok = r.nextInt((6));
 
       if (getPokemon(numPok).estEvanoui()) {
         numPok = 6;
@@ -89,7 +89,6 @@ public class AIsimple extends Dresseur implements IStrategy {
           return new Pokedex().getCapacite("Lutte");
         }
       }
-      System.out.println();
     }
 
     return capList[numAttaque];

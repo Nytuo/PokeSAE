@@ -110,6 +110,7 @@ public class Tour implements ITour {
     		  +" "+String.format("%.2f",pok1.getPourcentagePV())+"% PV\n"
     		  );
       
+
     
     } else if (atk2.getClass() == Echange.class) {
     	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!calle");
@@ -129,6 +130,7 @@ public class Tour implements ITour {
     		  );
     		
   
+
     }
     if (this.pok1.estEvanoui()) {
 
@@ -145,9 +147,7 @@ public class Tour implements ITour {
 
         System.out.println(this.dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
-    }
-
-    if (this.pok2.estEvanoui()) {
+    }else if(this.pok2.estEvanoui()) {
 
       System.out.println(this.pok1.getNom() + " slain " + this.pok2.getNom());
 

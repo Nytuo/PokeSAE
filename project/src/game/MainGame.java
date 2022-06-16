@@ -111,6 +111,7 @@ public class MainGame {
         
         
       }else if (mode == 12) { //DEBUG: IA TESTER
+
           System.out.println("\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
           String nomIA1 = "Nule";
           String nomIA2 = "Fort";
@@ -140,6 +141,7 @@ public class MainGame {
         
          
               
+
       } 
       else if (mode == 5) {
         System.out.println("See you next time !");
