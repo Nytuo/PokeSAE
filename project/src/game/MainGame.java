@@ -111,14 +111,16 @@ public class MainGame {
         
         
       }else if (mode == 12) { //DEBUG: IA TESTER
+        for (int i = 0; i < 100; i++) {
           System.out.println(
                   "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
-              Pokedex pokedex = new Pokedex();
-              AIcomplexe dresseurAIcomplexe = new AIcomplexe("IA L2", (Pokemon[]) pokedex.engendreRanch(),2);
-              AIsimple dresseurAIsimple = new AIsimple("IA L1", (Pokemon[]) pokedex.engendreRanch());
-              Combat combat = new Combat(dresseurAIcomplexe, dresseurAIsimple);
-              combat.commence();
-              
+          Pokedex pokedex = new Pokedex();
+          AIcomplexe dresseurAIcomplexe = new AIcomplexe("IA L2", (Pokemon[]) pokedex.engendreRanch(), 2);
+          AIsimple dresseurAIsimple = new AIsimple("IA L1", (Pokemon[]) pokedex.engendreRanch());
+          Combat combat = new Combat(dresseurAIcomplexe, dresseurAIsimple);
+          Combat.nbTour = 0;
+          combat.commence();
+        }
       } 
       else if (mode == 5) {
         System.out.println("See you next time !");
