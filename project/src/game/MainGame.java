@@ -117,13 +117,13 @@ public class MainGame {
           String nomIA2 = "Fort";
           int winIA1 = 0;
           int winIA2 = 0;
-          int gameNum=10;
+          int gameNum=100;
           for (int i=0; i<gameNum;i++) {
         	  
               
               Pokedex pokedex = new Pokedex();
               AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(),1);
-              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),3);
+              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),1);
               Combat combat = new Combat(IA2, IA1);
               combat.commence();
              

@@ -99,7 +99,7 @@ public class Tour implements ITour {
 
     if (atk1.getClass() == Echange.class) {
       pok1.subitAttaqueDe(pok2, atk2);
-      
+     
       System.out.println(
     		  "    "
     		  +pok2.getNom()
