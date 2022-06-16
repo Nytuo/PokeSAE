@@ -261,4 +261,9 @@ public class Dresseur implements IDresseur {
     }
     return true;
   }
+
+  public Pokemon[] getRanchCopy(){
+    return this.pokemons;
+  }
+
 }

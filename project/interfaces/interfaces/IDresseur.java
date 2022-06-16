@@ -14,7 +14,7 @@ package interfaces;
 public interface IDresseur {
 	public String getNom();			//Nom du dresseur
 	public int getNiveau();			//Niveau du dresseur
-	
+	public IPokemon[] getRanchCopy();
 	public IPokemon getPokemon(int i); //Récupère le i-eme Pokemon du Ranch
 	
 	public void enseigne(IPokemon pok, ICapacite[] caps); //Donne au pokemon pok les capacites caps
