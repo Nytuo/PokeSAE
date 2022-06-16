@@ -4,6 +4,7 @@ import java.util.Random;
 
 import game.Echange;
 import interfaces.IAttaque;
+import interfaces.ICapacite;
 import interfaces.IPokemon;
 import interfaces.IStrategy;
 import interfaces.IType;
@@ -87,10 +88,12 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  
 			  numPok=getMaxPVPokeIndex();
 		  }
+		  
+		  // 3 Choisit un pokemon qui à un avantage de type contre pok
 		  else if (degré==3) {
 			  numPok=getBestPokeIndexAgainst(pok);
 		  }
-		  // 3 Choisit un pokemon qui à un avantage de type contre pok
+		 
 		 
 		  
 		  
@@ -158,6 +161,10 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  numAttaque=choixAttaqueIAd2(attaquant,defenseur,capListAttaquant);
 			  //System.out.println("numAttaque"+numAttaque);
 		  }
+		  else if (degré==3) {
+			  numAttaque=getBestAttackAgainst(attaquant,defenseur);
+		  }
+		  
 		  else {
 			  System.out.println("[WARNING]: IA level "+degré+" is not implemented. Attack n°1 is selected.");
 		  }
@@ -278,30 +285,83 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  return maxPVindex;
 	  }
 	  
-	  public boolean estDeTypeSup(IPokemon atta,IPokemon def) {
-		  //retourne vrai un pokémon a le desus sur un autre
+	  public float getTypeScore(IPokemon atta,IPokemon def) {
+		  //retourne le score d'un pokémon 
 		  float total=0;
 		  for (IType typePok1:atta.getEspece().getTypes()) {
 				 for (IType typePok2:atta.getEspece().getTypes()) {
-					 total+=pokedex.getEfficacite(typePok1, typePok2);
+					 if (typePok1.getNom()!="" && typePok2.getNom()!="") {
+						 total+=pokedex.getEfficacite(typePok1, typePok2);
+					 }
 				 }
 				
 		  }
-		  return total>1;//retourner si le total est avantageux.
+		  return total;//retourner si le total est avantageux.
 	  }
+	  
+	  public int getBestAttackAgainst(IPokemon atta, IPokemon def) {
+		 int[] maxIndex= {0,0};
+		  double maxEfficacite=0;
+		  IType[] typesDef= def.getEspece().getTypes();
+		  ICapacite[] caps = atta.getCapacitesApprises();
+		  for (int j=0; j<typesDef.length;j++ ) {
+			  for (int i=0; i<caps.length;i++) {
+				  IType capType = caps[i].getType();
+				  if (caps[i].getPP()>0) {
+					  if (capType.getNom()!="" && typesDef[j].getNom()!="") {
+						  double efficacite =pokedex.getEfficacite(caps[i].getType(), typesDef[j] );
+						  if(efficacite>maxEfficacite) {
+							  maxEfficacite=efficacite;
+							  maxIndex[j]=i;
+					  }
+					 
+					  }
+					 
+				  }
+				
+			  }
+		  }
+		  
+		  //Prend la plus précise 
+		  if ( caps[maxIndex[0]].getPrecision()>caps[maxIndex[1]].getPrecision() ) {
+			  return maxIndex[0];
+		  }
+		  return maxIndex[1];
+		
+		
+	  }
+	  
+	  public int getBestAttack(IPokemon atta, IPokemon def) {
+		  int maxDmg=0;
+		  int i=0;
+		  int maxIndex=0;
+		  for (ICapacite cap: atta.getCapacitesApprises()) {
+			  int dmg=cap.calculeDommage(atta, def);
+			  if (dmg>maxDmg && cap.getPP()>0) {
+				  maxDmg=dmg;
+				  maxIndex=i;
+			  }
+			  i++;
+		  }
+		  return maxIndex;
+		 
+	  }
+	  
 	  
 	  public int getBestPokeIndexAgainst(IPokemon pok) {
 		
 		 
 		  
-		  
+		  float maxScore = 0;
+		  int bestPokeIndex=-1;
 		  for (int i=0; i<pokemons.length;i++) {// Pour chaque poke de mon ranch
-			  //Je regarde si mon pokemon à le dessus sur un ou deux des type de l'ADV
+			  float score = getTypeScore(pokemons[i],pok);
+			  if (score>maxScore)
+				 maxScore=score;
+			  	bestPokeIndex=i;
 			  // je compte combien il en a, s'il en a plus que le max rencontré, je garde son nom et son index
-			  
-			  
 		  }
-		  return 0;
+		  return bestPokeIndex;
 	  }
 	  public void duno() {
 		  // classe les pokémons du plus tanké au plus agréssif 
@@ -314,9 +374,9 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			 for (IType typePok2:atta.getEspece().getTypes()) {
 				 if (typePok1.getNom()!="" && typePok2.getNom()!="" ) {
 					 double value =pokedex.getEfficacite(typePok1, typePok2);
-					System.out.println(typePok1.getNom()+" et "+typePok2.getNom()+"->valeur :"+value);
+					//System.out.println(typePok1.getNom()+" et "+typePok2.getNom()+"->valeur :"+value);
 					 if (pokedex.getEfficacite(typePok1, typePok2) == 0.0) {
-						 System.out.println("TRUEEEEEEEEEEEEEEEE");
+						 //System.out.println("TRUEEEEEEEEEEEEEEEE");
 						 return true;
 					 }
 				 }
