@@ -170,7 +170,7 @@ public class Dresseur implements IDresseur {
      */
     @Override
     public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
-
+    	System.out.println("Choose the move to use : ");
         Capacite[] capList = (Capacite[]) attaquant.getCapacitesApprises(); // Récupère toutes les
         // capacités de
         // l'attaquant
