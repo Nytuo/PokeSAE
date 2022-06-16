@@ -263,7 +263,9 @@ public class Dresseur implements IDresseur {
   }
 
   public Pokemon[] getRanchCopy(){
-    return this.pokemons;
+    Pokemon[] pokecopy = new Pokemon[6];
+    System.arraycopy(this.pokemons, 0, pokecopy, 0, this.pokemons.length);
+    return pokecopy;
   }
 
 }
