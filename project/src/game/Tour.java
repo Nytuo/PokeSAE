@@ -65,10 +65,10 @@ public class Tour implements ITour {
   public void commence() {
 
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-      System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
+      System.out.println( dresseur1.getNom() + " : " + pok1.getNom());
       attaque(dresseur2, pok2, atk2, pok1, atk1);
       if (pok1 == Combat.pok1) {
-        System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+        System.out.println("Turn of " + dresseur2.getNom() + " : " + pok2.getNom());
         attaque(dresseur1, pok1, atk1, pok2, atk2);
       }
     } else {
