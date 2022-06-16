@@ -99,6 +99,7 @@ public class Tour implements ITour {
 
     if (atk1.getClass() == Echange.class) {
       pok1.subitAttaqueDe(pok2, atk2);
+      
       System.out.println(
     		  "    "
     		  +pok2.getNom()
@@ -111,9 +112,9 @@ public class Tour implements ITour {
       
     
     } else if (atk2.getClass() == Echange.class) {
-
+    	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!calle");
     } else {
-      //System.out.println(atk2.calculeDommage(pok2, pok1) + " damages points");
+
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(
     		  "    "
@@ -170,4 +171,7 @@ public class Tour implements ITour {
   void passTour(Dresseur dresseur1) {
     System.out.println("Pass his turn");
   }
+  
+ 
+  
 }
