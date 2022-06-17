@@ -2,7 +2,7 @@ package dresseur;
 
 import java.util.Random;
 
-
+import game.Echange;
 import interfaces.IAttaque;
 import interfaces.IPokemon;
 import interfaces.IStrategy;
@@ -150,7 +150,10 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  }
 		  
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
-			  return new Pokedex().getCapacite("Lutte");
+			  //return new Pokedex().getCapacite("Lutte");
+			  
+			  return new Echange(this, attaquant, defenseur); // peut être source de problème
+			  
 		  }
 		  else {
 			  return capListAttaquant[numAttaque];
