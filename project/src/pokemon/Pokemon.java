@@ -347,8 +347,12 @@ public class Pokemon extends Species implements IPokemon {
    * @return l'état du Pokémon
    */
   public boolean estEvanoui() {
-
-    return this.PVActuel <= 0;
+	  int nbPP=0;
+	  for (ICapacite cap : this.capacities) {
+		 nbPP+=cap.getPP();
+	  }
+	  
+    return this.PVActuel <= 0 || nbPP==0;
   }
 
   /**

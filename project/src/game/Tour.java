@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Random;
+
 import dresseur.AIcomplexe;
 import dresseur.AIsimple;
 import dresseur.Dresseur;
@@ -65,20 +67,35 @@ public class Tour implements ITour {
   public void commence() {
 
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-      System.out.println( dresseur1.getNom() + " : " + pok1.getNom());
-      attaque(dresseur2, pok2, atk2, pok1, atk1);
-      if (pok1 == Combat.pok1) {
-        System.out.println("Turn of " + dresseur2.getNom() + " : " + pok2.getNom());
-        attaque(dresseur1, pok1, atk1, pok2, atk2);
-      }
-    } else {
+      gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
+    }
+    else if (pok1.getStat().getVitesse() > pok2.getStat().getVitesse()) {
+      gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
+    }
+    else {
+    	Random r = new Random();
 
-      System.out.println( "◀"+dresseur2.getNom() + "▶ : " );
+	    int randDresseur = r.nextInt((2));
+	    
+	    if(randDresseur == 0) {
+          gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
+        }
+	    else {
+          gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
+        }
+	    
+	    
+	      
+     
+    }
+  }
+
+  private void gereAttaque(IDresseur dresseur1, IPokemon pok1, IAttaque atk1, IDresseur dresseur2, IPokemon pok2, IAttaque atk2) {
+    System.out.println("◀"+ dresseur1.getNom() + "▶ -> " + pok1.getNom());
+    attaque(dresseur2, pok2, atk2, pok1, atk1);
+    if (pok1 == Combat.pok1) {
+      System.out.println("◀"+ dresseur2.getNom() + "▶ -> " + pok2.getNom());
       attaque(dresseur1, pok1, atk1, pok2, atk2);
-      if (pok2 == Combat.pok2) {
-        System.out.println( "◀"+dresseur1.getNom() + "▶ : " );
-        attaque(dresseur2, pok2, atk2, pok1, atk1);
-      }
     }
   }
 
@@ -112,9 +129,8 @@ public class Tour implements ITour {
       
 
     
-    } else if (atk2.getClass() == Echange.class) {
-    	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!calle");
-    } else {
+    } 
+    else  if (atk2.getClass() != Echange.class){
 
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(

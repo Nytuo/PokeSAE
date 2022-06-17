@@ -52,12 +52,13 @@ public class Combat implements ICombat {
    */
   @Override
   public void commence() {
-	  System.out.println("\n\n<--------------------------[ Turn "+(nbTour + 1)+" ]--------------------------->\n");
+	System.out.println("\n\n<--------------------------[ Turn "+(nbTour + 1)+" ]--------------------------->\n");
     System.out.println(
             dresseur1.getNom()
             + " VS. "
             + dresseur2.getNom());
-
+    
+    //Lors du 1er tour, chaque dresseur choisit dans son ranch, quel Pokemon va se battre en premier.
     Combat.pok1 = dresseur1.choisitCombattant();
     Combat.pok2 = dresseur2.choisitCombattant();
 
@@ -72,6 +73,7 @@ public class Combat implements ICombat {
         Combat.pok1 = ((Echange) Combat.atk1).echangeCombattant();
         System.out.println(dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
+      
       Combat.atk2 = dresseur2.choisitAttaque(Combat.pok2, Combat.pok1);
       if (Combat.atk2.getClass() == Echange.class) {
         System.out.println(dresseur2.getNom() + " used swap");
@@ -83,6 +85,7 @@ public class Combat implements ICombat {
     }
 
     setGagnant();
+    nbTour=0;
 
     this.termine();
   }

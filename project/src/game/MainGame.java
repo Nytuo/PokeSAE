@@ -113,8 +113,8 @@ public class MainGame {
       }else if (mode == 12) { //DEBUG: IA TESTER
 
           System.out.println("\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
-          String nomIA1 = "Nule";
-          String nomIA2 = "Fort";
+          String nomIA1 = "IA1";
+          String nomIA2 = "IA2";
           int winIA1 = 0;
           int winIA2 = 0;
           int gameNum=100;
@@ -130,7 +130,7 @@ public class MainGame {
              if (combat.gagnant == nomIA1) {
             	 winIA1 ++;
              }
-             else  {
+             if (combat.gagnant == nomIA2)  {
             	 winIA2 ++;
              }
           }

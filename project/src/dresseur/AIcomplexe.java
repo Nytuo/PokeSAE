@@ -15,6 +15,18 @@ import pokedex.Pokedex;
 
 public class AIcomplexe extends Dresseur implements IStrategy {
 	/**
+     * Nombre d'échanges restants pour le dresseur pendant le Combat
+     */
+    public int echangeRestant = 5;
+
+    /**
+     * Le nombre de pokémons du Dresseur encore en vie
+     */
+    public int pokeEnVie = 6;
+    
+    
+	
+	/**
 	   * Constructeur de la classe AIcomplexe qui se charge de remplir le constructeur de Dresseur
 	   *
 	   * @param name Nom du dresseur (IA)
@@ -170,7 +182,10 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  }
 		  
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
-			  return new Pokedex().getCapacite("Lutte");
+			  //return new Pokedex().getCapacite("Lutte");
+			  
+			  return new Echange(this, attaquant, defenseur); // peut être source de problème
+			  
 		  }
 		  else {
 			  return capListAttaquant[numAttaque];
@@ -385,4 +400,11 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		 }
 		 return false;
 	 }
+	  public Pokemon[] getRanchCopy() {
+	        Pokemon[] pokecopy = new Pokemon[6];
+	        System.arraycopy(this.pokemons, 0, pokecopy, 0, this.pokemons.length);
+	        return pokecopy;
+	    }
+
+	 
 }
