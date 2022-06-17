@@ -112,9 +112,8 @@ public class Tour implements ITour {
       
 
     
-    } else if (atk2.getClass() == Echange.class) {
-    	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!calle");
-    } else {
+    } 
+    else  if (atk2.getClass() != Echange.class){
 
       pok1.subitAttaqueDe(pok2, atk2);
       System.out.println(
