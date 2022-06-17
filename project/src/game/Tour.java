@@ -67,21 +67,21 @@ public class Tour implements ITour {
   public void commence() {
 
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-      gereAttaque();
+      gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
     }
     else if (pok1.getStat().getVitesse() > pok2.getStat().getVitesse()) {
-      gereAttaque();
+      gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
     }
     else {
     	Random r = new Random();
 
-	    int SIU = r.nextInt((2));
+	    int randDresseur = r.nextInt((2));
 	    
-	    if(SIU == 0) {
-          gereAttaque();
+	    if(randDresseur == 0) {
+          gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
         }
 	    else {
-          gereAttaque();
+          gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
         }
 	    
 	    
@@ -95,7 +95,7 @@ public class Tour implements ITour {
     }
   }
 
-  private void gereAttaque() {
+  private void gereAttaque(IDresseur dresseur1, IPokemon pok1, IAttaque atk1, IDresseur dresseur2, IPokemon pok2, IAttaque atk2) {
     System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
     attaque(dresseur2, pok2, atk2, pok1, atk1);
     if (pok1 == Combat.pok1) {
