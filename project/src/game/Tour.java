@@ -67,42 +67,22 @@ public class Tour implements ITour {
   public void commence() {
 
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-      System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
-      attaque(dresseur2, pok2, atk2, pok1, atk1);
-      if (pok1 == Combat.pok1) {
-        System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
-        attaque(dresseur1, pok1, atk1, pok2, atk2);
-      }
+      gereAttaque();
     }
     else if (pok1.getStat().getVitesse() > pok2.getStat().getVitesse()) {
-        System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
-        attaque(dresseur2, pok2, atk2, pok1, atk1);
-        if (pok1 == Combat.pok1) {
-          System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
-          attaque(dresseur1, pok1, atk1, pok2, atk2);
-        }
-      }
+      gereAttaque();
+    }
     else {
     	Random r = new Random();
 
 	    int SIU = r.nextInt((2));
 	    
 	    if(SIU == 0) {
-	    	System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
-	        attaque(dresseur2, pok2, atk2, pok1, atk1);
-	        if (pok1 == Combat.pok1) {
-	          System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
-	          attaque(dresseur1, pok1, atk1, pok2, atk2);
-	        }
-	    }
+          gereAttaque();
+        }
 	    else {
-	    	System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
-	        attaque(dresseur2, pok2, atk2, pok1, atk1);
-	        if (pok1 == Combat.pok1) {
-	          System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
-	          attaque(dresseur1, pok1, atk1, pok2, atk2);
-	        }
-	    }
+          gereAttaque();
+        }
 	    
 	    
 	      
@@ -112,6 +92,15 @@ public class Tour implements ITour {
         System.out.println( "◀"+dresseur1.getNom() + "▶ : " );
         attaque(dresseur2, pok2, atk2, pok1, atk1);
       }
+    }
+  }
+
+  private void gereAttaque() {
+    System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
+    attaque(dresseur2, pok2, atk2, pok1, atk1);
+    if (pok1 == Combat.pok1) {
+      System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+      attaque(dresseur1, pok1, atk1, pok2, atk2);
     }
   }
 
