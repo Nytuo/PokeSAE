@@ -14,15 +14,10 @@ import pokemon.Pokemon;
 import pokedex.Pokedex;
 
 public class AIcomplexe extends Dresseur implements IStrategy {
-	/**
-     * Nombre d'échanges restants pour le dresseur pendant le Combat
-     */
-    public int echangeRestant = 5;
-
-    /**
-     * Le nombre de pokémons du Dresseur encore en vie
-     */
-    public int pokeEnVie = 6;
+    public int pokeEnVie = 6;//Le nombre de pokémons du Dresseur encore en vie
+    public int degré ;// Définit le "niveau" de compléxité de l'IA
+    Pokedex pokedex = new Pokedex();// Il est générer ici pour que l'execution soit plus rapide.
+    int[] pokemonsEchanges = {25,25,25,25,25,25};// nombre d'échange restant par pokémon.
     
     
 	
@@ -32,8 +27,8 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   * @param name Nom du dresseur (IA)
 	   * @param pokemons Liste des pokemons du dresseur (IA)
 	   */
-		Pokedex pokedex= new Pokedex();// Il est générer ici pour que l'execution soit plus rapide.
-	public int degré ;
+		
+	
 	public AIcomplexe(String name, Pokemon[] pokemons,int d) {
 		super(name, pokemons);
 		this.degré = d;
@@ -88,8 +83,6 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  public IPokemon choisitCombattantContre(IPokemon pok) {
 	   
 		  int numPok = -1;
-		
-		  
 		  
 		  //1 Random
 		  if (degré==1) {
@@ -119,6 +112,17 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  return getPokemon(numPok);
 	  }
 	  
+	  public boolean isSwapPossible() {
+		  //retourne vrai si il existe au moins un pokémon en vie qui peut etre appellé pour un échange.
+		  for (int i=0; i<pokemons.length;i++) {
+			  if (!pokemons[i].estEvanoui() &&  pokemonsEchanges[i]>0) {
+				  return true;
+			  }
+		  }
+		  return false;
+	  }
+	  
+	  
 	  /**
 	   * Méthode qui permet de choisir un pokemon au hasard dans la liste des pokemons du dresseur (IA)
 	   * (pendant le tour)
@@ -130,10 +134,11 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  Random r = new Random();
 
 		    int numPok = 6;
+		    int nbTests=0;
 		    while (numPok == 6) {
-
+		    	nbTests++;
 		      numPok = r.nextInt((6));
-
+		     
 		      if (getPokemon(numPok).estEvanoui()) {
 		        numPok = 6;
 		      }
@@ -141,7 +146,22 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 
 		    return numPok;
 	  }
-	  
+	  public int randomCombatantManual() {
+		  Random r = new Random();
+
+		    int numPok = 6;
+		    int nbTests=0;
+		    while (numPok == 6 && nbTests>12) {
+		    	nbTests++;
+		      numPok = r.nextInt((6));
+		      System.out.println("INFINIT:"+getPokemon(numPok).estEvanoui()+" "+numPok+"  "+pokemonsEchanges[numPok]);
+		      if (getPokemon(numPok).estEvanoui() || pokemonsEchanges[numPok]==0) {
+		        numPok = 6;
+		      }
+		    }
+
+		    return numPok;
+	  }
 	  /**
 	   * Méthode qui permet de délégué le choix d'une attaque dans la liste des attaques du pokemon (IA).
 	   * La capacité choisie doit avoir des PPs restants.
@@ -153,47 +173,66 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   */
 	  @Override
 	  public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
-		  // SI les pokémons se font 0 de dégats
-		  if (isOpposedType(attaquant,defenseur)) {
-			  
-			  return new Echange(this, attaquant, defenseur);
-				  
-		 }
+		
+		  System.out.println("nbEchanges:"+pokemonsEchanges[0]
+				  +" "+pokemonsEchanges[1]
+				  +" "+pokemonsEchanges[2]
+				  +" "+pokemonsEchanges[3]
+				  +" "+pokemonsEchanges[4]
+				  +" "+pokemonsEchanges[5]);
 		  
 		  Capacite[] capListAttaquant =
 			        (Capacite[])
 			            attaquant.getCapacitesApprises(); // Récupère toutes les capacités de l'attaquant
 		  
 		  int numAttaque=0 ;
-		  if ( degré == 1 ) { //Degrés 1 : Aléatoire
+		  if ( degré == 1 ) { //Degré 1 : Aléatoire
 			 numAttaque=choixAttaqueIAd1(attaquant,defenseur,capListAttaquant);
+			 System.out.println("numAttaque:"+numAttaque);
 		  }
-		  else if( degré ==2 ) {
+		  else if( degré ==2 ) {//Degré 2: 
 			 
 			  numAttaque=choixAttaqueIAd2(attaquant,defenseur,capListAttaquant);
 			  //System.out.println("numAttaque"+numAttaque);
 		  }
-		  else if (degré==3) {
-			  numAttaque=getBestAttackAgainst(attaquant,defenseur);
+		  else if (degré==3) { //Degré 3: 
+			  if (isOpposedType(attaquant,defenseur)) {
+				  System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!OPPOSED TYPE");
+				  return new Echange(this, attaquant, defenseur);
+					  
+			 }
+			  else {
+				  numAttaque=getBestAttackAgainst(attaquant,defenseur);
+			  }
 		  }
 		  
 		  else {
 			  System.out.println("[WARNING]: IA level "+degré+" is not implemented. Attack n°1 is selected.");
 		  }
-		  
+		  System.out.println("le swap est possible:"+isSwapPossible()+" nbPP"+(capListAttaquant[0].getPP()+capListAttaquant[1].getPP()+capListAttaquant[2].getPP()+capListAttaquant[3].getPP()) );
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
 			  //return new Pokedex().getCapacite("Lutte");
+			  if (isSwapPossible()) {
+				  int switchIndex = getBestSwitchablePokeIndex(attaquant,defenseur);
+				  System.out.println("changement:"+switchIndex);
+				  pokemonsEchanges[switchIndex]--; 
+				  return new Echange(this, attaquant, pokemons[switchIndex]); // peut être source de problème
+			  }
+			
+			 
 			  
-			  return new Echange(this, attaquant, defenseur); // peut être source de problème
+			 
 			  
 		  }
-		  else {
-			  return capListAttaquant[numAttaque];
-		  }
+		  return capListAttaquant[numAttaque];
+		 
+		
 		 
 	  }
 	  
 	 
+
+	
 
 	/**
 	   * Méthode qui permet de choisir une attaque au hasard dans la liste des attaques du pokemon (IA).
@@ -209,7 +248,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  
 		    Random r = new Random();
 		    int numAttaque = -1;
-		    int nbCap = 3 - Boolean.compare(false, echangeRestant > 0);
+		    int nbCap = 4;//3 - Boolean.compare(false, echangeRestant > 0);
 
 		    while (numAttaque < 0 || numAttaque > nbCap) {
 		      numAttaque = r.nextInt((nbCap));
@@ -222,7 +261,6 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		          return -1;
 		        }
 		      }
-		      System.out.println();
 		    }
 		    return numAttaque;
 	  }
@@ -364,17 +402,36 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  
 	  
 	  public int getBestPokeIndexAgainst(IPokemon pok) {
-		
-		 
-		  
 		  float maxScore = 0;
-		  int bestPokeIndex=-1;
+		  int bestPokeIndex=-2; // peut être source de problème
 		  for (int i=0; i<pokemons.length;i++) {// Pour chaque poke de mon ranch
 			  float score = getTypeScore(pokemons[i],pok);
-			  if (score>maxScore)
+			  if (score>maxScore && pokemons[i].getPourcentagePV()>0)
 				 maxScore=score;
 			  	bestPokeIndex=i;
 			  // je compte combien il en a, s'il en a plus que le max rencontré, je garde son nom et son index
+		  }
+		  return bestPokeIndex;
+	  }
+	 
+	  public int getBestSwitchablePokeIndex(IPokemon currentPok, IPokemon pok) {
+		  //Retourne le meilleur pokémon possible (sauf celui actuel) contre un opposant. 
+		  float maxScore = 0;
+		  int bestPokeIndex=-2; // peut être source de problème
+		  for (int i=0; i<pokemons.length;i++) {// Pour chaque poke de mon ranch
+			  float score = getTypeScore(pokemons[i],pok);
+			  if (score>maxScore 
+					  && !pokemons[i].estEvanoui() // Regarde si il n'est pas évanouhi
+					  && !pokemons[i].equals(currentPok) // Passe le pokémon actuel
+					  && pokemonsEchanges[i]>0) {// Si il reste des échanges au poké
+				  	maxScore=score;
+				  	bestPokeIndex=i;
+			  }
+				
+			  // je compte combien il en a, s'il en a plus que le max rencontré, je garde son nom et son index
+		  }
+		  if (bestPokeIndex==-2){//Aucun ne correspond
+			  return choisitCombattantContreIAd1();// Retourne un random
 		  }
 		  return bestPokeIndex;
 	  }
