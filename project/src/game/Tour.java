@@ -164,11 +164,9 @@ public class Tour implements ITour {
         System.out.println(this.dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
     }else if(this.pok2.estEvanoui()) {
+    	this.pok1.gagneExperienceDe(this.pok2);
+      System.out.println(this.pok1.getNom() + " slain " + this.pok2.getNom()+"  +"+String.format("%.2f",this.pok1.getExperience()) + " xp\n");
 
-      System.out.println(this.pok1.getNom() + " slain " + this.pok2.getNom());
-
-      this.pok1.gagneExperienceDe(this.pok2);
-      System.out.println(this.pok1.getNom() + " gained " + String.format("%.2f",this.pok1.getExperience()) + " xp\n");
 
       ((Dresseur) this.dresseur2).pokeEnVie--;
       if (((Dresseur) this.dresseur2).pokeEnVie > 0) {
