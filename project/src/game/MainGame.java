@@ -117,14 +117,15 @@ public class MainGame {
           String nomIA2 = "IA2";
           int winIA1 = 0;
           int winIA2 = 0;
-          int gameNum=100;
+          int gameNum=50;
           for (int i=0; i<gameNum;i++) {
         	  
               
               Pokedex pokedex = new Pokedex();
               AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(),1);
               AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),1);
-              Combat combat = new Combat(IA1, IA2);// DROITE = plus de chances de gg
+            
+              Combat combat = new Combat(IA2, IA1);
               combat.commence();
              
              if (combat.gagnant == nomIA1) {
