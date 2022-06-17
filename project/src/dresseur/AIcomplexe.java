@@ -14,11 +14,25 @@ import pokedex.Pokedex;
 
 public class AIcomplexe extends Dresseur implements IStrategy {
 	/**
+     * Nombre d'échanges restants pour le dresseur pendant le Combat
+     */
+    public int echangeRestant = 5;
+
+    /**
+     * Le nombre de pokémons du Dresseur encore en vie
+     */
+    public int pokeEnVie = 6;
+    
+    
+	
+	/**
 	   * Constructeur de la classe AIcomplexe qui se charge de remplir le constructeur de Dresseur
 	   *
 	   * @param name Nom du dresseur (IA)
 	   * @param pokemons Liste des pokemons du dresseur (IA)
 	   */
+	
+	
 	public int degré ;
 	public AIcomplexe(String name, Pokemon[] pokemons,int d) {
 		super(name, pokemons);
@@ -301,5 +315,11 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  // grâce à PV/ moyPond(capacités)
 	  }
 	  
+	  public Pokemon[] getRanchCopy() {
+	        Pokemon[] pokecopy = new Pokemon[6];
+	        System.arraycopy(this.pokemons, 0, pokecopy, 0, this.pokemons.length);
+	        return pokecopy;
+	    }
+
 	 
 }
