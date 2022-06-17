@@ -83,6 +83,7 @@ public class Combat implements ICombat {
     }
 
     setGagnant();
+    nbTour=0;
 
     this.termine();
   }
