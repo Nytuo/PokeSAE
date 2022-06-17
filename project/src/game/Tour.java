@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Random;
+
 import dresseur.AIcomplexe;
 import dresseur.AIsimple;
 import dresseur.Dresseur;
@@ -71,8 +73,39 @@ public class Tour implements ITour {
         System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
         attaque(dresseur1, pok1, atk1, pok2, atk2);
       }
-    } else {
+    }
+    else if (pok1.getStat().getVitesse() > pok2.getStat().getVitesse()) {
+        System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
+        attaque(dresseur2, pok2, atk2, pok1, atk1);
+        if (pok1 == Combat.pok1) {
+          System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+          attaque(dresseur1, pok1, atk1, pok2, atk2);
+        }
+      }
+    else {
+    	Random r = new Random();
 
+	    int SIU = r.nextInt((2));
+	    
+	    if(SIU == 0) {
+	    	System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
+	        attaque(dresseur2, pok2, atk2, pok1, atk1);
+	        if (pok1 == Combat.pok1) {
+	          System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+	          attaque(dresseur1, pok1, atk1, pok2, atk2);
+	        }
+	    }
+	    else {
+	    	System.out.println( dresseur1.getNom() + " -> " + pok1.getNom());
+	        attaque(dresseur2, pok2, atk2, pok1, atk1);
+	        if (pok1 == Combat.pok1) {
+	          System.out.println("Turn of " + dresseur2.getNom() + " with " + pok2.getNom());
+	          attaque(dresseur1, pok1, atk1, pok2, atk2);
+	        }
+	    }
+	    
+	    
+	      
       System.out.println( "◀"+dresseur2.getNom() + "▶ : " );
       attaque(dresseur1, pok1, atk1, pok2, atk2);
       if (pok2 == Combat.pok2) {
