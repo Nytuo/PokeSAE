@@ -52,7 +52,7 @@ public class Combat implements ICombat {
    */
   @Override
   public void commence() {
-	  System.out.println("\n\n<--------------------------[ Turn "+(nbTour + 1)+" ]--------------------------->\n");
+	System.out.println("\n\n<--------------------------[ Turn "+(nbTour + 1)+" ]--------------------------->\n");
     System.out.println(
             dresseur1.getNom()
             + " VS. "
