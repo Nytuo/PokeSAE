@@ -31,6 +31,8 @@ public class Pokemon extends Species implements IPokemon {
 
   /** PV actuels du Pokémon */
   public int PVActuel;
+  
+
 
   /** Treemap des dégats subit par le pokémon tour après tour */
   public TreeMap<Integer, Integer> degatSubit = new TreeMap<>();
@@ -355,6 +357,9 @@ public class Pokemon extends Species implements IPokemon {
     return this.PVActuel <= 0 || nbPP==0;
   }
 
+  
+  //TODO géré le rappel du pokemon actuel.
+  
   /**
    * Donne l'état de changement de niveau, si un changement de niveau est réalisé
    *

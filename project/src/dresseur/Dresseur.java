@@ -138,8 +138,17 @@ public class Dresseur implements IDresseur {
 
         return getPokemon(numPok - 1);
     }
-
+    
+    
+    
+    /**
+     * Permet d'afficher les pokémons avec leur état
+     * @param i
+     * @param maxPokeNameLength
+     * @param spaceCarac
+     */
     private void afficherPokeKO(int i,int maxPokeNameLength,String spaceCarac) {
+    	//TODO changer les paramètres.
         for (IPokemon poke : this.pokemons) {
             int pokeNameLength = poke.getNom().length();
             if (pokeNameLength > maxPokeNameLength) {
@@ -296,5 +305,8 @@ public class Dresseur implements IDresseur {
         System.arraycopy(this.pokemons, 0, pokecopy, 0, this.pokemons.length);
         return pokecopy;
     }
-
+   
+    public int getPokeEnVie() {
+		 return this.pokeEnVie;
+	 }
 }
