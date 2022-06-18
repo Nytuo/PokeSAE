@@ -50,7 +50,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  @Override
 	  public IPokemon choisitCombattant() {
 		  int numPok = 0;
-		  
+		  //showInfo();
 		  
 		  if (degré ==1) {
 			  // 1 Random
@@ -84,7 +84,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   
 		  int numPok = -1;
 		  
-		  showInfo();
+		  //showInfo();
 		  
 		  
 		  //1 Random
@@ -127,7 +127,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   */
 	  @Override
 	  public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
-		
+		  //showInfo();
 		 
 		  
 		  Capacite[] capListAttaquant =
@@ -137,7 +137,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  int numAttaque=0 ;
 		  if ( degré == 1 ) { //Degré 1 : Aléatoire
 			 numAttaque=choixAttaqueIAd1(attaquant,defenseur,capListAttaquant);
-			 System.out.println("numAttaque:"+numAttaque);
+			 System.out.println(this.getNom()+" numAttaque:"+numAttaque);
 		  }
 		  else if( degré ==2 ) {//Degré 2: 
 			 
@@ -161,16 +161,18 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  System.out.println(this.name+" swap is possible:"+isSwapPossible()+" "+attaquant.getNom()+": totalPP: "+totalPP(attaquant) );
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
 			  //return new Pokedex().getCapacite("Lutte");
+			  System.out.println("-1 non géré.");
 			  if (isSwapPossible()) {
 				  int switchIndex = getBestSwitchablePokeIndex(attaquant,defenseur);
 				  System.out.println("changement:"+switchIndex);
 				  pokemonsEchanges[switchIndex]--; 
-				  return new Echange(this, attaquant, pokemons[switchIndex]); // peut être source de problème
+				  return new Echange(this, attaquant, defenseur); // peut être source de problème
 			  }
 			  else {
 				  System.out.println("SWAP IMPOSSIBLE");
-				  numAttaque=0;
+				  return new Echange(this, attaquant, defenseur); // peut être source de problème
 			  }
+			  
 		  }
 		  return capListAttaquant[numAttaque];
 		 
@@ -208,7 +210,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		    while (numPok == 6) {
 		    	nbTests++;
 		      numPok = r.nextInt((6));
-		     System.out.println();
+		     System.out.println("infinite");
 		      if (getPokemon(numPok).estEvanoui())  {
 		        numPok = 6;
 		      }

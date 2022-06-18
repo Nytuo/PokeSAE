@@ -93,15 +93,18 @@ public class Combat implements ICombat {
 
   /** Methode permettant de determiner le gagnant du combat. */
   private void setGagnant() {
+	  System.out.println("Verification gagnant");
 	  if (dresseur2.getClass() == Dresseur.class) { // si dresseur2 est humain
-		  if (((Dresseur) dresseur2).pokeEnVie == 0) {
+		  System.out.println("OH humain");
+		  if (((Dresseur) dresseur2).pokeEnVie <= 0) {
 		      gagnant = dresseur1.getNom();
 		    } else  {
 		      gagnant = dresseur2.getNom();
 		    }
 	  }
 	  else if (dresseur2.getClass() == AIcomplexe.class) {// si dresseur2 est une IA
-		  if (((AIcomplexe) dresseur2).pokeEnVie == 0 || ((AIcomplexe)dresseur2).isSwapPossible()) {
+		  System.out.println("!!!!pokeEnvie de"+dresseur2.getNom()+":"+((AIcomplexe) dresseur2).pokeEnVie);
+		  if (((AIcomplexe) dresseur2).pokeEnVie == 0 || !((AIcomplexe)dresseur2).isSwapPossible()) {
 		      gagnant = dresseur1.getNom();
 		    } else {
 		      gagnant = dresseur2.getNom();

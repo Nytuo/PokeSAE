@@ -350,7 +350,7 @@ public class Pokemon extends Species implements IPokemon {
    */
   public boolean estEvanoui() {
 	  int nbPP=0;
-	  for (ICapacite cap : this.capacities) {
+	  for (ICapacite cap : this.getCapacitesApprises()) {
 		 nbPP+=cap.getPP();
 	  }
 	  

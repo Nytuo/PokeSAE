@@ -117,7 +117,7 @@ public class MainGame {
           String nomIA2 = "IA2";
           int winIA1 = 0;
           int winIA2 = 0;
-          int gameNum=100;
+          int gameNum=10;
           for (int i=0; i<gameNum;i++) {
         	  
               

@@ -116,12 +116,9 @@ public class Tour implements ITour {
       IDresseur dresseur1, IPokemon pok1, IAttaque atk1, IPokemon pok2, IAttaque atk2) {
 
     atk1.utilise();
-    try {
-		Thread.sleep(1);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+
+    
+  
   //Gestion des echanges
     if (atk1.getClass() == Echange.class) {// Si il y a échange
         pok1.subitAttaqueDe(pok2, atk2);
@@ -157,7 +154,6 @@ public class Tour implements ITour {
     
 
       }
-    
     //Gestion des KO
     if (this.pok1.estEvanoui()) {
     	this.pok2.gagneExperienceDe(this.pok1);
@@ -197,6 +193,7 @@ public class Tour implements ITour {
 	      }
 	      
     }
+   
     
     
   }
