@@ -168,10 +168,6 @@ public class Combat implements ICombat {
     		);
 
     resetAllandEvolve(dresseur1);
-    if (MainGame.nbSave != 0) {
-
-      MainGame.saveGame(dresseur1.pokemons, dresseur1.name, MainGame.nbSave);
-    }
   }
 
   /**
