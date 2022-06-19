@@ -133,25 +133,24 @@ public class MainGame {
              if (combat.gagnant == nomIA2)  {
             	 winIA2 ++;
              }
-          }
-          if (combat.gagnant == nomIA2) {
-            winIA2++;
-          }
-        }
+          
+          
+         }
         float winrateIA1 = winIA1;
         float winrateIA2 = winIA2;
         System.out.println(
             "Winrates:\n" + nomIA1 + ": " + winrateIA1 + "\n" + nomIA2 + ": " + winrateIA2);
-
-      } else if (mode == 5) {
+      
+     } 
+    else if (mode == 5) {
         System.out.println("See you next time !");
         System.exit(0);
-
-      } else {
+      } 
+      else {
         System.out.println("Invalid input. Please try again.");
       }
     }
-  }
+	}
 
   private static int getLevelFromSave(int saveNumber) {
     ArrayList<String[]> data = getFromCSV("saveSlot" + saveNumber);

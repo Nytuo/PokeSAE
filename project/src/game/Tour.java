@@ -69,9 +69,11 @@ public class Tour implements ITour {
 	  System.out.println("poke en vie "+dresseur2.getNom()+" :"+((AIcomplexe) dresseur2).getPokeEnVie());
 	  
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
+    	 System.out.println("---gère "+ dresseur2.getNom());
       gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
     }
     else if (pok1.getStat().getVitesse() > pok2.getStat().getVitesse()) {
+    	 System.out.println("---gère "+ dresseur1.getNom());
       gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
     }
     else {
@@ -80,9 +82,11 @@ public class Tour implements ITour {
 	    int randDresseur = r.nextInt((2));
 	    
 	    if(randDresseur == 0) {
+	    	 System.out.println("---gère "+ dresseur2.getNom());
           gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
         }
 	    else {
+	    	 System.out.println("---gère "+ dresseur1.getNom());
           gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
         }
 	    
@@ -93,12 +97,14 @@ public class Tour implements ITour {
   }
 
   private void gereAttaque(IDresseur dresseur1, IPokemon pok1, IAttaque atk1, IDresseur dresseur2, IPokemon pok2, IAttaque atk2) {
-    System.out.println("◀"+ dresseur1.getNom() + "▶ -> " + pok1.getNom());
+    System.out.println("◀ gagnant "+ dresseur1.getNom() + "▶ -> " + pok1.getNom());
     attaque(dresseur2, pok2, atk2, pok1, atk1);
     if (pok1 == Combat.pok1) {
+    	System.out.println("voila!");
       System.out.println("◀"+ dresseur2.getNom() + "▶ -> " + pok2.getNom());
       attaque(dresseur1, pok1, atk1, pok2, atk2);
     }
+   
   }
 
   
@@ -168,8 +174,7 @@ public class Tour implements ITour {
 	    	((Dresseur) this.dresseur1).pokeEnVie--;
 	      if (((Dresseur) this.dresseur1).pokeEnVie > 0) {
 	
-	        Combat.pok1 =
-	            new Echange((Dresseur) this.dresseur1, this.pok1, this.pok2).echangeCombattant();
+	        Combat.pok1 = new Echange((Dresseur) this.dresseur1, this.pok1, this.pok2).echangeCombattant();
 	
 	        System.out.println(this.dresseur1.getNom() + " sent " + Combat.pok1.getNom());
 	      }
@@ -187,8 +192,7 @@ public class Tour implements ITour {
 		    
 	      	((Dresseur) this.dresseur2).pokeEnVie--;
 	      if (((Dresseur) this.dresseur2).pokeEnVie > 0) {
-	        Combat.pok2 =
-	            new Echange((Dresseur) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
+	        Combat.pok2 = new Echange((Dresseur) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
 	        System.out.println(this.dresseur2.getNom() + " sent " + Combat.pok2.getNom()+"\n");
 	      }
 	      

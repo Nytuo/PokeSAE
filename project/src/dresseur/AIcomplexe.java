@@ -137,7 +137,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  int numAttaque=0 ;
 		  if ( degré == 1 ) { //Degré 1 : Aléatoire
 			 numAttaque=choixAttaqueIAd1(attaquant,defenseur,capListAttaquant);
-			 System.out.println(this.getNom()+" numAttaque:"+numAttaque);
+			 
 		  }
 		  else if( degré ==2 ) {//Degré 2: 
 			 
@@ -158,7 +158,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  else {
 			  System.out.println("[WARNING]: IA level "+degré+" is not implemented. Attack n°1 is selected.");
 		  }
-		  System.out.println(this.name+" swap is possible:"+isSwapPossible()+" "+attaquant.getNom()+": totalPP: "+totalPP(attaquant) );
+		  //System.out.println(this.name+" swap is possible:"+isSwapPossible()+" "+attaquant.getNom()+": totalPP: "+totalPP(attaquant) );
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
 			  //return new Pokedex().getCapacite("Lutte");
 			  System.out.println("-1 non géré.");
@@ -174,6 +174,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  }
 			  
 		  }
+		  System.out.println(this.getNom()+" numAttaque:"+numAttaque+" "+capListAttaquant[numAttaque].getNom()+" :"+capListAttaquant[numAttaque].getPP());
 		  return capListAttaquant[numAttaque];
 		 
 		
@@ -182,6 +183,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  
 	  public int[] getSwapableList() {
 		  //retourne l'index des pokémons swapable
+		  return ;
 	  }
 	  
 	  public boolean isSwapPossible() {
@@ -210,7 +212,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		    while (numPok == 6) {
 		    	nbTests++;
 		      numPok = r.nextInt((6));
-		     System.out.println("infinite");
+		    
 		      if (getPokemon(numPok).estEvanoui())  {
 		        numPok = 6;
 		      }

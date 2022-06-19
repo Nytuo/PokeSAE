@@ -69,13 +69,18 @@ public class Combat implements ICombat {
       if (nbTour>0) { System.out.println("\n\n<--------------------------[ Turn "+(nbTour + 1)+" ]--------------------------->\n");}
       
       Combat.atk1 = dresseur1.choisitAttaque(Combat.pok1, Combat.pok2);
+      System.out.println( dresseur1.getNom()+" "+Combat.atk1.calculeDommage(pok1, pok2) );
+      
       if (Combat.atk1.getClass() == Echange.class) {
         System.out.println(dresseur1.getNom() + " used swap");
         Combat.pok1 = ((Echange) Combat.atk1).echangeCombattant();
         System.out.println(dresseur1.getNom() + " sent " + Combat.pok1.getNom());
       }
       
+      
       Combat.atk2 = dresseur2.choisitAttaque(Combat.pok2, Combat.pok1);
+      System.out.println( dresseur2.getNom() +" "+Combat.atk2.calculeDommage(pok2, pok1) );
+      
       if (Combat.atk2.getClass() == Echange.class) {
         System.out.println(dresseur2.getNom() + " used swap");
         Combat.pok2 = ((Echange) Combat.atk2).echangeCombattant();
