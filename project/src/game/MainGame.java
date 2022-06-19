@@ -4,10 +4,12 @@ import dresseur.AIcomplexe;
 import dresseur.AIsimple;
 import dresseur.Dresseur;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 import javax.sound.sampled.*;
 
@@ -124,7 +126,8 @@ public class MainGame {
           System.out.println("Too hard to choose? Then I'll choose for you!");
           difficulty = 3;
         }
-        for (int i = 0; i < 32; i++) {
+        ArrayList<IDresseur> adversaires = new ArrayList<>();
+        for (int i = 0; i < 31; i++) {
 
           IDresseur dresseurAI;
           if (difficulty == 1) {
@@ -139,10 +142,16 @@ public class MainGame {
             System.out.println("Too difficult to choose? I'll choose for you!");
             dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), 3);
           }
-
-          Combat combat = new Combat(joueur, dresseurAI);
-          combat.commence();
+          adversaires.add(dresseurAI);
         }
+        while (adversaires.size() == 0) {
+          Combat combat =
+              new Combat(joueur, adversaires.get(new Random().nextInt(0, adversaires.size())));
+          combat.commence();
+
+
+        }
+        System.out.println("You won the tournament!");
 
       } else if (mode == 3) { // Voir tout les pokémons
         System.out.println(new Pokedex().toString());
