@@ -69,7 +69,8 @@ public class EtatJeu {
 		return false;
 	}
 	
-	
+
+/*
 	public ArrayList<Object> P(EtatJeu X) { // probabilité de victoire pour l'IA dans l'état X
 		if (X.isTerminal()) {
 			if (allPokeDown(dresseur1)) {
@@ -106,11 +107,13 @@ public class EtatJeu {
 			objList.add(cmax);
 			return objList;
 		}
+		return null;
 	}
-	
+*/
+
 
 	
-	
+/*
 	public ArrayList<Object> H(EtatJeu X,int n) {
 		float max=0;
 		ICapacite[] C1=getCoupPossible(X.dresseur1,X.currentPok1);// pas sur
@@ -139,7 +142,7 @@ public class EtatJeu {
 		objList.add(max);
 		objList.add(cmax);
 		return objList;
-	}
+	}*/
 	
 	public int sommePV(IDresseur dresseur) {
 		int total=0;
