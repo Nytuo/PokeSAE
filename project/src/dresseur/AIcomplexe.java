@@ -18,7 +18,9 @@ public class AIcomplexe extends Dresseur implements IStrategy {
     public int degré ;// Définit le "niveau" de compléxité de l'IA
     Pokedex pokedex = new Pokedex();// Il est générer ici pour que l'execution soit plus rapide.
     public int[] pokemonsEchanges = {5,5,5,5,5,5};// nombre d'échange restant par pokémon.
-    EtatJeu X = new EtatJeu();
+    IPokemon lastUsedPokemon = null;
+    EtatJeu X = new EtatJeu(); //Sert pour le minimax
+    
     
 	
 	/**
@@ -129,6 +131,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	   */
 	  @Override
 	  public IAttaque choisitAttaque(IPokemon attaquant, IPokemon defenseur) {
+		  lastUsedPokemon=attaquant;
 		  //showInfo();
 		 
 		  
@@ -164,11 +167,11 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
 			  //return new Pokedex().getCapacite("Lutte");
 			  //System.out.println("-1 non géré.");
-			  if (isSwapPossible()) {
+			  if (isSwapPossible() && degré==3) {
 				  int switchIndex = getBestSwitchablePokeIndex(attaquant,defenseur);
 				  System.out.println("changement:"+switchIndex);
 				  pokemonsEchanges[switchIndex]--; 
-				  return new Echange(this, attaquant, defenseur); // peut être source de problème
+				  return new Echange(this, pokemons[switchIndex], defenseur); // peut être source de problème
 			  }
 			  else {
 				  //System.out.println("SWAP IMPOSSIBLE");
@@ -400,7 +403,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  int i=0;
 		  for (Pokemon poke:pokemons) {
 			  int pokePV=poke.getStat().getPV();
-			  if (pokePV>maxPV && !poke.estEvanoui() && pokemonsEchanges[i]>0) {
+			  if (pokePV>maxPV && !poke.estEvanoui() && pokemonsEchanges[i]>0 && !pokemons[i].equals(lastUsedPokemon)) {
 				  maxPV=pokePV;
 				  maxPVindex=i;
 			  }
@@ -420,7 +423,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 				 }
 				
 		  }
-		  return total;//retourner si le total est avantageux.
+		  return total;
 	  }
 	  
 	  
@@ -454,7 +457,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  }
 		  
 		  //Prend la plus précise 
-		  if ( caps[maxIndex[0]].getPrecision()>caps[maxIndex[1]].getPrecision() ) {
+		  if ( caps[maxIndex[0]].getPrecision() >caps[maxIndex[1]].getPrecision() ) {
 			  return maxIndex[0];
 		  }
 		  return maxIndex[1];
