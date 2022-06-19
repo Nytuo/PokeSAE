@@ -109,7 +109,6 @@ public class MainGame {
         Pokemon[] pokes = (Pokemon[]) pokedex.engendreRanch();
         showPokemon(pokes);
 
-        Dresseur joueur = new Dresseur(name, pokes);
 
         System.out.println("select the difficulty : \n");
         System.out.println("1. I'm too young to die");
@@ -119,15 +118,26 @@ public class MainGame {
 
         Scanner diffScan = new Scanner(System.in);
         int difficulty = diffScan.nextInt();
-        if (difficulty > 0 && difficulty < 5) {
-          difficulty = diffScan.nextInt();
+        if (difficulty < 1 || difficulty > 4) {
 
-        } else {
           System.out.println("Too hard to choose? Then I'll choose for you!");
           difficulty = 3;
         }
+
+        System.out.println("AI autopilot ? (y/n)");
+        String autopilot = scanner2.next();
+        boolean autopilotBool = autopilot.equals("y");
+        IDresseur joueur;
+        if (autopilotBool) {
+          joueur = new AIcomplexe(name, pokes, 3);
+
+        } else {
+          joueur = new Dresseur(name, pokes);
+        }
+
         ArrayList<IDresseur> adversaires = new ArrayList<>();
-        for (int i = 0; i < 32; i++) {
+        adversaires.add(joueur);
+        for (int i = 0; i < 31; i++) {
 
           IDresseur dresseurAI;
           if (difficulty == 1) {
