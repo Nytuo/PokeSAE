@@ -113,11 +113,11 @@ public class MainGame {
       }else if (mode == 12) { //DEBUG: IA TESTER
 
           System.out.println("\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
-          String nomIA1 = "IA1";
-          String nomIA2 = "IA2";
+          String nomIA1 = "A lvl3";
+          String nomIA2 = "B lvl1";
           int winIA1 = 0;
           int winIA2 = 0;
-          int gameNum=10;
+          int gameNum=100;
           for (int i=0; i<gameNum;i++) {
         	  
               
@@ -139,7 +139,8 @@ public class MainGame {
         float winrateIA1 = winIA1;
         float winrateIA2 = winIA2;
         System.out.println(
-            "Winrates:\n" + nomIA1 + ": " + winrateIA1 + "\n" + nomIA2 + ": " + winrateIA2);
+            "Winrates:\n" + nomIA1 + ": " + winrateIA1/gameNum*100 +"% ("+winrateIA1+")"
+            + "\n" + nomIA2 + ": " + winrateIA2/gameNum*100 +"% ("+winrateIA2+")");
       
      } 
     else if (mode == 5) {

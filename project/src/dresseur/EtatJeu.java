@@ -51,13 +51,10 @@ public class EtatJeu {
 		return (ICapacite[]) caps.toArray(); // Pas sur
 	}
 	
-	public int nbCoupPossible(IDresseur dresseur) {
-		//Switch
-		//Attaque
-		return 5;
-		
-	}
 	
+	/**Permet de savoit si une partie est terminale
+	 * 
+	 */
 	public boolean isTerminal() {
 		for (IPokemon poke: dresseur1.getRanchCopy()) {
 			if (!poke.estEvanoui()) {
@@ -73,61 +70,75 @@ public class EtatJeu {
 	}
 	
 	
-	public void P(EtatJeu X) { // probabilité de victoire pour l'IA dans l'état X
+	public ArrayList<Object> P(EtatJeu X) { // probabilité de victoire pour l'IA dans l'état X
 		if (X.isTerminal()) {
 			if (allPokeDown(dresseur1)) {
-				return (1,null);
+				ArrayList<Object> objList = new ArrayList<Object>();
+				objList.add( 1);
+				objList.add(null);
+				return objList;
 			}
-			else if (allPokeDown(dresseur2)) {
-				return(0,null);
+			else if (allPokeDown(X.dresseur2)) {
+				ArrayList<Object> objList = new ArrayList<Object>();
+				objList.add( 0);
+				objList.add(null);
+				return objList;
 			}
 		}
 		else {
-			ICapacite[] C1=getCoupPossible(dresseur1,currentPok1);// pas sur
-			ICapacite[] C2=getCoupPossible(dresseur2,currentPok2);// pas sur
+			ICapacite[] C1=getCoupPossible(X.dresseur1,X.currentPok1);// pas sur
+			ICapacite[] C2=getCoupPossible(X.dresseur2,X.currentPok2);// pas sur
 			float max=0;
 			ICapacite cmax=(ICapacite) C1[0];
 			for (int i=0; i<C1.length;i++) { // pas sur dresseur2
 				float min=1;
 				for (int j=0; j<C2.length;j++) {
 					//val=somme_i P_i P(X_i)[0] // A FAIRE
-					min = min(min,val);
+					min = Math.min(min,val);
 				}
 				if (min>max){
 					max=min;
-					cmax=c[1];
+					cmax=C1[1];
 				}
 			}
-			return (max,cmax);
+			ArrayList<Object> objList = new ArrayList<Object>();
+			objList.add(max);
+			objList.add(cmax);
+			return objList;
 		}
 	}
 	
 
 	
 	
-	public void H(EtatJeu X,int n) {
+	public ArrayList<Object> H(EtatJeu X,int n) {
+		float max=0;
+		ICapacite[] C1=getCoupPossible(X.dresseur1,X.currentPok1);// pas sur
+		ICapacite cmax=(ICapacite) C1[0];
 		if (X.isTerminal() || n==0) { // PAS SUR DE X.isTerminal
-			int sPVdresseur1=sommePV(dresseur1);
-			float val = sPVdresseur1/(sPVdresseur1+sommePV(dresseur2));
+			int sPVdresseur1=sommePV(X.dresseur1);
+			float val = sPVdresseur1/(sPVdresseur1+sommePV(X.dresseur2));
 		}
 		else {
-			ICapacite[] C1=getCoupPossible(dresseur1,currentPok1);// pas sur
-			ICapacite[] C2=getCoupPossible(dresseur2,currentPok2);// pas sur
-			float max=0;
-			ICapacite cmax=(ICapacite) C1[0];
+			ICapacite[] C2=getCoupPossible(X.dresseur2,X.currentPok2);// pas sur
+			
 			for (int i=0; i<C1.length;i++) {
 				float min=1;
 				for (int j=0; j<C2.length;j++) {
-					//val=somme_i P_i P(X_i)[0]; // A FAIRE
-					min = min(min,val);
+					
+					//float val = Float.sum(P, j) //val=somme_i P_i P(X_i)[0]; // A FAIRE
+					min = Math.min(min,val);
 				}
 				if (min>max) {
 					max=min;
-					cmax=c_1;
+					cmax=C1[1];
 				}
 			}
 		}
-		return (max,cmax);
+		ArrayList<Object> objList = new ArrayList<Object>();
+		objList.add(max);
+		objList.add(cmax);
+		return objList;
 	}
 	
 	public int sommePV(IDresseur dresseur) {

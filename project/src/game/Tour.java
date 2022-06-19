@@ -69,11 +69,11 @@ public class Tour implements ITour {
 	  System.out.println("poke en vie "+dresseur2.getNom()+" :"+((AIcomplexe) dresseur2).getPokeEnVie());
 	  
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
-    	 System.out.println("---gère "+ dresseur2.getNom());
+    
       gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
     }
     else if (pok1.getStat().getVitesse() > pok2.getStat().getVitesse()) {
-    	 System.out.println("---gère "+ dresseur1.getNom());
+    
       gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
     }
     else {
@@ -82,11 +82,11 @@ public class Tour implements ITour {
 	    int randDresseur = r.nextInt((2));
 	    
 	    if(randDresseur == 0) {
-	    	 System.out.println("---gère "+ dresseur2.getNom());
+	    	
           gereAttaque(dresseur2, pok2, atk2, dresseur1, pok1, atk1);
         }
 	    else {
-	    	 System.out.println("---gère "+ dresseur1.getNom());
+	    
           gereAttaque(dresseur1, pok1, atk1, dresseur2, pok2, atk2);
         }
 	    

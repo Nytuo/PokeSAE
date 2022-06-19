@@ -18,7 +18,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
     public int degré ;// Définit le "niveau" de compléxité de l'IA
     Pokedex pokedex = new Pokedex();// Il est générer ici pour que l'execution soit plus rapide.
     public int[] pokemonsEchanges = {5,5,5,5,5,5};// nombre d'échange restant par pokémon.
-    
+    EtatJeu X = new EtatJeu();
     
 	
 	/**
@@ -37,7 +37,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	
 	public AIcomplexe(String name, Pokemon[] pokemons) {
 		super(name, pokemons);
-		this.degré = 1;
+		this.degré = 3; //Niveau par défaut
 		
 	}
 	
@@ -146,7 +146,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  }
 		  else if (degré==3) { //Degré 3: 
 			  if (isOpposedType(attaquant,defenseur)) {
-				  System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!OPPOSED TYPE");
+				  //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!OPPOSED TYPE");
 				  return new Echange(this, attaquant, defenseur);
 					  
 			 }
@@ -161,7 +161,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  //System.out.println(this.name+" swap is possible:"+isSwapPossible()+" "+attaquant.getNom()+": totalPP: "+totalPP(attaquant) );
 		  if (numAttaque==-1) {// Si aucune attaque n'est disponible numAttaque = -1
 			  //return new Pokedex().getCapacite("Lutte");
-			  System.out.println("-1 non géré.");
+			  //System.out.println("-1 non géré.");
 			  if (isSwapPossible()) {
 				  int switchIndex = getBestSwitchablePokeIndex(attaquant,defenseur);
 				  System.out.println("changement:"+switchIndex);
@@ -169,7 +169,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 				  return new Echange(this, attaquant, defenseur); // peut être source de problème
 			  }
 			  else {
-				  System.out.println("SWAP IMPOSSIBLE");
+				  //System.out.println("SWAP IMPOSSIBLE");
 				  return new Echange(this, attaquant, defenseur); // peut être source de problème
 			  }
 			  
@@ -181,10 +181,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		 
 	  }
 	  
-	  public int[] getSwapableList() {
-		  //retourne l'index des pokémons swapable
-		  return ;
-	  }
+	 
 	  
 	  public boolean isSwapPossible() {
 		  //retourne vrai si il existe au moins un pokémon en vie qui peut etre appellé pour un échange.
@@ -290,13 +287,8 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  }
 
 	
-	  public void prudent() {
-		  float PVictoireDresseur1;
-		  float PVictoireDresseur2;
-	  }
-	  public int P(IDresseur dressseur1, IDresseur dresseur2) {
-		  if ()
-	  }
+	 
+	
 	  
 	  
 
