@@ -17,7 +17,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
     public int pokeEnVie = 6;//Le nombre de pokémons du Dresseur encore en vie
     public int degré ;// Définit le "niveau" de compléxité de l'IA
     Pokedex pokedex = new Pokedex();// Il est générer ici pour que l'execution soit plus rapide.
-    int[] pokemonsEchanges = {5,5,5,5,5,5};// nombre d'échange restant par pokémon.
+    public int[] pokemonsEchanges = {5,5,5,5,5,5};// nombre d'échange restant par pokémon.
     
     
 	
@@ -213,7 +213,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		    	nbTests++;
 		      numPok = r.nextInt((6));
 		    
-		      if (getPokemon(numPok).estEvanoui())  {
+		      if (getPokemon(numPok).estEvanoui() || pokemonsEchanges[numPok] == 0)  {
 		        numPok = 6;
 		      }
 		    }
@@ -290,6 +290,15 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  }
 
 	
+	  public void prudent() {
+		  float PVictoireDresseur1;
+		  float PVictoireDresseur2;
+	  }
+	  public int P(IDresseur dressseur1, IDresseur dresseur2) {
+		  if ()
+	  }
+	  
+	  
 
 	/**
 	   * Méthode qui permet de choisir une attaque au hasard dans la liste des attaques du pokemon (IA).

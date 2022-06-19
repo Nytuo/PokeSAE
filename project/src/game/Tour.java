@@ -189,7 +189,7 @@ public class Tour implements ITour {
 		    		  +String.format("%.2f",this.pok1.getExperience()) 
 		    		  + " xp\n");
 	
-		    
+		
 	      	((Dresseur) this.dresseur2).pokeEnVie--;
 	      if (((Dresseur) this.dresseur2).pokeEnVie > 0) {
 	        Combat.pok2 = new Echange((Dresseur) this.dresseur2, this.pok2, this.pok1).echangeCombattant();
