@@ -124,10 +124,17 @@ public class Species implements IEspece {
    * @return un objet Species.
    */
   public IEspece getEvolution(int niveau) { // renvoie null si aucune evolution possible
-    if (this.evolution.containsKey(this.evolution.ceilingKey(niveau)))
-      return new Pokedex().getInfo(this.evolution.get(niveau));
-    else return null;
-  }
+    try {
+			return new Pokedex().getInfo(this.evolution.get(this.evolution.ceilingKey(niveau)));
+		} catch (NullPointerException e) {
+			try {
+				if (this.evolution.containsKey(this.evolution.floorKey(niveau)))
+					return new Pokedex().getInfo(this.evolution.get(this.evolution.floorKey(niveau)));
+			} catch (NullPointerException e2) {
+			}
+		}
+		return null;
+	}
 
   /**
    * Donne un tableau d'objets Types correspondant aux types de l'espèce.
