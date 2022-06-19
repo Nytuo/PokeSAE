@@ -68,7 +68,7 @@ public class MainGame {
       System.out.println(
           "————————————————————————————————————————————————————————————————————————————————");
       System.out.println(
-          "What do you want to do ?\n1. Campaign\\n2. Go ULTIMATE WARRIORS\n3. View all pokémons\n4. Search a pokemon\n5. Exit");
+          "What do you want to do ?\n1. Campaign\n2. Go ULTIMATE WARRIORS\n3. View all pokémons\n4. Search a pokemon\n5. Exit");
       System.out.print("> ");
       Scanner scanner = new Scanner(System.in);
       int mode = scanner.nextInt();
@@ -109,7 +109,6 @@ public class MainGame {
         Pokemon[] pokes = (Pokemon[]) pokedex.engendreRanch();
         showPokemon(pokes);
 
-        Dresseur joueur = new Dresseur(name, pokes);
 
         System.out.println("select the difficulty : \n");
         System.out.println("1. I'm too young to die");
@@ -119,39 +118,63 @@ public class MainGame {
 
         Scanner diffScan = new Scanner(System.in);
         int difficulty = diffScan.nextInt();
-        if (difficulty > 0 && difficulty < 5) {
-          difficulty = diffScan.nextInt();
+        if (difficulty < 1 || difficulty > 4) {
 
-        } else {
           System.out.println("Too hard to choose? Then I'll choose for you!");
           difficulty = 3;
         }
+
+        System.out.println("AI autopilot ? (y/n)");
+        String autopilot = scanner2.next();
+        boolean autopilotBool = autopilot.equals("y");
+        IDresseur joueur;
+        if (autopilotBool) {
+          joueur = new AIcomplexe(name, pokes, 3);
+
+        } else {
+          joueur = new Dresseur(name, pokes);
+        }
+
         ArrayList<IDresseur> adversaires = new ArrayList<>();
+        adversaires.add(joueur);
         for (int i = 0; i < 31; i++) {
 
           IDresseur dresseurAI;
           if (difficulty == 1) {
-            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else if (difficulty == 2) {
-            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else if (difficulty == 3) {
-            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else if (difficulty == 4) {
-            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else {
             System.out.println("Too difficult to choose? I'll choose for you!");
-            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), 3);
+            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), 3);
           }
           adversaires.add(dresseurAI);
         }
-        while (adversaires.size() == 0) {
-          Combat combat =
-              new Combat(joueur, adversaires.get(new Random().nextInt(0, adversaires.size())));
-          combat.commence();
 
-
+        System.out.println("[TOURNAMENT] -- 32 opponents are ready to fight!");
+        for (int i = 0; i < 16; i += 2) {
+          tournamentManager(adversaires, i);
         }
-        System.out.println("You won the tournament!");
+        System.out.println("[TOURNAMENT] -- 16 opponents are ready to fight!");
+        for (int i = 0; i < 8; i += 2) {
+          tournamentManager(adversaires, i);
+        }
+        System.out.println("[TOURNAMENT] -- 8 opponents are ready to fight!");
+        for (int i = 0; i < 4; i += 2) {
+          tournamentManager(adversaires, i);
+        }
+        System.out.println("[TOURNAMENT] -- 4 opponents are ready to fight!");
+        for (int i = 0; i < 2; i += 2) {
+          tournamentManager(adversaires, i);
+        }
+        System.out.println("[TOURNAMENT] -- 2 opponents are ready to fight!");
+        tournamentManager(adversaires, 0);
+
+        System.out.println(adversaires.get(0).getNom() + " is the winner!");
 
       } else if (mode == 3) { // Voir tout les pokémons
         System.out.println(new Pokedex().toString());
@@ -165,43 +188,62 @@ public class MainGame {
           new Pokedex().searchPokemon(podexScan.nextLine());
         }
 
-          System.out.println("\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
-          String nomIA1 = "A lvl3";
-          String nomIA2 = "B lvl1";
-          int winIA1 = 0;
-          int winIA2 = 0;
-          int gameNum=100;
-          for (int i=0; i<gameNum;i++) {
-        	  
-              
-              Pokedex pokedex = new Pokedex();
-              AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(),1);
-              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),1);
-              Combat combat = new Combat(IA2, IA1);
-              combat.commence();
-             
-             if (combat.gagnant == nomIA1) {
-            	 winIA1 ++;
-             }
-             if (combat.gagnant == nomIA2)  {
-            	 winIA2 ++;
-             }
-          
-          
-         }
+        System.out.println(
+            "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
+        String nomIA1 = "A lvl3";
+        String nomIA2 = "B lvl1";
+        int winIA1 = 0;
+        int winIA2 = 0;
+        int gameNum = 100;
+        for (int i = 0; i < gameNum; i++) {
+
+          Pokedex pokedex = new Pokedex();
+          AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(), 1);
+          AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(), 1);
+          Combat combat = new Combat(IA2, IA1);
+          combat.commence();
+
+          if (combat.gagnant == nomIA1) {
+            winIA1++;
+          }
+          if (combat.gagnant == nomIA2) {
+            winIA2++;
+          }
+        }
         float winrateIA1 = winIA1;
         float winrateIA2 = winIA2;
         System.out.println(
-            "Winrates:\n" + nomIA1 + ": " + winrateIA1/gameNum*100 +"% ("+winrateIA1+")"
-            + "\n" + nomIA2 + ": " + winrateIA2/gameNum*100 +"% ("+winrateIA2+")");
-      
-     } 
-    else if (mode == 5) {
+            "Winrates:\n"
+                + nomIA1
+                + ": "
+                + winrateIA1 / gameNum * 100
+                + "% ("
+                + winrateIA1
+                + ")"
+                + "\n"
+                + nomIA2
+                + ": "
+                + winrateIA2 / gameNum * 100
+                + "% ("
+                + winrateIA2
+                + ")");
+
+      } else if (mode == 5) {
         System.out.println("See you next time !");
         System.exit(0);
       } else {
         System.out.println("Invalid input. Please try again.");
       }
+    }
+  }
+
+  private static void tournamentManager(ArrayList<IDresseur> adversaires, int i) {
+    Combat c = new Combat(adversaires.get(i), adversaires.get(i + 1));
+    c.commence();
+    if (Objects.equals(c.gagnant, adversaires.get(i).getNom())) {
+      adversaires.remove(i + 1);
+    } else {
+      adversaires.remove(i);
     }
   }
 
