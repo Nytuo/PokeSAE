@@ -176,32 +176,23 @@ public class Dresseur implements IDresseur {
     String spaceCarac = " ";
     Scanner scanner = new Scanner(System.in);
     int i = 1;
-
-    if (capList[0].getPP() <= 0
-        && capList[1].getPP() <= 0
-        && capList[2].getPP() <= 0
-        && capList[3].getPP() <= 0) {
-      for (int j = 1; j < 5; j++) {
-        System.out.println(j + " : Lutte");
-      }
-    } else {
+    
       // Gestion de l'affichage
-
-      for (ICapacite cap : attaquant.getCapacitesApprises()) {
-        int capLength = cap.getNom().length();
-        if (capLength > maxCapLength) {
-          maxCapLength = capLength;
-        }
-      }
-
-      for (ICapacite cap : attaquant.getCapacitesApprises()) {
-        int capLength = cap.getNom().length();
-        String newSpaceCarac = spaceCarac.repeat(maxCapLength - capLength + 1);
-        System.out.println(
-            "    " + i + " : " + cap.getNom() + newSpaceCarac + "|   PP : " + cap.getPP());
-        i++;
+    for (ICapacite cap : attaquant.getCapacitesApprises()) {
+      int capLength = cap.getNom().length();
+      if (capLength > maxCapLength) {
+        maxCapLength = capLength;
       }
     }
+
+    for (ICapacite cap : attaquant.getCapacitesApprises()) {
+      int capLength = cap.getNom().length();
+      String newSpaceCarac = spaceCarac.repeat(maxCapLength - capLength + 1);
+      System.out.println(
+          "    " + i + " : " + cap.getNom() + newSpaceCarac + "|   PP : " + cap.getPP());
+      i++;
+    }
+    
     if (echangeRestant > 0) {
       System.out.println(
           "    "
@@ -239,12 +230,6 @@ public class Dresseur implements IDresseur {
           System.out.println(
               "Argh, " + capList[numAttaque - 1].getNom() + " cannot be used anymore !");
           numAttaque = 0;
-          if (capList[0].getPP() <= 0
-              && capList[1].getPP() <= 0
-              && capList[2].getPP() <= 0
-              && capList[3].getPP() <= 0) {
-            return new Pokedex().getCapacite("Lutte");
-          }
         }
 
       } catch (ArrayIndexOutOfBoundsException ignored) {
