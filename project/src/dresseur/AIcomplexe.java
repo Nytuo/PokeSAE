@@ -182,7 +182,10 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  }
 	  
 	 
-	  
+	  /**
+	   * Regarde si il est possible d'effectuer un swap.
+	   * @return true si un swap est possible, False sinon
+	   */
 	  public boolean isSwapPossible() {
 		  //retourne vrai si il existe au moins un pokémon en vie qui peut etre appellé pour un échange.
 		  for (int i=0; i<pokemons.length;i++) {
@@ -218,6 +221,11 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		    return numPok;
 	  }
 	  
+	  /**
+	   * Méthode qui permet renvoyer la somme des PP de chaque attaque d'un pokémon
+	   * @param Un pokémon
+	   * @return un entier, le total des PP d'un pokémon
+	   */
 	  public int totalPP(IPokemon pok) {
 		  // Retourne le total des PP d'un pokémon 
 		  int total=0;
@@ -228,6 +236,10 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 	  }
 	  
 	  
+	  
+	  /**
+	   * Affiche les noms des pokémons et leur état (KO ou non)
+	   */
 	  private void afficherPokeKO() {
 		  int i=0;
 		  	String spaceCarac=" ";
@@ -409,6 +421,13 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  return total;//retourner si le total est avantageux.
 	  }
 	  
+	  
+	  /**
+	   * Méthode qui permet de déterminer la meilleure attaque possible face à un pokémon
+	   * @param Pokémon attaquant
+	   * @param Pokémon attaqué
+	   * @return un entier, soit l'index de la liste de capacité de l'attaquant à utiliser. 
+	   */
 	  public int getBestAttackAgainst(IPokemon atta, IPokemon def) {
 		 int[] maxIndex= {0,0};
 		  double maxEfficacite=0;
@@ -440,7 +459,12 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		
 		
 	  }
-	  
+	  /**
+	   * Cherche l'attaque qui supposément, fait le plus de dégâts.
+	   * @param Pokémon attaquant
+	   * @param Pokémon attaqué
+	   * @return un entier, soit l'index de la liste de capacité de l'attaquant à utiliser. 
+	   */
 	  public int getBestAttack(IPokemon atta, IPokemon def) {
 		  int maxDmg=0;
 		  int i=0;
@@ -457,7 +481,11 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		 
 	  }
 	  
-	  
+	  /**
+	   * Cheche le pokémon qui à le type le plus adapté contre un défenseur
+	   * @param Pokémon attaqué
+	   * @return un entier, soit l'index de la liste de pokémon. 
+	   */
 	  public int getBestPokeIndexAgainst(IPokemon pok) {
 		  float maxScore = 0;
 		  int bestPokeIndex=-2; // peut être source de problème
@@ -471,6 +499,12 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  return bestPokeIndex;
 	  }
 	 
+	  /**
+	   * Choisit le pokémon le plus adapter lors d'un échange selon sont type.
+	   * @param currentPok
+	   * @param pok
+	   * @return un entier, L'index du pokémon que l'on peut échanger qui est le plus adapter 
+	   */
 	  public int getBestSwitchablePokeIndex(IPokemon currentPok, IPokemon pok) {
 		  //Retourne le meilleur pokémon possible (sauf celui actuel) contre un opposant. 
 		  float maxScore = 0;
@@ -499,6 +533,12 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  // grâce à PV/ moyPond(capacités)
 	  }
 	  
+	  /**
+	   * Evalue la "compatibilité" entre deux pokémons, c'est à dire s'ils sont de types opposés.
+	   * @param Pokémon attaquant
+	   * @param Pokémon attaqué
+	   * @return True si ils sont de types opposés, sinon false
+	   */
 	 public boolean isOpposedType(IPokemon atta,IPokemon def) {
 		 // retourne vrai si deux pokémons sont de type contraires.
 		 for (IType typePok1:atta.getEspece().getTypes()) {
