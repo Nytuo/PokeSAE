@@ -65,8 +65,7 @@ public class Tour implements ITour {
    */
   @Override
   public void commence() {
-	  System.out.println("poke en vie "+dresseur1.getNom()+" :"+((Dresseur) dresseur1).getPokeEnVie());
-	  System.out.println("poke en vie "+dresseur2.getNom()+" :"+((Dresseur) dresseur2).getPokeEnVie());
+	
 	  
     if (pok1.getStat().getVitesse() < pok2.getStat().getVitesse()) {
     

@@ -215,8 +215,8 @@ public class MainGame {
 
         System.out.println(
             "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
-        String nomIA1 = "A lvl3";
-        String nomIA2 = "B lvl1";
+        String nomIA1 = "A lvl1";
+        String nomIA2 = "B lvl3";
         int winIA1 = 0;
         int winIA2 = 0;
         int gameNum = 100;
@@ -224,8 +224,8 @@ public class MainGame {
 
           Pokedex pokedex = new Pokedex();
           AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(), 1);
-          AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(), 1);
-          Combat combat = new Combat(IA2, IA1);
+          AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(), 3);
+          Combat combat = new Combat(IA1, IA2);
           combat.commence();
 
           if (combat.gagnant == nomIA1) {

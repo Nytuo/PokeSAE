@@ -60,7 +60,9 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  // 2 Choisit le pokemon avec le plus gros PV
 			  numPok=getMaxPVPokeIndex();
 		  }
-		  
+		  else if (degré==3) {
+			  numPok=getMaxPVPokeIndex();
+		  }
 		  // 3 Choisit le pokémon qui la meilleur ratio PV/Dégat (Fait la moyene pondérée avec les PP des capacités)
 		  // 4
 		  else {
@@ -174,7 +176,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  }
 			  
 		  }
-		  System.out.println(this.getNom()+" numAttaque:"+numAttaque+" "+capListAttaquant[numAttaque].getNom()+" :"+capListAttaquant[numAttaque].getPP());
+		  //System.out.println(this.getNom()+" numAttaque:"+numAttaque+" "+capListAttaquant[numAttaque].getNom()+" :"+capListAttaquant[numAttaque].getPP());
 		  return capListAttaquant[numAttaque];
 		 
 		
