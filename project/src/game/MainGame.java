@@ -211,6 +211,7 @@ public class MainGame {
         } else {
           new Pokedex().searchPokemon(podexScan.nextLine());
         }
+        } else if (mode == 12) {
 
         System.out.println(
             "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
