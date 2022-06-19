@@ -169,7 +169,7 @@ public class Capacite implements interfaces.ICapacite {
     @Override
     public int calculeDommage(interfaces.IPokemon lanceur, interfaces.IPokemon receveur) {
 
-        double R = new Random().nextDouble() * (1 - this.getPrecision()) + this.getPrecision();
+        double R = new Random().nextDouble() * (1 - this.getPrecision());
         if (R > this.getPrecision()) {
             return 0;
         }
