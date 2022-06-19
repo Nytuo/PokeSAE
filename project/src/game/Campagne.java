@@ -25,7 +25,7 @@ public class Campagne {
     "Covid-19",
     "Elyan GRELOT",
     "Etan TESLA",
-    "Arnaud Beutanique",
+    "Arnaud BEUTANIQUE",
     "Jules MARAIS",
   };
 
