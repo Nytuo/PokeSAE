@@ -25,10 +25,11 @@ public class Campagne {
     "Covid-19",
     "Elyan GRELOT",
     "Etan TESLA",
-    "Arnaud Beutanique",
+    "Arnaud BEUTANIQUE",
     "Jules MARAIS",
   };
 
+  public int difficulty = MainGame.difficulty;
   public int storyLevel = 0;
   public int prestige = 0;
   Dresseur dresseur;
@@ -116,14 +117,14 @@ public class Campagne {
         pokeForge(
             "Florizarre", "Noadkoko", "Saquedeneu", "Empiflor", "Parasect", "Rafflesia", pokedex);
     Pokemon[] pokeT =
-        pokeForge(
-            "Électhor", "Voltali", "Élektek", "Électrode", "Magnéton", "Raichu", pokedex);
-    Pokemon[] pokeM = pokeForge("Tortank", "Akwakwak", "Lokhlass", "Tentacruel", "Léviator", "Aquali", pokedex);
+        pokeForge("Électhor", "Voltali", "Élektek", "Électrode", "Magnéton", "Raichu", pokedex);
+    Pokemon[] pokeM =
+        pokeForge("Tortank", "Akwakwak", "Lokhlass", "Tentacruel", "Léviator", "Aquali", pokedex);
 
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 4], pokeG));
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 3], pokeT));
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 2], pokeB));
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 1], pokeM));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 4], pokeG,3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 3], pokeT,3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 2], pokeB,3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 1], pokeM,3));
   }
 
   public Campagne(Dresseur dresseur, int storyLevel, int prestige) {
@@ -132,8 +133,8 @@ public class Campagne {
     this.dresseur = dresseur;
     Pokedex pokedex = new Pokedex();
     for (int i = 0; i < storyNb - 4; i++) {
-      if (i < 3) this.AIs.add(new AIsimple(AIsNames[i], (Pokemon[]) pokedex.engendreRanch()));
-      else this.AIs.add(new AIcomplexe(AIsNames[i], (Pokemon[]) pokedex.engendreRanch()));
+      if (i == 0) this.AIs.add(new AIsimple(AIsNames[i], (Pokemon[]) pokedex.engendreRanch()));
+      else this.AIs.add(new AIcomplexe(AIsNames[i], (Pokemon[]) pokedex.engendreRanch(),difficulty));
     }
     finalBossForge(pokedex);
   }
@@ -180,7 +181,7 @@ public class Campagne {
     } else {
       System.out.println("[SAVE] - Saving...");
       MainGame.saveGame(
-          dresseur.pokemons, dresseur.getNom(), MainGame.nbSave, storyLevel, prestige);
+          dresseur.pokemons, dresseur.getNom(), MainGame.nbSave, storyLevel, prestige, null);
       System.out.println("[SAVE] - Save done");
       System.out.println("[INFO] - Exiting...");
       return true;
