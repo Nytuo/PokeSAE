@@ -121,10 +121,10 @@ public class Campagne {
     Pokemon[] pokeM =
         pokeForge("Tortank", "Akwakwak", "Lokhlass", "Tentacruel", "Léviator", "Aquali", pokedex);
 
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 4], pokeG,3));
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 3], pokeT,3));
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 2], pokeB,3));
-    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 1], pokeM,3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 4], pokeG, 3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 3], pokeT, 3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 2], pokeB, 3));
+    DevAI.add(new AIcomplexe(AIsNames[AIsNames.length - 1], pokeM, 3));
   }
 
   public Campagne(Dresseur dresseur, int storyLevel, int prestige) {
@@ -133,8 +133,9 @@ public class Campagne {
     this.dresseur = dresseur;
     Pokedex pokedex = new Pokedex();
     for (int i = 0; i < storyNb - 4; i++) {
-      if (i == 0) this.AIs.add(new AIsimple(AIsNames[i], (Pokemon[]) pokedex.engendreRanch()));
-      else this.AIs.add(new AIcomplexe(AIsNames[i], (Pokemon[]) pokedex.engendreRanch(),difficulty));
+      if (i == 0) this.AIs.add(new AIcomplexe(AIsNames[i], (Pokemon[]) pokedex.engendreRanch(),1));
+      else
+        this.AIs.add(new AIcomplexe(AIsNames[i], (Pokemon[]) pokedex.engendreRanch(), difficulty));
     }
     finalBossForge(pokedex);
   }
@@ -147,9 +148,7 @@ public class Campagne {
             "\n\n<--------------------------[ Prestige "
                 + (this.prestige + 1)
                 + " ]--------------------------->\n");
-        if (!story()) {
-          break;
-        } else {
+        if (story()) {
           prestige++;
           if (wouldQuit()) return;
         }
@@ -161,13 +160,11 @@ public class Campagne {
             "\n\n<--------------------------[ Story "
                 + (storyLevel + 1)
                 + " ]--------------------------->\n");
-        if (!story()) {
-          break;
-        } else {
+        if (story()) {
           storyLevel++;
           if (wouldQuit()) return;
         }
-      } while (storyLevel < storyNb);
+      } while (storyLevel <= storyNb);
       printCredits();
     }
   }
