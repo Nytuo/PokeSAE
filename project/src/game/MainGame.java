@@ -197,9 +197,7 @@ public class MainGame {
         }
         System.out.println("[TOURNAMENT] -- 2 opponents are ready to fight!");
         tournamentManager(adversaires);
-
-        System.out.println(adversaires.size());
-
+        
         System.out.println("[TOURNAMENT] -- " + adversaires.get(0).getNom() + " is the winner!");
 
       } else if (mode == 3) { // Voir tout les pokémons
