@@ -213,7 +213,7 @@ public class Dresseur implements IDresseur {
               + this.echangeRestant);
     }
     System.out.println(
-        "    " + i + 1 + " : Consult the Pokedex ".repeat(maxCapLength - msg.length() + 1) + "\n");
+        "    " + (i + 1) + " : Consult the Pokedex ".repeat(maxCapLength - msg.length() + 1) + "\n");
 
     int numAttaque;
     do {
