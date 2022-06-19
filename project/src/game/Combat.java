@@ -193,7 +193,7 @@ public class Combat implements ICombat {
       if (pok.peutMuter()) {
         System.out.println("What ?!\n" + pok.getNom() + " evolve ?!");
         pok.vaMuterEn(pok.getEvolution(pok.getNiveau()));
-        System.out.println("It became a " + pok.getNom());
+        System.out.println("It became a " + pok.getEspece().getNom());
       }
     }
   }
