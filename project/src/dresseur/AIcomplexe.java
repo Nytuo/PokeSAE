@@ -400,7 +400,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  int i=0;
 		  for (Pokemon poke:pokemons) {
 			  int pokePV=poke.getStat().getPV();
-			  if (pokePV>maxPV && !poke.estEvanoui()) {
+			  if (pokePV>maxPV && !poke.estEvanoui() && pokemonsEchanges[i]>0) {
 				  maxPV=pokePV;
 				  maxPVindex=i;
 			  }
@@ -493,7 +493,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  int bestPokeIndex=-2; // peut être source de problème
 		  for (int i=0; i<pokemons.length;i++) {// Pour chaque poke de mon ranch
 			  float score = getTypeScore(pokemons[i],pok);
-			  if (score>maxScore && pokemons[i].getPourcentagePV()>0)
+			  if (score>maxScore && pokemons[i].getPourcentagePV()>0  && pokemonsEchanges[i]>0)
 				 maxScore=score;
 			  	bestPokeIndex=i;
 			  // je compte combien il en a, s'il en a plus que le max rencontré, je garde son nom et son index
