@@ -109,7 +109,6 @@ public class MainGame {
         Pokemon[] pokes = (Pokemon[]) pokedex.engendreRanch();
         showPokemon(pokes);
 
-
         System.out.println("select the difficulty : \n");
         System.out.println("1. I'm too young to die");
         System.out.println("2. Hey, not too rough");
@@ -128,29 +127,54 @@ public class MainGame {
         String autopilot = scanner2.next();
         boolean autopilotBool = autopilot.equals("y");
         IDresseur joueur;
+        int nbPlayerInt = 0;
+        ArrayList<IDresseur> adversaires = new ArrayList<>();
         if (autopilotBool) {
           joueur = new AIcomplexe(name, pokes, 3);
+          adversaires.add(joueur);
 
         } else {
-          joueur = new Dresseur(name, pokes);
+          System.out.println("How many players ? (1 minimum) : ");
+          Scanner nbPlayer = new Scanner(System.in);
+          nbPlayerInt = nbPlayer.nextInt();
+          if (nbPlayerInt < 1) {
+            nbPlayerInt = 1;
+          }
+
+          for (int i = 0; i < nbPlayerInt; i++) {
+            if (i == 0) joueur = new Dresseur(name, pokes);
+            else {
+              System.out.println("Player " + (i + 1) + " name : ");
+              String playerName = scanner2.next();
+              joueur = new Dresseur(playerName, (Pokemon[]) pokedex.engendreRanch());
+            }
+            adversaires.add(joueur);
+          }
         }
 
-        ArrayList<IDresseur> adversaires = new ArrayList<>();
-        adversaires.add(joueur);
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 31 - nbPlayerInt; i++) {
 
           IDresseur dresseurAI;
           if (difficulty == 1) {
-            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI =
+                new AIcomplexe(
+                    "Dimitry clone " + i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else if (difficulty == 2) {
-            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI =
+                new AIcomplexe(
+                    "Dimitry clone " + i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else if (difficulty == 3) {
-            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI =
+                new AIcomplexe(
+                    "Dimitry clone " + i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else if (difficulty == 4) {
-            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI =
+                new AIcomplexe(
+                    "Dimitry clone " + i, (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else {
             System.out.println("Too difficult to choose? I'll choose for you!");
-            dresseurAI = new AIcomplexe("Dimitry clone "+i, (Pokemon[]) pokedex.engendreRanch(), 3);
+            dresseurAI =
+                new AIcomplexe("Dimitry clone " + i, (Pokemon[]) pokedex.engendreRanch(), 3);
           }
           adversaires.add(dresseurAI);
         }
@@ -174,7 +198,7 @@ public class MainGame {
         System.out.println("[TOURNAMENT] -- 2 opponents are ready to fight!");
         tournamentManager(adversaires, 0);
 
-        System.out.println(adversaires.get(0).getNom() + " is the winner!");
+        System.out.println("[TOURNAMENT] -- " + adversaires.get(0).getNom() + " is the winner!");
 
       } else if (mode == 3) { // Voir tout les pokémons
         System.out.println(new Pokedex().toString());
@@ -238,12 +262,17 @@ public class MainGame {
   }
 
   private static void tournamentManager(ArrayList<IDresseur> adversaires, int i) {
-    Combat c = new Combat(adversaires.get(i), adversaires.get(i + 1));
+    int opponent1 = new Random().nextInt(0, adversaires.size());
+    int opponent2 = new Random().nextInt(0, adversaires.size());
+    while (opponent1 == opponent2) {
+      opponent2 = new Random().nextInt(0, adversaires.size());
+    }
+    Combat c = new Combat(adversaires.get(opponent1), adversaires.get(opponent2));
     c.commence();
-    if (Objects.equals(c.gagnant, adversaires.get(i).getNom())) {
-      adversaires.remove(i + 1);
+    if (Objects.equals(c.gagnant, adversaires.get(opponent1).getNom())) {
+      adversaires.remove(opponent2);
     } else {
-      adversaires.remove(i);
+      adversaires.remove(opponent1);
     }
   }
 
