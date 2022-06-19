@@ -4,9 +4,14 @@ import dresseur.AIcomplexe;
 import dresseur.AIsimple;
 import dresseur.Dresseur;
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import javax.sound.sampled.*;
+
+import interfaces.IDresseur;
 import pokedex.Pokedex;
 import pokemon.*;
 
@@ -15,6 +20,8 @@ public class MainGame {
 
   /** Numéro de la sauvegarde sélectionner */
   static int nbSave = 0;
+
+  static int difficulty = 0;
 
   /**
    * methode main de lancement du menu
@@ -59,14 +66,14 @@ public class MainGame {
       System.out.println(
           "————————————————————————————————————————————————————————————————————————————————");
       System.out.println(
-          "What do you want to do ?\n1. Go Single Player\n2. Go ULTIMATE WARRIORS\n3. View all pokémons\n4. Search a pokemon\n5. Exit");
+          "What do you want to do ?\n1. Campaign\\n2. Go ULTIMATE WARRIORS\n3. View all pokémons\n4. Search a pokemon\n5. Exit");
       System.out.print("> ");
       Scanner scanner = new Scanner(System.in);
       int mode = scanner.nextInt();
       selectGameMode = mode != 1 && mode != 2;
       if (mode == 1) { // Campagne
         System.out.println(
-            "You have chosen Single Player mode.\n"
+            "You have chosen Campaign mode.\n"
                 + "Insert the slot number of your save (Between 1 and infinite, will be created if doesn't exist): ");
         System.out.print("> ");
 
@@ -74,8 +81,16 @@ public class MainGame {
         String dName = getNameFromSave(nbSave);
         int dLevel = getLevelFromSave(nbSave);
         int dPrestige = getPrestigeFromSave(nbSave);
+        System.out.println("AI autopilot ? (y/n)");
+        String autopilot = scanner.next();
+        boolean autopilotBool = autopilot.equals("y");
+        Dresseur joueur;
+        if (autopilotBool) {
+          joueur = new AIcomplexe(dName, pokes, 3);
 
-        Dresseur joueur = new Dresseur(dName, pokes);
+        } else {
+          joueur = new Dresseur(dName, pokes);
+        }
 
         System.out.println("[SAVE] - Loading complete.\n");
 
@@ -93,9 +108,33 @@ public class MainGame {
         showPokemon(pokes);
 
         Dresseur joueur = new Dresseur(name, pokes);
-        AIsimple dresseurAI = new AIsimple("Dimitry", (Pokemon[]) pokedex.engendreRanch());
-        Combat combat = new Combat(joueur, dresseurAI);
-        combat.commence();
+
+        System.out.println("select the difficulty : \n");
+        System.out.println("1. I'm too young to die");
+        System.out.println("2. Hey, not too rough");
+        System.out.println("3. Hurt me plenty");
+        System.out.println("4. Ultra-Violence");
+        Scanner diffScan = new Scanner(System.in);
+        int difficulty = diffScan.nextInt();
+        for (int i = 0; i < 32; i++) {
+
+          IDresseur dresseurAI;
+          if (difficulty == 1) {
+            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+          } else if (difficulty == 2) {
+            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+          } else if (difficulty == 3) {
+            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+          } else if (difficulty == 4) {
+            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+          } else {
+            System.out.println("Too difficult to choose? I'll choose for you!");
+            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+          }
+
+          Combat combat = new Combat(joueur, dresseurAI);
+          combat.commence();
+        }
 
       } else if (mode == 3) { // Voir tout les pokémons
         System.out.println(new Pokedex().toString());
@@ -108,49 +147,44 @@ public class MainGame {
         } else {
           new Pokedex().searchPokemon(podexScan.nextLine());
         }
-       
-        
-      }else if (mode == 12) { //DEBUG: IA TESTER
 
-          System.out.println("\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
-          String nomIA1 = "IA1";
-          String nomIA2 = "IA2";
-          int winIA1 = 0;
-          int winIA2 = 0;
-          int gameNum=10;
-          for (int i=0; i<gameNum;i++) {
-        	  
-              
-              Pokedex pokedex = new Pokedex();
-              AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(),1);
-              AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(),1);
-              Combat combat = new Combat(IA2, IA1);
-              combat.commence();
-             
-             if (combat.gagnant == nomIA1) {
-            	 winIA1 ++;
-             }
-             if (combat.gagnant == nomIA2)  {
-            	 winIA2 ++;
-             }
-          
-          
-         }
+      } else if (mode == 12) { // DEBUG: IA TESTER
+
+        System.out.println(
+            "\n————————————————————————————————————————————————\nIA Tester!\n————————————————————————————————————————————————");
+        String nomIA1 = "IA1";
+        String nomIA2 = "IA2";
+        int winIA1 = 0;
+        int winIA2 = 0;
+        int gameNum = 10;
+        for (int i = 0; i < gameNum; i++) {
+
+          Pokedex pokedex = new Pokedex();
+          AIcomplexe IA1 = new AIcomplexe(nomIA1, (Pokemon[]) pokedex.engendreRanch(), 1);
+          AIcomplexe IA2 = new AIcomplexe(nomIA2, (Pokemon[]) pokedex.engendreRanch(), 1);
+          Combat combat = new Combat(IA2, IA1);
+          combat.commence();
+
+          if (combat.gagnant == nomIA1) {
+            winIA1++;
+          }
+          if (combat.gagnant == nomIA2) {
+            winIA2++;
+          }
+        }
         float winrateIA1 = winIA1;
         float winrateIA2 = winIA2;
         System.out.println(
             "Winrates:\n" + nomIA1 + ": " + winrateIA1 + "\n" + nomIA2 + ": " + winrateIA2);
-      
-     } 
-    else if (mode == 5) {
+
+      } else if (mode == 5) {
         System.out.println("See you next time !");
         System.exit(0);
-      } 
-      else {
+      } else {
         System.out.println("Invalid input. Please try again.");
       }
     }
-	}
+  }
 
   private static int getLevelFromSave(int saveNumber) {
     ArrayList<String[]> data = getFromCSV("saveSlot" + saveNumber);
@@ -192,11 +226,11 @@ public class MainGame {
    * @return nbSave int
    */
   public static int setSave(Scanner scanner) {
-   while (!scanner.hasNextInt()){
-     scanner.nextLine();
-    System.out.println("Invalid input. Please try again.");
+    while (!scanner.hasNextInt()) {
+      scanner.nextLine();
+      System.out.println("Invalid input. Please try again.");
       System.out.print("> ");
-   }
+    }
 
     return nbSave = scanner.nextInt();
   }
@@ -317,17 +351,51 @@ public class MainGame {
       System.out.print("My name is : ");
       Scanner scanner2 = new Scanner(System.in);
       String name = scanner2.nextLine();
-      System.out.println("She says : \"Welcome " + name + "!\", the Professor will see you in a moment.\n");
+      System.out.println("She also needs a security code.\n");
+      System.out.print("Your security code will be : ");
+      Scanner securityScan = new Scanner(System.in);
+      String securityCode = securityScan.nextLine();
+      System.out.println("select the difficulty : \n");
+      System.out.println("1. I'm too young to die");
+      System.out.println("2. Hey, not too rough");
+      System.out.println("3. Hurt me plenty");
+      System.out.println("4. Ultra-Violence (not implemented yet)");
+      Scanner diffScan = new Scanner(System.in);
+      if (diffScan.hasNextInt()) {
+        int diff = diffScan.nextInt();
+        if (diff > 0 && diff < 5) {
+          difficulty = diffScan.nextInt();
+
+        } else {
+          System.out.println("Too hard to choose? Then I'll choose for you!");
+          difficulty = 3;
+        }
+      }
+
+      System.out.println(
+          "She says : \"Welcome " + name + "!, the Professor will see you in a moment.\"\n");
       Pokedex pokedex = new Pokedex();
       pokes = (Pokemon[]) pokedex.engendreRanch();
       System.out.println(
           "[SAVE] - Creating new save...\n[SAVE] - Please do not power off the computer during the process.");
-      saveGame(pokes, name, saveNumber,0,0);
+      saveGame(pokes, name, saveNumber, 0, 0, securityCode);
 
       System.out.println("[SAVE] - Save created.");
 
     } else {
+
       System.out.println("[SAVE] - Save found.\n[SAVE] - Loading...");
+      String securityCode;
+      do {
+
+        System.out.println("Please enter your security code : ");
+        Scanner securityScan = new Scanner(System.in);
+        securityCode = securityScan.nextLine();
+        if (!md5Password(securityCode).equals(data.get(0)[3]))
+          System.out.println("[SAVE] - Security code incorrect. Please try again.");
+      } while (!md5Password(securityCode).equals(data.get(0)[3]));
+
+      System.out.println("[SAVE] - Security code correct.");
 
       Pokedex pokedex = new Pokedex();
 
@@ -355,7 +423,7 @@ public class MainGame {
                 Integer.parseInt(data.get(i + 1)[8]),
                 (Stats) esp.getGainsStat());
       }
-
+      difficulty = Integer.parseInt(data.get(0)[4]);
       System.out.println("[SAVE] - Save loaded.");
     }
     return pokes;
@@ -372,6 +440,23 @@ public class MainGame {
     return data.get(0)[0];
   }
 
+  static String md5Password(String password) {
+    StringBuilder md5Pass = null;
+    try {
+      MessageDigest m = MessageDigest.getInstance("MD5");
+      m.update(password.getBytes());
+      byte[] bytes = m.digest();
+      md5Pass = new StringBuilder();
+      for (byte aByte : bytes) {
+        md5Pass.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+      }
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+    assert md5Pass != null;
+    return md5Pass.toString();
+  }
+
   /**
    * Sauvegarde le nom du dresseur et les attributs principales des pokémons dans un fichier CSV
    *
@@ -380,10 +465,33 @@ public class MainGame {
    * @param Slotnb le numéro du slot de sauvegarde
    */
   static void saveGame(
-      Pokemon[] pokemon, String name, int Slotnb, int storyLevel, int prestigeLevel) {
+      Pokemon[] pokemon,
+      String name,
+      int Slotnb,
+      int storyLevel,
+      int prestigeLevel,
+      String securityCode) {
+
     ArrayList<String[]> data = new ArrayList<>();
+    if (securityCode == null) {
+      try {
+        ArrayList<String[]> oldSave = getFromCSV("saveSlot" + Slotnb);
+        securityCode = oldSave.get(0)[4];
+      } catch (Exception e) {
+        System.out.println(
+            "[SAVE] - Error when retrieving security code from old save. Default code will be used (pokemon).");
+        securityCode = "pokemon";
+      }
+    }
     // Ajout du nom du dresseur
-    data.add(new String[] {name, String.valueOf(storyLevel), String.valueOf(prestigeLevel)});
+    data.add(
+        new String[] {
+          name,
+          String.valueOf(storyLevel),
+          String.valueOf(prestigeLevel),
+          md5Password(securityCode),
+          String.valueOf(difficulty)
+        });
     // Ajout des attributs principaux des pokémons
     for (int i = 0; i < 6; i++) {
       String[] laLigne = new String[14];
