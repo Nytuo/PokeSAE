@@ -96,15 +96,25 @@ public class Tour implements ITour {
     }
   }
 
-  private void gereAttaque(IDresseur dresseur1, IPokemon pok1, IAttaque atk1, IDresseur dresseur2, IPokemon pok2, IAttaque atk2) {
-    System.out.println("◀ gagnant "+ dresseur1.getNom() + "▶ -> " + pok1.getNom());
-    attaque(dresseur2, pok2, atk2, pok1, atk1);
-    if (pok1 == Combat.pok1) {
-    	System.out.println("voila!");
-      System.out.println("◀"+ dresseur2.getNom() + "▶ -> " + pok2.getNom());
-      attaque(dresseur1, pok1, atk1, pok2, atk2);
-    }
-   
+  private void gereAttaque(IDresseur dressAttack, IPokemon pokAttack, IAttaque atkPokAttack, IDresseur dressDef, IPokemon pokDef, IAttaque atkPokDef) {
+
+      if (dressAttack == dresseur1){
+          System.out.println("◀ gagnant "+ dressAttack.getNom() + "▶ -> " + pokAttack.getNom());
+          attaque(dressAttack, pokAttack, atkPokAttack, pokDef, atkPokDef);
+          if (pokAttack == Combat.pok1) {
+              System.out.println("voila!");
+              System.out.println("◀"+ dressDef.getNom() + "▶ -> " + pokDef.getNom());
+              attaque(dressAttack, pokDef, atkPokDef, pokAttack, atkPokAttack);
+          }
+      }else{
+          System.out.println("◀ gagnant "+ dressAttack.getNom() + "▶ -> " + pokAttack.getNom());
+          attaque(dressAttack, pokAttack, atkPokAttack, pokDef, atkPokDef);
+          if (pokAttack == Combat.pok2) {
+              System.out.println("voila!");
+              System.out.println("◀" + dressDef.getNom() + "▶ -> " + pokDef.getNom());
+              attaque(dressAttack, pokDef, atkPokDef, pokAttack, atkPokAttack);
+          }
+      }
   }
 
   
