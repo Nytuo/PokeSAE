@@ -180,23 +180,25 @@ public class MainGame {
         }
 
         System.out.println("[TOURNAMENT] -- 32 opponents are ready to fight!");
-        for (int i = 0; i < 16; i += 2) {
-          tournamentManager(adversaires, i);
+        for (int i = 0; i < 16; i++) {
+          tournamentManager(adversaires);
         }
         System.out.println("[TOURNAMENT] -- 16 opponents are ready to fight!");
-        for (int i = 0; i < 8; i += 2) {
-          tournamentManager(adversaires, i);
+        for (int i = 0; i < 8; i++) {
+          tournamentManager(adversaires);
         }
         System.out.println("[TOURNAMENT] -- 8 opponents are ready to fight!");
-        for (int i = 0; i < 4; i += 2) {
-          tournamentManager(adversaires, i);
+        for (int i = 0; i < 4; i++) {
+          tournamentManager(adversaires);
         }
         System.out.println("[TOURNAMENT] -- 4 opponents are ready to fight!");
-        for (int i = 0; i < 2; i += 2) {
-          tournamentManager(adversaires, i);
+        for (int i = 0; i < 2; i++) {
+          tournamentManager(adversaires);
         }
         System.out.println("[TOURNAMENT] -- 2 opponents are ready to fight!");
-        tournamentManager(adversaires, 0);
+        tournamentManager(adversaires);
+
+        System.out.println(adversaires.size());
 
         System.out.println("[TOURNAMENT] -- " + adversaires.get(0).getNom() + " is the winner!");
 
@@ -261,7 +263,7 @@ public class MainGame {
     }
   }
 
-  private static void tournamentManager(ArrayList<IDresseur> adversaires, int i) {
+  private static void tournamentManager(ArrayList<IDresseur> adversaires) {
     int opponent1 = new Random().nextInt(0, adversaires.size());
     int opponent2 = new Random().nextInt(0, adversaires.size());
     while (opponent1 == opponent2) {
