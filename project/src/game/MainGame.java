@@ -197,7 +197,7 @@ public class MainGame {
         }
         System.out.println("[TOURNAMENT] -- 2 opponents are ready to fight!");
         tournamentManager(adversaires);
-        
+
         System.out.println("[TOURNAMENT] -- " + adversaires.get(0).getNom() + " is the winner!");
 
       } else if (mode == 3) { // Voir tout les pokémons
@@ -453,10 +453,7 @@ public class MainGame {
       Scanner diffScan = new Scanner(System.in);
       if (diffScan.hasNextInt()) {
         int diff = diffScan.nextInt();
-        if (diff > 0 && diff < 5) {
-          difficulty = diffScan.nextInt();
-
-        } else {
+        if (diff < 1 || diff >4) {
           System.out.println("Too hard to choose? Then I'll choose for you!");
           difficulty = 3;
         }
