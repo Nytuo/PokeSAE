@@ -113,9 +113,17 @@ public class MainGame {
         System.out.println("1. I'm too young to die");
         System.out.println("2. Hey, not too rough");
         System.out.println("3. Hurt me plenty");
-        System.out.println("4. Ultra-Violence");
+        System.out.println("4. Ultra-Violence (not implemented)");
+
         Scanner diffScan = new Scanner(System.in);
         int difficulty = diffScan.nextInt();
+        if (difficulty > 0 && difficulty < 5) {
+          difficulty = diffScan.nextInt();
+
+        } else {
+          System.out.println("Too hard to choose? Then I'll choose for you!");
+          difficulty = 3;
+        }
         for (int i = 0; i < 32; i++) {
 
           IDresseur dresseurAI;
@@ -129,7 +137,7 @@ public class MainGame {
             dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
           } else {
             System.out.println("Too difficult to choose? I'll choose for you!");
-            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), difficulty);
+            dresseurAI = new AIcomplexe("Dimitry", (Pokemon[]) pokedex.engendreRanch(), 3);
           }
 
           Combat combat = new Combat(joueur, dresseurAI);
