@@ -99,18 +99,16 @@ public class Tour implements ITour {
   private void gereAttaque(IDresseur dressAttack, IPokemon pokAttack, IAttaque atkPokAttack, IDresseur dressDef, IPokemon pokDef, IAttaque atkPokDef) {
 
       if (dressAttack == dresseur1){
-          System.out.println("◀ gagnant "+ dressAttack.getNom() + "▶ -> " + pokAttack.getNom());
+          System.out.println("◀"+ dressAttack.getNom() + "▶ -> " + pokAttack.getNom());
           attaque(dressAttack, pokAttack, atkPokAttack, pokDef, atkPokDef);
           if (pokAttack == Combat.pok1) {
-              System.out.println("voila!");
               System.out.println("◀"+ dressDef.getNom() + "▶ -> " + pokDef.getNom());
               attaque(dressAttack, pokDef, atkPokDef, pokAttack, atkPokAttack);
           }
       }else{
-          System.out.println("◀ gagnant "+ dressAttack.getNom() + "▶ -> " + pokAttack.getNom());
+          System.out.println("◀"+ dressAttack.getNom() + "▶ -> " + pokAttack.getNom());
           attaque(dressAttack, pokAttack, atkPokAttack, pokDef, atkPokDef);
           if (pokAttack == Combat.pok2) {
-              System.out.println("voila!");
               System.out.println("◀" + dressDef.getNom() + "▶ -> " + pokDef.getNom());
               attaque(dressAttack, pokDef, atkPokDef, pokAttack, atkPokAttack);
           }
