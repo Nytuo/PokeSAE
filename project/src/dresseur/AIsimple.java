@@ -63,7 +63,6 @@ public class AIsimple extends Dresseur implements IStrategy {
   /**
    * Méthode qui permet de choisir une attaque au hasard dans la liste des attaques du pokemon (IA).
    * La capacité choisie doit avoir des PPs restants.
-   * Si le nombre de PP de toutes les capacités est égal à 0, la capacité choisie est "Lutte".
    *
    * @param attaquant Pokemon du dresseur (IA)
    * @param defenseur Pokemon Adverse
@@ -80,15 +79,6 @@ public class AIsimple extends Dresseur implements IStrategy {
 
     while (numAttaque < 0 || numAttaque > nbCap) {
       numAttaque = r.nextInt((nbCap));
-      if (capList[numAttaque].getPP() <= 0) {
-        numAttaque = -1;
-        if (capList[0].getPP() <= 0
-            && capList[1].getPP() <= 0
-            && capList[2].getPP() <= 0
-            && capList[3].getPP() <= 0) {
-          return new Pokedex().getCapacite("Lutte");
-        }
-      }
     }
 
     return capList[numAttaque];
