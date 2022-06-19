@@ -158,8 +158,7 @@ public class Dresseur implements IDresseur {
 
   /**
    * Permet de choisir une attaque à utiliser par un pokémon contre un pokémon ennemi Gère également
-   * le cas de l'échange de pokémon L'attaque sera "Lutte" si le pokémon n'a plus de PP sur ses
-   * capacités
+   * le cas de l'échange de pokémon
    *
    * @param attaquant le pokémon du dresseur
    * @param defenseur le pokémon ennemi
