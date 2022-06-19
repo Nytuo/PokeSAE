@@ -150,13 +150,15 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  //System.out.println("numAttaque"+numAttaque);
 		  }
 		  else if (degré==3) { //Degré 3: 
-			  if (isOpposedType(attaquant,defenseur)) {
-				  //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!OPPOSED TYPE");
-				  return new Echange(this, attaquant, defenseur);
+			  if (isOpposedType(attaquant,defenseur))  {
+				  int switchIndex = getBestSwitchablePokeIndex(attaquant,defenseur);
+				  //System.out.println("changement:"+switchIndex);
+				  pokemonsEchanges[switchIndex]--; 
+				  return new Echange(this, pokemons[switchIndex], defenseur); // peut être source de problème
 					  
 			 }
 			  else {
-				  numAttaque=getBestAttackAgainst(attaquant,defenseur);
+				  numAttaque=getBestAttackAgainst(attaquant,defenseur);//choixAttaqueIAd2(attaquant,defenseur,capListAttaquant);
 			  }
 		  }
 		  
@@ -169,7 +171,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 			  //System.out.println("-1 non géré.");
 			  if (isSwapPossible() && degré==3) {
 				  int switchIndex = getBestSwitchablePokeIndex(attaquant,defenseur);
-				  System.out.println("changement:"+switchIndex);
+				  //System.out.println("changement:"+switchIndex);
 				  pokemonsEchanges[switchIndex]--; 
 				  return new Echange(this, pokemons[switchIndex], defenseur); // peut être source de problème
 			  }
@@ -443,7 +445,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 				  IType capType = caps[i].getType();
 				  if (caps[i].getPP()>0) {
 					  if (capType.getNom()!="" && typesDef[j].getNom()!="") {
-						  double efficacite =pokedex.getEfficacite(caps[i].getType(), typesDef[j] );
+						  double efficacite =pokedex.getEfficacite(caps[i].getType(), typesDef[j] )*caps[i].getPuissance();
 						  if(efficacite>maxEfficacite) {
 							  maxEfficacite=efficacite;
 							  maxIndex[j]=i;
@@ -457,7 +459,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 		  }
 		  
 		  //Prend la plus précise 
-		  if ( caps[maxIndex[0]].getPrecision() >caps[maxIndex[1]].getPrecision() ) {
+		  if ( caps[maxIndex[0]].getPrecision()>caps[maxIndex[1]].getPrecision() ) {
 			  return maxIndex[0];
 		  }
 		  return maxIndex[1];
@@ -520,7 +522,7 @@ public class AIcomplexe extends Dresseur implements IStrategy {
 					  && !pokemons[i].estEvanoui() // Regarde si il n'est pas évanouhi
 					  && !(pokemons[i].getNom() ==currentPok.getNom())  // Passe le pokémon actuel
 					  && pokemonsEchanges[i]>0 // Si il reste des échanges au poké
-					  && totalPP(pok)>0) {// Si il lui reste des PP
+					  && totalPP(pok)>0){// Si il lui reste des PP
 				  
 				  	maxScore=score;
 				  	bestPokeIndex=i;
